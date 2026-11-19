@@ -39,6 +39,12 @@ namespace GISLibrary
 		return d2 && d2->Factory() && d2->RenderTarget() && d2->SolidColorBrush() && d2->SolidStrokeStyle();
 	}
 
+	const void* D2DRenderer::Backend() const
+	{
+		static const char direct2D = 0;
+		return &direct2D;
+	}
+
 	void D2DRenderer::SetTransform(const s100::render::Transform& transform)
 	{
 		if (!Ready())

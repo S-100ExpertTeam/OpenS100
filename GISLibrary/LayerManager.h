@@ -45,8 +45,6 @@ public:
 
 	MBR mbr;
 
-	// RCID of already rendered curveRecords
-	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
 	// With onIC off: consecutive vector layers in the same group are drawn as one chart, every
@@ -113,17 +111,8 @@ public:
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority);
 	// Draws the layers priority by priority across them (see drawGroups).
 	void DrawS100Layers(HDC& hDC, int offset, const std::vector<S100Layer*>& group);
-	void AddSymbolDrawing(
-		int ,
-		HDC &hdc,
-		int offset,
-		std::list<SENC_Instruction*>* augmentedRay,
-		std::list<SENC_Instruction*>* augmentedPath,
-		std::list<SENC_Instruction*>* point,
-		std::list<SENC_Instruction*>* line,
-		std::list<SENC_Instruction*>* area,
-		std::list<SENC_Instruction*>* text,
-		PortrayalCatalogue *pc = nullptr);
+	void AddSymbolDrawing(int drawingPrioriy, DrawingSet& drawingSet, PortrayalCatalogue* pc);
+	void CollectInstructions(S100Layer* layer);
 
 	void DrawInformationLayer(HDC& hDC, Layer* layer);
 	void DrawInformationLayer(HDC& hDC, int nIndex);
@@ -162,8 +151,6 @@ public:
 	Scaler* GetScaler();
 	//D2D1Resources* GetD2D1Resources();
 
-	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
-
 	int LayerCount();
 
 	// Return type : enum S100_FileType
@@ -179,5 +166,5 @@ public:
 
 	void InitFeatureOnOffMap();
 	void SetFeatureOnOff(std::wstring code, bool on);
-	bool IsFeatureOn(std::wstring& featureTypeCode);
+	bool IsFeatureOn(const std::wstring& featureTypeCode);
 };

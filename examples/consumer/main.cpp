@@ -20,6 +20,8 @@
 #include <string>
 #include <GISLibrary/DisplayListJson.h>
 #include <GISLibrary/DisplayListPainter.h>
+#include <GISLibrary/DrawingOrder.h>
+#include <GISLibrary/DrawingSet.h>
 #include <GISLibrary/IRenderer.h>
 #include <GISLibrary/PCOutputSchemaManager.h>
 #include <GISLibrary/S100Layer.h>
@@ -56,6 +58,12 @@ namespace
 		int strokes = 0;
 		int symbols = 0;
 		int texts = 0;
+
+		const void* Backend() const override
+		{
+			static const char recorder = 0;
+			return &recorder;
+		}
 
 		void SetTransform(const s100::render::Transform& transform) override
 		{
@@ -292,6 +300,7 @@ namespace
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <set>
 #include <string>
 
 int main(int argc, char** argv)
@@ -454,8 +463,9 @@ int main(int argc, char** argv)
 				<< std::dec << std::setfill(' ') << "\n";
 
 			// Drawing, as far as the library does it without a backend: the dataset fitted to a
-			// 1600 x 1000 surface, the instructions painted on the recording renderer. Colours
-			// are left as tokens (a renderer resolves them in its palette).
+			// 1600 x 1000 surface, a frame of it painted on the recording renderer as a display
+			// paints one (the instructions the view shows, one drawing priority after another).
+			// Colours are left as tokens (a renderer resolves them in its palette).
 			Scaler scaler;
 			scaler.SetScreen(0, 0, 1600, 1000);
 			scaler.SetMap(layer.m_mbr);
@@ -463,9 +473,14 @@ int main(int argc, char** argv)
 			s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring& token) {
 				return s100::render::ColorF{ static_cast<float>(token.size()), token.empty() ? 0.0f : static_cast<float>(token[0]), 0.0f, 1.0f };
 			});
-			for (auto& [key, instruction] : displayList.displayInstructions)
+			DrawingSet frame;
+			std::set<int> priorities;
+			s100::render::CollectInstructions(displayList, scaler.GetCurrentScale(), scaler, nullptr, frame, priorities);
+			s100::render::SuppressSharedCurves(priorities, frame);
+			for (const int priority : priorities)
 			{
-				instruction->Accept(painter);
+				renderer.text += "priority " + std::to_string(priority) + "\n";
+				s100::render::PaintPriority(priority, frame, painter, true);
 			}
 			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.fills << " fills, " << renderer.strokes << " strokes, " << renderer.lineStyles << " line styles, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)

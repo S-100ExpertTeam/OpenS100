@@ -39,6 +39,7 @@
 #include "SCommonFuction.h"
 #include "CoverageDataset.h"
 #include "DepthSuppression.h"
+#include "DrawingOrder.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -485,81 +486,82 @@ void LayerManager::DrawInformationLayerByKey(HDC& hDC, int key)
 	DrawInformationLayer(hDC, selectedLayer);
 }
 
-void LayerManager::AddSymbolDrawing(
-	int drawingPrioriy,
-	HDC& /*hdc*/,
-	int /*offset*/,
-	std::list<SENC_Instruction*>* augmentedRay,
-	std::list<SENC_Instruction*>* augmentedPath,
-	std::list<SENC_Instruction*>* point,
-	std::list<SENC_Instruction*>* line,
-	std::list<SENC_Instruction*>* area,
-	std::list<SENC_Instruction*>* text,
-	PortrayalCatalogue* pc)
+namespace
 {
-	GISLibrary::D2DInstructionPainter painter(D2, scaler, pc);
-
-	D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
-
-	// Area and line instructions of the S-101 depth features are masked under S-102 data (S-98 D-1).
-	std::optional<GISLibrary::DepthSuppression::Runs> worldRuns(std::in_place, D2->pRT, D2->Factory(), *scaler, true);
-	// Area
-	for (auto i = area[drawingPrioriy].begin(); i != area[drawingPrioriy].end(); i++)
+	// What Direct2D needs around the groups of a drawing priority: the transform of the view
+	// under the areas and lines, and the mask of S-98 D-1 over the S-101 depth features that lie
+	// under S-102 data.
+	class D2DStages final : public s100::render::DrawingStages
 	{
-		auto instruction = *i;
-		worldRuns->Update(instruction);
-
-		D2->pBrush->SetOpacity(1.0f);
-		instruction->Accept(painter);
-	}
-
-	// Line
-	for (auto i = line[drawingPrioriy].begin(); i != line[drawingPrioriy].end(); i++)
-	{
-		auto instruction = *i;
-		worldRuns->Update(instruction);
-		instruction->Accept(painter);
-	}
-	worldRuns.reset();   // pops a run still open before the transform changes
-
-	D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-	// AugmentedRay
-	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
-	{
-		auto instruction = *i;
-		instruction->Accept(painter);
-	}
-
-	// AugmentedPath
-	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
-	{
-		auto instruction = *i;
-		instruction->Accept(painter);
-	}
-
-	// Point
-	for (auto i = point[drawingPrioriy].begin(); i != point[drawingPrioriy].end(); i++)
-	{
-		(*i)->Accept(painter);
-	}
-
-	// Text
-	if (ENCCommon::TEXTOUT)
-	{
-		D2->pBrush->SetOpacity(1.0f);
-		D2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-		if (text[drawingPrioriy].size() > 0)
+	public:
+		D2DStages(D2D1Resources* d2, Scaler* scaler) : d2(d2), scaler(scaler)
 		{
-			GISLibrary::DepthSuppression::Runs textRuns(D2->pRT, D2->Factory(), *scaler, false);
-			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
+		}
+
+		void BeginAreasAndLines() override
+		{
+			d2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
+			runs.emplace(d2->pRT, d2->Factory(), *scaler, true);
+		}
+
+		void BeforeArea(SENC_Instruction& instruction) override
+		{
+			runs->Update(&instruction);
+			d2->pBrush->SetOpacity(1.0f);
+		}
+
+		void BeforeLine(SENC_Instruction& instruction) override
+		{
+			runs->Update(&instruction);
+		}
+
+		void EndAreasAndLines() override
+		{
+			runs.reset();   // pops a run still open before the transform changes
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		}
+
+		void BeginTexts(bool any) override
+		{
+			d2->pBrush->SetOpacity(1.0f);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+			if (any)
 			{
-				auto instruction = (SENC_TextInstruction*)*i;
-				textRuns.Update(instruction);
-				instruction->Accept(painter);
+				runs.emplace(d2->pRT, d2->Factory(), *scaler, false);
 			}
 		}
-	}
+
+		void BeforeText(SENC_Instruction& instruction) override
+		{
+			runs->Update(&instruction);
+		}
+
+		void EndTexts() override
+		{
+			runs.reset();
+		}
+
+	private:
+		D2D1Resources* d2;
+		Scaler* scaler;
+		std::optional<GISLibrary::DepthSuppression::Runs> runs;
+	};
+}
+
+void LayerManager::AddSymbolDrawing(int drawingPrioriy, DrawingSet& drawingSet, PortrayalCatalogue* pc)
+{
+	GISLibrary::D2DInstructionPainter painter(D2, scaler, pc);
+	D2DStages stages(D2, scaler);
+	s100::render::PaintPriority(drawingPrioriy, drawingSet, painter, ENCCommon::TEXTOUT, &stages);
+}
+
+// The instructions of the layer the view shows, into its drawing set.
+void LayerManager::CollectInstructions(S100Layer* layer)
+{
+	auto cell = (S100SpatialObject*)layer->GetSpatialObject();
+	s100::render::CollectInstructions(*cell->pcManager->displayListSENC, GetS100Scale(), *scaler,
+		[this](const std::wstring& code) { return IsFeatureOn(code); },
+		layer->drawingSet, layer->drawingPriority);
 }
 
 
@@ -766,7 +768,7 @@ void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 	}
 }
 
-void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
+void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer)
 {
 	auto pc = layer->GetPC();
 	layer->InitDraw();
@@ -783,113 +785,10 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		return;
 	}
 
-	std::list<SENC_Instruction*> itList;
-	for (int i = 0; i < 100; i++)
-	{
-		/*
-		* Type Of Instruction
-		* 0 : Null Instruction
-		* 1 : Point Instruction
-		* 2 : Line Instruction
-		* 3 : Area Instruction
-		* 4 : Text Instruction
-		*/
-		int cnt = 0;
-
-		// Augmented Ray
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Augmented Path
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Point
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetPointList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Line
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetLineList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Area
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAreaList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Text
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetTextList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		if (cnt)
-		{
-			layer->drawingPriority.insert(i);
-		}
-	}
-
-	itList.clear();
+	CollectInstructions(layer);
 
 	// Line Suppression
-	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
+	s100::render::SuppressSharedCurves(layer->drawingPriority, layer->drawingSet);
 
 	auto rt = D2->pRT;
 	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
@@ -903,14 +802,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
-		AddSymbolDrawing(*dp, hDC, offset,
-			layer->drawingSet.GetAugmentedRayList(),
-			layer->drawingSet.GetAugmentedPathList(),
-			layer->drawingSet.GetPointList(),
-			layer->drawingSet.GetLineList(),
-			layer->drawingSet.GetAreaList(),
-			layer->drawingSet.GetTextList(),
-			pc);
+		AddSymbolDrawing(*dp, layer->drawingSet, pc);
 	}
 
 	GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
@@ -933,118 +825,15 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 		return;
 	}
 
-	std::list<SENC_Instruction*> itList;
-	for (int i = 0; i < 100; i++)
-	{
-		/*
-		* Type Of Instruction
-		* 0 : Null Instruction
-		* 1 : Point Instruction
-		* 2 : Line Instruction
-		* 3 : Area Instruction
-		* 4 : Text Instruction
-		*/
-		int cnt = 0;
-
-		// Augmented Ray
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Augmented Path
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Point
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetPointList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Line
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetLineList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Area
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetAreaList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		// Text
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, GetS100Scale(), scaler, itList);
-		if (itList.size() > 0)
-		{
-			auto instructionList = layer->drawingSet.GetTextList(i);
-			for (const auto& iter : itList)
-			{
-				if (!IsFeatureOn(iter->code))
-					continue;
-				instructionList->push_back(iter);
-				cnt++;
-			}
-		}
-
-		if (cnt)
-		{
-			layer->drawingPriority.insert(i);
-		}
-	}
-
-	itList.clear();
+	CollectInstructions(layer);
 
 	// Line Suppression
 	if (101 == layer->GetProductNumber()) {
-		SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
+		s100::render::SuppressSharedCurves(layer->drawingPriority, layer->drawingSet);
 	}
 }
 
-void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority)
+void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int minPriority, int maxPriority)
 {
 	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr)) {
 		return;
@@ -1070,14 +859,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	{
 		if (*dp >= minPriority && *dp <= maxPriority)
 		{
-			AddSymbolDrawing(*dp, hDC, offset,
-				layer->drawingSet.GetAugmentedRayList(),
-				layer->drawingSet.GetAugmentedPathList(),
-				layer->drawingSet.GetPointList(),
-				layer->drawingSet.GetLineList(),
-				layer->drawingSet.GetAreaList(),
-				layer->drawingSet.GetTextList(),
-				pc);
+			AddSymbolDrawing(*dp, layer->drawingSet, pc);
 		}
 	}
 
@@ -1086,7 +868,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	rt->EndDraw();
 }
 
-void LayerManager::DrawS100Layers(HDC& hDC, int offset, const std::vector<S100Layer*>& group)
+void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S100Layer*>& group)
 {
 	std::set<int> priorities;
 	std::vector<PortrayalCatalogue*> catalogues;
@@ -1129,14 +911,7 @@ void LayerManager::DrawS100Layers(HDC& hDC, int offset, const std::vector<S100La
 		{
 			if (layer->drawingPriority.contains(priority))
 			{
-				AddSymbolDrawing(priority, hDC, offset,
-					layer->drawingSet.GetAugmentedRayList(),
-					layer->drawingSet.GetAugmentedPathList(),
-					layer->drawingSet.GetPointList(),
-					layer->drawingSet.GetLineList(),
-					layer->drawingSet.GetAreaList(),
-					layer->drawingSet.GetTextList(),
-					layer->GetPC());
+				AddSymbolDrawing(priority, layer->drawingSet, layer->GetPC());
 			}
 		}
 	}
@@ -1529,112 +1304,6 @@ D2D1Resources* LayerManager::GetD2D1Resources()
 	return D2;
 }
 */
-void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
-{
-	lineSuppressionMap.clear();
-
-	// Drawing priority : High -> Low
-	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
-	{
-		int _drawingPriority = *i;
-
-		auto lineInstructions = drawingSet->GetLineList()[_drawingPriority];
-
-		for (auto j = lineInstructions.begin(); j != lineInstructions.end(); j++)
-		{
-			auto lineInstruction = (SENC_LineInstruction*)*j;
-
-			auto featureRecord = lineInstruction->fr;
-			auto geom = featureRecord->GetGeometry();
-
-			std::list<SCurve*> curListCurveLink;
-
-			if (lineInstruction->spatialReference.size() > 0)
-			{
-				if (geom->GetType() == SGeometryType::Surface)
-				{
-					auto surface = (SSurface*)geom;
-
-					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-					{
-						SENC_SpatialReference* sred = *iterLi;
-						int referencedID = sred->reference;
-
-						auto curve = surface->GetCurve(referencedID);
-						if (curve) {
-							curListCurveLink.push_back(curve);
-						}
-					}
-				}
-				else if (geom->GetType() == SGeometryType::CompositeCurve)
-				{
-					auto compositeCurve = (SCompositeCurve*)geom;
-
-					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-					{
-						SENC_SpatialReference* sred = *iterLi;
-						int referencedID = sred->reference;
-
-						auto curve = compositeCurve->GetCurveByRCID(referencedID);
-						if (curve) {
-							curListCurveLink.push_back(curve);
-						}
-					}
-				}
-				else if (geom->GetType() == SGeometryType::Curve)
-				{
-					auto curveHasOrient = (SCurve*)geom;
-
-					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-					{
-						SENC_SpatialReference* sred = *iterLi;
-						int referencedID = sred->reference;
-
-						if (curveHasOrient->GetRCID() == referencedID)
-						{
-							curListCurveLink.push_back(curveHasOrient);
-						}
-					}
-				}
-			}
-			else if (geom->GetType() == SGeometryType::Surface)
-			{
-				auto surface = (SSurface*)geom;
-				surface->GetCurveList(curListCurveLink);
-			}
-			else if (geom->GetType() == SGeometryType::CompositeCurve)
-			{
-				auto compositeCurve = (SCompositeCurve*)geom;
-				compositeCurve->GetCurveList(curListCurveLink);
-			}
-			else if (geom->GetType() == SGeometryType::Curve)
-			{
-				curListCurveLink.push_back(((SCurve*)geom));
-			}
-
-			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)
-			{
-				auto curve = *m;
-				if (false == curve->GetMasking())
-				{
-					int id = curve->GetRCID();
-
-					auto item = lineSuppressionMap.find(id);
-
-					if (item == lineSuppressionMap.end())
-					{
-						lineSuppressionMap.insert(id);
-					}
-					else if (item != lineSuppressionMap.end())
-					{
-						curve->SetSuppress(true);
-					}
-				}
-			}
-		}
-	}
-}
-
 int LayerManager::LayerCount()
 {
 	return (int)layers.size();
@@ -1859,7 +1528,7 @@ void LayerManager::SetFeatureOnOff(std::wstring code, bool on)
 	}
 }
 
-bool LayerManager::IsFeatureOn(std::wstring& featureTypeCode)
+bool LayerManager::IsFeatureOn(const std::wstring& featureTypeCode)
 {
 	auto item = featureOnOffMap.find(featureTypeCode);
 	if (item != featureOnOffMap.end())

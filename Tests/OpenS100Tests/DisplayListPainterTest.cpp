@@ -11,6 +11,8 @@
 #include "TestPaths.h"
 #include "DisplayListJson.h"
 #include "DisplayListPainter.h"
+#include "DrawingOrder.h"
+#include "DrawingSet.h"
 #include "FeatureCatalogue.h"
 #include "IRenderer.h"
 #include "PCOutputSchemaManager.h"
@@ -39,6 +41,15 @@ namespace
 		int strokes = 0;
 		int arcs = 0;
 		int dashed = 0;
+
+		// Every recorder is one backend, unless a test makes one another.
+		static constexpr char recorder = 0;
+		const void* backend = &recorder;
+
+		const void* Backend() const override
+		{
+			return backend;
+		}
 
 		void SetTransform(const s100::render::Transform& transform) override
 		{
@@ -285,4 +296,149 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_EQ(renderer.retained, kept);
 	EXPECT_EQ(renderer.retainedStrokes, 2 * strokesOfKept);
 	EXPECT_EQ(renderer.fills, 2 * fills);
+
+	// Another backend does not draw with what this one made: it gets paths and sizes of its own.
+	RecordingRenderer other;
+	other.backend = &other;
+	s100::render::DisplayListPainter otherPainter(other, scaler, [](const std::wstring&) { return s100::render::ColorF{}; });
+	for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
+	{
+		instruction->Accept(otherPainter);
+	}
+	EXPECT_EQ(other.retained, kept);
+	EXPECT_EQ(other.retainedStrokes, strokesOfKept);
+	EXPECT_EQ(other.fills, fills);
+	EXPECT_EQ(other.measures, renderer.measures);
+
+	// And the first one, back, builds its own again.
+	for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
+	{
+		instruction->Accept(painter);
+	}
+	EXPECT_EQ(renderer.retained, 2 * kept);
+}
+
+namespace
+{
+	// Writes the stages of a priority into the text of the recorder, between the calls.
+	class RecordingStages : public s100::render::DrawingStages
+	{
+	public:
+		explicit RecordingStages(std::string& text) : text(text)
+		{
+		}
+
+		void BeginAreasAndLines() override { text += "stage areas and lines\n"; }
+		void BeforeArea(SENC_Instruction&) override { areas++; }
+		void BeforeLine(SENC_Instruction&) override { lines++; }
+		void EndAreasAndLines() override { text += "stage end of areas and lines\n"; }
+		void BeginTexts(bool any) override { text += any ? "stage texts\n" : "stage no texts\n"; }
+		void BeforeText(SENC_Instruction&) override { texts++; }
+		void EndTexts() override { text += "stage end of texts\n"; }
+
+		int areas = 0;
+		int lines = 0;
+		int texts = 0;
+
+	private:
+		std::string& text;
+	};
+}
+
+// A frame of the sample cell as a display draws it: the instructions the view shows, sorted by
+// drawing priority and kind, the shared curves suppressed, one priority after another.
+TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
+{
+	const auto root = testpaths::repoRoot();
+	const auto cellPath = root / "SampleData" / "10100AA_X01NE.000";
+	ASSERT_TRUE(std::filesystem::exists(cellPath)) << cellPath;
+
+	FeatureCatalogue fc;
+	ASSERT_TRUE(fc.Read((root / "ProgramData" / "FC" / "S-101_FC.xml").string()));
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((root / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	S100Layer layer(&fc, &pc);
+	auto* cell = new S101Cell(&fc);   // the layer owns its dataset
+	layer.m_spatialObject = cell;
+	cell->SetLayer(&layer);
+	ASSERT_TRUE(cell->Open(cellPath.wstring()));
+	layer.BuildPortrayalCatalogue();
+	ASSERT_TRUE(cell->pcManager && cell->pcManager->displayListSENC);
+	auto& displayList = *cell->pcManager->displayListSENC;
+
+	Scaler scaler;
+	scaler.SetScreen(0, 0, 1600, 1000);
+	scaler.SetMap(layer.m_mbr);
+
+	// Every feature type shown: the set has an instruction for all the display list gives.
+	DrawingSet set;
+	std::set<int> priorities;
+	s100::render::CollectInstructions(displayList, scaler.GetCurrentScale(), scaler, nullptr, set, priorities);
+	ASSERT_FALSE(priorities.empty());
+	size_t collected = 0;
+	for (const int priority : priorities)
+	{
+		ASSERT_GE(priority, 0);
+		ASSERT_LT(priority, 100);
+		collected += set.GetAreaList(priority)->size() + set.GetLineList(priority)->size() + set.GetPointList(priority)->size()
+			+ set.GetTextList(priority)->size() + set.GetAugmentedRayList(priority)->size() + set.GetAugmentedPathList(priority)->size();
+	}
+	EXPECT_GT(collected, 0u);
+	EXPECT_LE(collected, displayList.displayInstructions.size());
+
+	// A feature type turned off is not collected.
+	DrawingSet withoutLights;
+	std::set<int> prioritiesWithoutLights;
+	s100::render::CollectInstructions(displayList, scaler.GetCurrentScale(), scaler,
+		[](const std::wstring& code) { return code != L"LightSectored"; }, withoutLights, prioritiesWithoutLights);
+	size_t collectedWithoutLights = 0;
+	for (const int priority : prioritiesWithoutLights)
+	{
+		collectedWithoutLights += withoutLights.GetAreaList(priority)->size() + withoutLights.GetLineList(priority)->size()
+			+ withoutLights.GetPointList(priority)->size() + withoutLights.GetTextList(priority)->size()
+			+ withoutLights.GetAugmentedRayList(priority)->size() + withoutLights.GetAugmentedPathList(priority)->size();
+	}
+	EXPECT_LT(collectedWithoutLights, collected);
+
+	s100::render::SuppressSharedCurves(priorities, set);
+
+	RecordingRenderer renderer;
+	s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring& token) {
+		return s100::render::ColorF{ static_cast<float>(token.size()), token.empty() ? 0.0f : static_cast<float>(token[0]), 0.0f, 1.0f };
+	});
+	RecordingStages stages(renderer.text);
+	for (const int priority : priorities)
+	{
+		renderer.text += std::format("priority {}\n", priority);
+		s100::render::PaintPriority(priority, set, painter, true, &stages);
+	}
+	EXPECT_GT(stages.areas, 0);
+	EXPECT_GT(stages.lines, 0);
+	EXPECT_GT(stages.texts, 0);
+	EXPECT_GT(renderer.fills, 0);
+	EXPECT_GT(renderer.texts, 0);
+
+	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
+	if (hash != "73fcde194fa8c275")
+	{
+		const auto dump = testpaths::tempDir() / "10100AA_X01NE.frame.txt";
+		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
+		ADD_FAILURE() << "recorded frame hash " << hash << ", priorities " << priorities.size() << ", instructions " << collected
+			<< ", symbols " << renderer.symbols << ", texts " << renderer.texts << ", fills " << renderer.fills
+			<< ", strokes " << renderer.strokes << ", strokes of kept paths " << renderer.retainedStrokes
+			<< ", line styles " << renderer.lineStyles << "; the text is in " << dump;
+	}
+
+	// With texts off, none is drawn and the stages of texts are not entered.
+	RecordingRenderer silent;
+	s100::render::DisplayListPainter silentPainter(silent, scaler, [](const std::wstring&) { return s100::render::ColorF{}; });
+	RecordingStages silentStages(silent.text);
+	for (const int priority : priorities)
+	{
+		s100::render::PaintPriority(priority, set, silentPainter, false, &silentStages);
+	}
+	EXPECT_EQ(silent.texts, 0);
+	EXPECT_EQ(silentStages.texts, 0);
+	EXPECT_EQ(silent.fills, renderer.fills);
 }

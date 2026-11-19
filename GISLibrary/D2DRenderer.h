@@ -22,6 +22,7 @@ namespace GISLibrary
 		// False when the Direct2D resources are not there (nothing can be drawn).
 		bool Ready() const;
 
+		const void* Backend() const override;
 		void SetTransform(const s100::render::Transform& transform) override;
 		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
 			const s100::render::Stroke& stroke) override;

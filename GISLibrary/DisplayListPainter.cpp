@@ -53,11 +53,12 @@ namespace
 	// Pixels to a millimetre of a symbol.
 	const float symbolScale = 5;
 
-	// The path of a curve or a surface as the backend keeps it, parked with the geometry. A
-	// dataset is drawn by one backend, so the path is that backend's.
+	// The path of a curve or a surface as a backend keeps it, parked with the geometry. Drawn
+	// by another backend, the geometry gets a path of that one in its place.
 	struct KeptPath : Geometry::RenderAttachment
 	{
 		std::unique_ptr<s100::render::RetainedPath> path;   // nothing when there is nothing to draw
+		const void* backend = nullptr;                      // IRenderer::Backend of the one that made it
 	};
 
 	// The rings of a surface as closed figures; the points are given by a function of the index.
@@ -91,11 +92,12 @@ namespace
 		return path;
 	}
 
-	// The measured size of a text, kept in the cache slot of its instruction. A display list is
-	// drawn by one backend, so the size is that backend's.
+	// The measured size of a text, kept in the cache slot of its instruction. Drawn by another
+	// backend, the text is measured again: the glyphs are the backend's.
 	struct TextSizeEntry : GISLibrary::RenderCacheEntry
 	{
 		s100::render::SizeF size;
+		const void* backend = nullptr;   // IRenderer::Backend of the one that measured
 	};
 }
 
@@ -233,9 +235,10 @@ namespace s100::render
 		{
 			// The path of the surface in the coordinates of the dataset (x, -y), built once.
 			auto kept = dynamic_cast<KeptPath*>(surface->renderAttachment.get());
-			if (!kept)
+			if (!kept || kept->backend != renderer.Backend())
 			{
 				auto attachment = std::make_unique<KeptPath>();
+				attachment->backend = renderer.Backend();
 				attachment->path = renderer.Retain(SurfaceRings(surface, [surface](int i) {
 					return PointF{ static_cast<float>(surface->m_pPoints[i].x), static_cast<float>(-surface->m_pPoints[i].y) };
 				}));
@@ -480,9 +483,10 @@ namespace s100::render
 		{
 			// The path of the curve in the coordinates of the dataset (x, -y), built once.
 			auto kept = dynamic_cast<KeptPath*>(curve->renderAttachment.get());
-			if (!kept)
+			if (!kept || kept->backend != renderer.Backend())
 			{
 				auto attachment = std::make_unique<KeptPath>();
+				attachment->backend = renderer.Backend();
 				if (curve->m_numPoints >= 2)
 				{
 					PathFigure figure;
@@ -556,9 +560,10 @@ namespace s100::render
 
 			// Measured once: the size is kept with the instruction.
 			auto measured = dynamic_cast<TextSizeEntry*>(instruction->renderCache.get());
-			if (!measured)
+			if (!measured || measured->backend != renderer.Backend())
 			{
 				auto entry = std::make_unique<TextSizeEntry>();
+				entry->backend = renderer.Backend();
 				entry->size = renderer.MeasureText(text, font);
 				measured = entry.get();
 				instruction->renderCache = std::move(entry);

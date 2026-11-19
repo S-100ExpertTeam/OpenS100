@@ -168,6 +168,11 @@ namespace s100::render
 	public:
 		virtual ~IRenderer() = default;
 
+		// What tells one backend from another; the same for every renderer of a backend. What a
+		// backend made for the painter (a kept path, the measured size of a text) stays with
+		// the data, and is used again only by a renderer of the backend that made it.
+		virtual const void* Backend() const = 0;
+
 		// Replaces the transform; it stays until the next call.
 		virtual void SetTransform(const Transform& transform) = 0;
 		virtual void StrokePath(const Path& path, const ColorF& color, const Stroke& stroke) = 0;
