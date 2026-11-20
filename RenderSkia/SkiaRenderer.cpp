@@ -1,6 +1,7 @@
 #include "SkiaRenderer.h"
 #include "SkiaText.h"
 
+#include "../GISLibrary/PatternTile.h"
 #include "../GISLibrary/SymbolPicture.h"
 
 #include "include/core/SkCanvas.h"
@@ -10,6 +11,11 @@
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathEffect.h"
 #include "include/core/SkPathTypes.h"
+#include "include/core/SkPicture.h"
+#include "include/core/SkPictureRecorder.h"
+#include "include/core/SkSamplingOptions.h"
+#include "include/core/SkShader.h"
+#include "include/core/SkTileMode.h"
 #include "include/effects/SkDashPathEffect.h"
 
 #include <cmath>
@@ -88,6 +94,8 @@ namespace s100::render
 	{
 	}
 
+	SkiaRenderer::~SkiaRenderer() = default;
+
 	const void* SkiaRenderer::Backend() const
 	{
 		static const char skia = 0;
@@ -156,16 +164,70 @@ namespace s100::render
 
 	void SkiaRenderer::Fill_(const SkPath& path, const Fill& fill)
 	{
-		if (fill.kind != Fill::Kind::Color)
-		{
-			omitted.patternFills++;
-			return;
-		}
 		SkPaint paint;
 		paint.setAntiAlias(fill.smooth);   // off for areas: two side by side must not show a seam
 		paint.setStyle(SkPaint::kFill_Style);
-		paint.setColor4f(ToSk(fill.color), nullptr);
+		if (fill.kind == Fill::Kind::Color)
+		{
+			paint.setColor4f(ToSk(fill.color), nullptr);
+		}
+		else
+		{
+			sk_sp<SkShader> pattern = Pattern(fill);
+			if (!pattern)
+			{
+				omitted.patternFills++;
+				return;
+			}
+			paint.setShader(std::move(pattern));
+		}
+		// The path goes to device pixels and the canvas stays as it is, so a pattern is laid in
+		// device pixels from the corner of the surface whatever the transform.
 		canvas.drawPath(path.makeTransform(matrix), paint);
+	}
+
+	sk_sp<SkShader> SkiaRenderer::Pattern(const Fill& fill)
+	{
+		if (!resources.areaFills || !resources.symbols || !resources.color)
+		{
+			return nullptr;
+		}
+		std::string key;
+		if (fill.kind == Fill::Kind::AreaFill)
+		{
+			key = "a " + fill.reference + " " + fill.fallback;
+		}
+		else
+		{
+			key = "s " + fill.symbol;
+			for (const float number : { fill.v1.x, fill.v1.y, fill.v2.x, fill.v2.y, fill.offset.x, fill.offset.y })
+			{
+				key += " " + std::to_string(number);
+			}
+		}
+		const auto made = patterns.find(key);
+		if (made != patterns.end())
+		{
+			return made->second;
+		}
+
+		// The tile is recorded as a picture (the shared code draws its symbols on a renderer of
+		// this backend) and repeated; what a symbol at a corner has outside the tile is cut.
+		sk_sp<SkShader> shader;
+		const PatternTile tile = TileOf(fill, *resources.areaFills);
+		if (!tile.Empty())
+		{
+			const SkRect bounds = SkRect::MakeWH(tile.width, tile.height);
+			SkPictureRecorder recorder;
+			SkiaRenderer onTile(*recorder.beginRecording(bounds), resources);
+			if (DrawPatternTile(onTile, tile, *resources.symbols, resources.color))
+			{
+				shader = recorder.finishRecordingAsPicture()->makeShader(SkTileMode::kRepeat, SkTileMode::kRepeat,
+					SkFilterMode::kNearest, nullptr, &bounds);
+			}
+		}
+		patterns.emplace(std::move(key), shader);
+		return shader;
 	}
 
 	void SkiaRenderer::StrokePath(const Path& path, const ColorF& color, const Stroke& stroke)

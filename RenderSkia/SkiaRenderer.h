@@ -4,20 +4,26 @@
 // It draws on a canvas it is handed and knows nothing else of the surface: whether the pixels
 // are in memory or on a GPU, and where they go afterwards, is the application's business.
 //
-// What it draws so far: paths stroked (solid, dashed, arcs) and filled with a colour, the
-// symbols of the catalogue (by the shared code of SymbolPicture, which draws them as paths) and
-// texts in the fonts it is handed. Line styles and pattern fills are counted and left out
+// What it draws so far: paths stroked (solid, dashed, arcs) and filled with a colour or a
+// pattern, the symbols of the catalogue (by the shared code of SymbolPicture, which draws them
+// as paths) and texts in the fonts it is handed. Line styles are counted and left out
 // (NotDrawn).
 #include "../GISLibrary/DisplayListPainter.h"
 #include "../GISLibrary/IRenderer.h"
 
 #include "include/core/SkMatrix.h"
+#include "include/core/SkRefCnt.h"
+
+#include <map>
+#include <string>
 
 class SkCanvas;
 class SkPath;
+class SkShader;
 
 namespace s100::render
 {
+	class AreaFillLibrary;
 	class SkiaFonts;
 	class SymbolLibrary;
 
@@ -27,6 +33,8 @@ namespace s100::render
 	{
 		// The symbols of the portrayal catalogue; without them no symbol is drawn.
 		SymbolLibrary* symbols = nullptr;
+		// The area fills of the catalogue, for the pattern fills that name one.
+		const AreaFillLibrary* areaFills = nullptr;
 		// The colours of the palette in use, for the symbols.
 		ColorLookup color;
 		// The fonts texts are written in; without them no text is drawn and every text
@@ -40,6 +48,7 @@ namespace s100::render
 		// The canvas outlives the renderer. Its matrix is taken as device pixels: the renderer
 		// draws under that matrix and leaves it as it found it.
 		explicit SkiaRenderer(SkCanvas& canvas, SkiaResources resources = {});
+		~SkiaRenderer() override;
 
 		const void* Backend() const override;
 
@@ -72,10 +81,16 @@ namespace s100::render
 	private:
 		void Stroke_(const SkPath& path, const ColorF& color, const Stroke& stroke);
 		void Fill_(const SkPath& path, const Fill& fill);
+		// The tile of a pattern fill, repeated over the surface; nothing when there is no
+		// such pattern.
+		sk_sp<SkShader> Pattern(const Fill& fill);
 
 		SkCanvas& canvas;
 		SkiaResources resources;
 		SkMatrix matrix;   // the transform of the painter, onto device pixels
+		// The patterns made so far, by what the fill asked for. They are in the colours of the
+		// palette this renderer was made with.
+		std::map<std::string, sk_sp<SkShader>> patterns;
 		Omitted omitted;
 	};
 }

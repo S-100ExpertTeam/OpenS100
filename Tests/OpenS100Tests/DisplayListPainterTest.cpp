@@ -12,6 +12,7 @@
 #include "DisplayListJson.h"
 #include "ColorPalette.h"
 #include "SymbolPicture.h"
+#include "PatternTile.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -641,4 +642,98 @@ TEST(SymbolPicture, ReadsTheSymbolsOfTheS101Catalogue)
 	EXPECT_TRUE(s100::render::DrawSymbol(questionMark, symbols, "QUESMRK1", { 0.0f, 0.0f }, 0.0f, 5.0f, color));
 	EXPECT_FALSE(unknown.text.empty());
 	EXPECT_EQ(unknown.text, questionMark.text);
+}
+
+// The tile of a pattern: a rectangle of whole pixels with the symbol at its corners, and in its
+// middle too when every other row of the lattice is shifted.
+TEST(PatternTile, IsMadeFromTheLattice)
+{
+	const auto square = s100::render::MakePatternTile("SYMBOL", { 22.5f, 0.0f }, { 0.0f, 43.13f }, { 0.0f, 0.0f }, 5.0f);
+	EXPECT_FALSE(square.Empty());
+	EXPECT_EQ(square.symbol, "SYMBOL");
+	EXPECT_FLOAT_EQ(square.width, 112.0f);    // 112.5 cut to whole pixels
+	EXPECT_FLOAT_EQ(square.height, 215.0f);   // 215.65
+	ASSERT_EQ(square.at.size(), 4u);
+	EXPECT_FLOAT_EQ(square.at[2].x, 112.5f);  // the places are not cut
+	EXPECT_FLOAT_EQ(square.at[2].y, 215.65f);
+
+	const auto staggered = s100::render::MakePatternTile("SYMBOL", { 10.0f, 0.0f }, { 5.0f, 4.0f }, { 1.0f, 2.0f }, 5.0f);
+	EXPECT_FLOAT_EQ(staggered.width, 50.0f);
+	EXPECT_FLOAT_EQ(staggered.height, 40.0f);   // two rows
+	ASSERT_EQ(staggered.at.size(), 5u);
+	EXPECT_FLOAT_EQ(staggered.at[0].x, 5.0f);   // the offset moves every symbol
+	EXPECT_FLOAT_EQ(staggered.at[0].y, 10.0f);
+	EXPECT_FLOAT_EQ(staggered.at[2].x, 30.0f);  // the one in the middle: half a step along, one row down
+	EXPECT_FLOAT_EQ(staggered.at[2].y, 30.0f);
+	EXPECT_FLOAT_EQ(staggered.at[4].x, 55.0f);
+	EXPECT_FLOAT_EQ(staggered.at[4].y, 50.0f);
+
+	EXPECT_TRUE(s100::render::MakePatternTile("SYMBOL", { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, 5.0f).Empty());
+}
+
+// The area fills of the S-101 catalogue are read from their files, and a pattern fill is the
+// tile of the one it names.
+TEST(PatternTile, ReadsTheAreaFillsOfTheS101Catalogue)
+{
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	s100::render::AreaFillLibrary areaFills(pc);
+	EXPECT_EQ(areaFills.Size(), pc.GetAreaFills()->GetAreaFillFilesVecter()->size());
+	EXPECT_GT(areaFills.Size(), 20u);
+
+	const auto diamond = areaFills.Find("DIAMOND1");
+	ASSERT_NE(diamond, nullptr);
+	EXPECT_EQ(diamond->name, "DIAMOND1");
+	EXPECT_EQ(diamond->symbol, "DIAMOND1P");
+	EXPECT_FLOAT_EQ(diamond->v1.x, 22.5f);
+	EXPECT_FLOAT_EQ(diamond->v2.y, 43.13f);
+	EXPECT_EQ(areaFills.Find("diamond1"), diamond);   // whatever the case
+	EXPECT_EQ(areaFills.Find("NO_SUCH_FILL"), nullptr);
+
+	// Every area fill names a symbol the catalogue has.
+	s100::render::SymbolLibrary symbols(pc);
+	for (auto file : *pc.GetAreaFills()->GetAreaFillFilesVecter())
+	{
+		const std::string name = std::filesystem::path(file->GetFileNameW()).stem().string();
+		const auto areaFill = areaFills.Find(name);
+		ASSERT_NE(areaFill, nullptr) << name;
+		EXPECT_NE(symbols.Find(areaFill->symbol), nullptr) << name << " " << areaFill->symbol;
+	}
+
+	s100::render::Fill byName;
+	byName.kind = s100::render::Fill::Kind::AreaFill;
+	byName.reference = "DIAMOND1";
+	const auto tile = s100::render::TileOf(byName, areaFills);
+	EXPECT_EQ(tile.symbol, "DIAMOND1P");
+	EXPECT_FLOAT_EQ(tile.width, 112.0f);
+	EXPECT_FLOAT_EQ(tile.height, 215.0f);
+
+	// A name the catalogue does not have: the fallback, or nothing.
+	s100::render::Fill unknown;
+	unknown.kind = s100::render::Fill::Kind::AreaFill;
+	unknown.reference = "NO_SUCH_FILL";
+	EXPECT_TRUE(s100::render::TileOf(unknown, areaFills).Empty());
+	unknown.fallback = "QUESMRK1";
+	EXPECT_FALSE(s100::render::TileOf(unknown, areaFills).Empty());
+
+	// A lattice of the rule's own.
+	s100::render::Fill lattice;
+	lattice.kind = s100::render::Fill::Kind::SymbolTiles;
+	lattice.symbol = "DIAMOND1P";
+	lattice.v1 = { 10.0f, 0.0f };
+	lattice.v2 = { 0.0f, 8.0f };
+	const auto own = s100::render::TileOf(lattice, areaFills);
+	EXPECT_FLOAT_EQ(own.width, 50.0f);
+	EXPECT_FLOAT_EQ(own.height, 40.0f);
+
+	// The symbols of a tile are drawn at its places; with a symbol the catalogue lacks, nothing.
+	const auto color = [](const std::wstring&) { return s100::render::ColorF{}; };
+	RecordingRenderer renderer;
+	EXPECT_TRUE(s100::render::DrawPatternTile(renderer, tile, symbols, color));
+	EXPECT_NE(renderer.text.find("transform scale 5 rotate 0 about 0 0 translate 112.5 215.65\n"), std::string::npos) << renderer.text;
+	lattice.symbol = "NO_SUCH_SYMBOL";
+	RecordingRenderer none;
+	EXPECT_FALSE(s100::render::DrawPatternTile(none, s100::render::TileOf(lattice, areaFills), symbols, color));
+	EXPECT_TRUE(none.text.empty());
 }

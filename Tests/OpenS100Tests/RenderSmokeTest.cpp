@@ -451,7 +451,8 @@ namespace
 	class PathsOnly final : public s100::render::IRenderer
 	{
 	public:
-		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts) : inner(inner), symbols(symbols), texts(texts)
+		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts, bool patterns)
+			: inner(inner), symbols(symbols), texts(texts), patterns(patterns)
 		{
 		}
 
@@ -470,14 +471,14 @@ namespace
 		}
 		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override
 		{
-			if (fill.kind == s100::render::Fill::Kind::Color)
+			if (patterns || fill.kind == s100::render::Fill::Kind::Color)
 			{
 				inner.FillPath(path, fill);
 			}
 		}
 		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override
 		{
-			if (fill.kind == s100::render::Fill::Kind::Color)
+			if (patterns || fill.kind == s100::render::Fill::Kind::Color)
 			{
 				inner.FillPath(path, fill);
 			}
@@ -507,12 +508,13 @@ namespace
 		s100::render::IRenderer& inner;
 		bool symbols;   // the symbols too
 		bool texts;     // the texts too
+		bool patterns;  // the pattern fills too
 	};
 
 	// Draws `cell` fitted to the canvas as RenderCell does, but only its paths (PathsOnly), by
 	// the neutral frame (DrawingOrder) on the Direct2D renderer. The reference picture for a
 	// backend that draws paths only.
-	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts)
+	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts, bool patterns)
 	{
 		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
@@ -536,6 +538,8 @@ namespace
 		ASSERT_NE(rt, nullptr);
 		rt->BindDC(canvas.dc(), &view);
 		rt->BeginDraw();
+		// The brushes of the catalogue's patterns belong to a frame, as the viewer makes them.
+		GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(rt);
 		for (Layer* layer : gis.GetLayerManager()->layers)
 		{
 			auto s100Layer = dynamic_cast<S100Layer*>(layer);
@@ -550,7 +554,7 @@ namespace
 			s100::render::SuppressSharedCurves(priorities, frame);
 
 			GISLibrary::D2DRenderer renderer(d2, pc);
-			PathsOnly paths(renderer, symbols, texts);
+			PathsOnly paths(renderer, symbols, texts, patterns);
 			s100::render::DisplayListPainter painter(paths, scaler,
 				[pc](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
 			for (const int priority : priorities)
@@ -558,6 +562,7 @@ namespace
 				s100::render::PaintPriority(priority, frame, painter, true);
 			}
 		}
+		GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
 		rt->SetTransform(D2D1::Matrix3x2F::Identity());
 		rt->EndDraw();
 		::GdiFlush();
@@ -569,7 +574,7 @@ namespace
 
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
 // With S100_RENDER_PRIMITIVES=paths only the stroked and colour-filled paths are drawn; with
-// "paths,symbols" the symbols too, with "paths,symbols,texts" the texts as well.
+// "symbols", "texts" and "patterns" added after commas ("paths,symbols,texts") those too.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
 	char* value = nullptr;
@@ -591,12 +596,15 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 	bool pathsOnly = false;
 	bool withSymbols = false;
 	bool withTexts = false;
+	bool withPatterns = false;
 	char* primitives = nullptr;
 	if (_dupenv_s(&primitives, &length, "S100_RENDER_PRIMITIVES") == 0 && primitives)
 	{
-		withTexts = std::string(primitives) == "paths,symbols,texts";
-		withSymbols = withTexts || std::string(primitives) == "paths,symbols";
-		pathsOnly = withSymbols || std::string(primitives) == "paths";
+		const std::string asked = std::string(",") + primitives + ",";
+		pathsOnly = asked.find(",paths,") != std::string::npos;
+		withSymbols = asked.find(",symbols,") != std::string::npos;
+		withTexts = asked.find(",texts,") != std::string::npos;
+		withPatterns = asked.find(",patterns,") != std::string::npos;
 		free(primitives);
 	}
 
@@ -614,7 +622,7 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
 		if (pathsOnly)
 		{
-			RenderCellPaths(cell, withSymbols, withTexts);
+			RenderCellPaths(cell, withSymbols, withTexts, withPatterns);
 			continue;
 		}
 		std::size_t nonWhite = 0;

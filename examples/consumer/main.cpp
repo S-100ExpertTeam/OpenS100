@@ -31,6 +31,7 @@
 #include <GISLibrary/SENC_InstructionVisitor.h>
 #ifdef OPENS100_CONSUMER_HAS_SKIA
 #include <GISLibrary/ColorPalette.h>
+#include <GISLibrary/PatternTile.h>
 #include <GISLibrary/SymbolPicture.h>
 #include <RenderSkia/SkiaFonts.h>
 #include <RenderSkia/SkiaImage.h>
@@ -435,6 +436,7 @@ int main(int argc, char** argv)
 		}
 #ifdef OPENS100_CONSUMER_HAS_SKIA
 		s100::render::SymbolLibrary symbols(pc);
+		s100::render::AreaFillLibrary areaFills(pc);
 		s100::render::SkiaFonts fonts;
 		for (const std::string& file : fontFiles)
 		{
@@ -561,7 +563,7 @@ int main(int argc, char** argv)
 					return 1;
 				}
 				const s100::render::ColorLookup color = [&palette](const std::wstring& token) { return palette.Color(token); };
-				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, color, &fonts });
+				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, &areaFills, color, &fonts });
 				s100::render::DisplayListPainter picture(skia, scaler, color);
 				for (const int priority : priorities)
 				{

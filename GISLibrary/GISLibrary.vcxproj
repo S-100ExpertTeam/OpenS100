@@ -622,6 +622,7 @@
     <ClCompile Include="DisplayListPainter.cpp" />
     <ClCompile Include="ColorPalette.cpp" />
     <ClCompile Include="DrawingOrder.cpp" />
+    <ClCompile Include="PatternTile.cpp" />
     <ClCompile Include="SymbolPicture.cpp" />
     <ClCompile Include="S100LayerBuildPortrayal.cpp" />
     <ClCompile Include="S100LayerPortrayal.cpp" />
@@ -1015,6 +1016,7 @@
     <ClInclude Include="DisplayListPainter.h" />
     <ClInclude Include="ColorPalette.h" />
     <ClInclude Include="DrawingOrder.h" />
+    <ClInclude Include="PatternTile.h" />
     <ClInclude Include="SymbolPicture.h" />
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="S100Layer.h" />
