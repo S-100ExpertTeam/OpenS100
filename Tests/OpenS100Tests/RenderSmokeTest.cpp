@@ -32,6 +32,14 @@
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
 #include "CoverageDataset.h"
+#include "D2D1Resources.h"
+#include "D2DRenderer.h"
+#include "DisplayListPainter.h"
+#include "DrawingOrder.h"
+#include "DrawingSet.h"
+#include "PCOutputSchemaManager.h"
+#include "S100Layer.h"
+#include "SENC_DisplayList.h"
 #include "S10XGML.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -435,7 +443,114 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 	}
 }
 
+namespace
+{
+	// Lets through what every backend draws alike from the first day: paths stroked and paths
+	// filled with a colour. Symbols, line styles, pattern fills and texts are dropped, so that
+	// the picture can be compared with that of a backend that does not draw them yet.
+	class PathsOnly final : public s100::render::IRenderer
+	{
+	public:
+		explicit PathsOnly(s100::render::IRenderer& inner) : inner(inner)
+		{
+		}
+
+		const void* Backend() const override { return inner.Backend(); }
+		void SetTransform(const s100::render::Transform& transform) override { inner.SetTransform(transform); }
+		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override
+		{
+			inner.StrokePath(path, color, stroke);
+		}
+		std::unique_ptr<s100::render::RetainedPath> Retain(const s100::render::Path& path) override { return inner.Retain(path); }
+		void StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override
+		{
+			inner.StrokePath(path, color, stroke);
+		}
+		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override
+		{
+			if (fill.kind == s100::render::Fill::Kind::Color)
+			{
+				inner.FillPath(path, fill);
+			}
+		}
+		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override
+		{
+			if (fill.kind == s100::render::Fill::Kind::Color)
+			{
+				inner.FillPath(path, fill);
+			}
+		}
+		void StrokeLineStyle(const std::string&, const std::vector<s100::render::PointF>&, const s100::render::ColorF*) override {}
+		void DrawSymbol(const std::string&, s100::render::PointF, float, float) override {}
+		s100::render::SizeF MeasureText(const std::string&, const s100::render::TextFont&) override { return {}; }
+		void FillText(const std::string&, s100::render::PointF, const s100::render::TextFont&, const s100::render::ColorF&) override {}
+
+	private:
+		s100::render::IRenderer& inner;
+	};
+
+	// Draws `cell` fitted to the canvas as RenderCell does, but only its paths (PathsOnly), by
+	// the neutral frame (DrawingOrder) on the Direct2D renderer. The reference picture for a
+	// backend that draws paths only.
+	void RenderCellPaths(const std::filesystem::path& cell)
+	{
+		GdiplusSession gdiplus;
+		CGISLibraryApp gis;
+		auto cm = gis.GetCatalogManager();
+		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+		ASSERT_NE(pc, nullptr);
+		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+		ASSERT_TRUE(gis.AddLayer(cell.wstring())) << cell.string();
+		gis.SetViewMBR(view);
+
+		MemoryCanvas canvas(kWidth, kHeight);
+		ASSERT_TRUE(canvas.valid());
+
+		auto d2 = gis.GetD2D1Resources();
+		auto& scaler = *gis.GetScaler();
+		auto rt = d2->RenderTarget();
+		ASSERT_NE(rt, nullptr);
+		rt->BindDC(canvas.dc(), &view);
+		rt->BeginDraw();
+		for (Layer* layer : gis.GetLayerManager()->layers)
+		{
+			auto s100Layer = dynamic_cast<S100Layer*>(layer);
+			auto dataset = s100Layer ? static_cast<S100SpatialObject*>(s100Layer->GetSpatialObject()) : nullptr;
+			if (!dataset || !dataset->pcManager || !dataset->pcManager->displayListSENC)
+			{
+				continue;
+			}
+			DrawingSet frame;
+			std::set<int> priorities;
+			s100::render::CollectInstructions(*dataset->pcManager->displayListSENC, scaler.GetCurrentScale(), scaler, nullptr, frame, priorities);
+			s100::render::SuppressSharedCurves(priorities, frame);
+
+			GISLibrary::D2DRenderer renderer(d2, pc);
+			PathsOnly paths(renderer);
+			s100::render::DisplayListPainter painter(paths, scaler,
+				[pc](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
+			for (const int priority : priorities)
+			{
+				s100::render::PaintPriority(priority, frame, painter, true);
+			}
+		}
+		rt->SetTransform(D2D1::Matrix3x2F::Identity());
+		rt->EndDraw();
+		::GdiFlush();
+
+		const auto png = OutputDirectory() / (cell.stem().string() + ".png");
+		EXPECT_TRUE(canvas.SavePng(png)) << png.string();
+	}
+}
+
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
+// With S100_RENDER_PRIMITIVES=paths only the stroked and colour-filled paths are drawn.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
 	char* value = nullptr;
@@ -454,6 +569,14 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		free(software);
 	}
 
+	bool pathsOnly = false;
+	char* primitives = nullptr;
+	if (_dupenv_s(&primitives, &length, "S100_RENDER_PRIMITIVES") == 0 && primitives)
+	{
+		pathsOnly = std::string(primitives) == "paths";
+		free(primitives);
+	}
+
 	std::size_t start = 0;
 	while (start <= list.size())
 	{
@@ -466,6 +589,11 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		}
 		const std::filesystem::path cell(item);
 		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
+		if (pathsOnly)
+		{
+			RenderCellPaths(cell);
+			continue;
+		}
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
 		RenderCell(cell, nonWhite, colours);

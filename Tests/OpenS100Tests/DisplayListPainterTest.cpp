@@ -10,6 +10,7 @@
 
 #include "TestPaths.h"
 #include "DisplayListJson.h"
+#include "ColorPalette.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -441,4 +442,36 @@ TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
 	EXPECT_EQ(silent.texts, 0);
 	EXPECT_EQ(silentStages.texts, 0);
 	EXPECT_EQ(silent.fills, renderer.fills);
+}
+
+// The colours of the tokens come from the colour profile of the catalogue, read with no backend.
+TEST(ColorPalette, ReadsThePalettesOfTheS101Catalogue)
+{
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	s100::render::ColorPalette day;
+	ASSERT_TRUE(day.Read(pc));
+	EXPECT_GT(day.Size(), 50u);
+
+	// Deep water by day: sRGB 201, 237, 255 in the colour profile.
+	const auto deep = day.Color(L"DEPDW");
+	EXPECT_FLOAT_EQ(deep.r, 201 / 255.0f);
+	EXPECT_FLOAT_EQ(deep.g, 237 / 255.0f);
+	EXPECT_FLOAT_EQ(deep.b, 1.0f);
+	EXPECT_FLOAT_EQ(deep.a, 1.0f);
+
+	// A token the palette does not have is black.
+	const auto unknown = day.Color(L"NO_SUCH_TOKEN");
+	EXPECT_FLOAT_EQ(unknown.r + unknown.g + unknown.b, 0.0f);
+	EXPECT_FLOAT_EQ(unknown.a, 1.0f);
+
+	s100::render::ColorPalette night;
+	ASSERT_TRUE(night.Read(pc, "Night"));
+	EXPECT_EQ(night.Size(), day.Size());
+	EXPECT_LT(night.Color(L"DEPDW").r, 0.5f);
+
+	s100::render::ColorPalette none;
+	EXPECT_FALSE(none.Read(pc, "Noon"));
+	EXPECT_EQ(none.Size(), 0u);
 }

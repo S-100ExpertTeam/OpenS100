@@ -95,6 +95,26 @@
         }
       ]
     },
+    "render-skia": {
+      "description": "Skia backend of the renderer: draws the drawing instructions on a Skia canvas, CPU raster and PNG output included (opens100::render-skia)",
+      "dependencies": [
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "portrayal"
+          ]
+        },
+        {
+          "name": "skia",
+          "default-features": false,
+          "features": [
+            "freetype",
+            "png"
+          ]
+        }
+      ]
+    },
     "system-database": {
       "description": "System Database: local store of installed datasets, catalogues and support files, and S-100 Part 15 data protection (opens100::sdb)",
       "dependencies": [

@@ -40,6 +40,11 @@ option(OPENS100_BUILD_PORTRAYAL "Build opens100::portrayal (GISLibrary: drawing 
 if(OPENS100_BUILD_PORTRAYAL AND NOT (OPENS100_BUILD_DATASET AND OPENS100_BUILD_LUASCRIPTING))
     message(FATAL_ERROR "opens100::portrayal needs opens100::dataset and opens100::luascripting")
 endif()
+option(OPENS100_BUILD_RENDER_SKIA "Build opens100::render-skia (RenderSkia: the Skia backend of the renderer)" OFF)
+
+if(OPENS100_BUILD_RENDER_SKIA AND NOT OPENS100_BUILD_PORTRAYAL)
+    message(FATAL_ERROR "opens100::render-skia needs opens100::portrayal")
+endif()
 if(OPENS100_BUILD_LUASCRIPTING AND NOT OPENS100_BUILD_FEATURECATALOG)
     message(FATAL_ERROR "opens100::luascripting needs opens100::featurecatalog")
 endif()
@@ -72,6 +77,9 @@ endif()
 if(OPENS100_BUILD_PORTRAYAL)
     find_package(LibXml2 REQUIRED)
     find_package(LibXslt REQUIRED)   # XSLT 1.0 portrayal rules
+endif()
+if(OPENS100_BUILD_RENDER_SKIA)
+    find_package(unofficial-skia CONFIG REQUIRED)
 endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
@@ -244,6 +252,13 @@ if(OPENS100_BUILD_PORTRAYAL)
     else()
         target_compile_options(portrayal PRIVATE -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function)
     endif()
+endif()
+
+if(OPENS100_BUILD_RENDER_SKIA)
+    # A backend of the renderer: IRenderer on a Skia canvas, and a picture in memory with its PNG
+    # file for drawing with no window (Documents/TechDocs/2026-11-19-r6-skia-backend-design.md).
+    # Skia is public: the canvas is the application's.
+    opens100_add_module(render-skia RenderSkia DEPENDS portrayal unofficial::skia::skia)
 endif()
 
 # --- package ------------------------------------------------------------------------------

@@ -14,10 +14,11 @@
 # that builds it from the output of the rules, the Lua host that answers the rules from an S-101
 # dataset, the run itself (Lua 5.1 for S-101, XSLT 1.0 for the other products), and the
 # instructions as JSON text (DisplayListJson). DisplayListPainter is the S-100 side of drawing
-# them on an IRenderer and DrawingOrder says which of them a view shows and in what order; they
-# are here until a portable backend gives them a target of their own.
+# them on an IRenderer, DrawingOrder says which of them a view shows and in what order and
+# ColorPalette gives the colours of their tokens; they are here until they get a target of
+# their own.
 set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
-    DisplayListJson DisplayListPainter DrawingOrder PCOutputSchemaManager ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
+    ColorPalette DisplayListJson DisplayListPainter DrawingOrder PCOutputSchemaManager ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
     S101LuaScriptingReference host_data host_functions
     SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch

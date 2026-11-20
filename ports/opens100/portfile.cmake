@@ -30,6 +30,7 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
         lua-scripting     OPENS100_BUILD_LUASCRIPTING
         portrayal         OPENS100_BUILD_PORTRAYAL
         portrayal-catalogue OPENS100_BUILD_PORTRAYALCATALOGUE
+        render-skia       OPENS100_BUILD_RENDER_SKIA
         system-database   OPENS100_BUILD_SYSTEMDATABASE
 )
 

@@ -19,5 +19,20 @@
     "boost-geometry",
     "utfcpp",
     "gtest"
-  ]
+  ],
+  "features": {
+    "render-skia": {
+      "description": "Skia backend of the renderer (opens100::render-skia): CPU raster, PNG output, fonts through FreeType",
+      "dependencies": [
+        {
+          "name": "skia",
+          "default-features": false,
+          "features": [
+            "freetype",
+            "png"
+          ]
+        }
+      ]
+    }
+  }
 }

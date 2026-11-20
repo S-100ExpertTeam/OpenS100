@@ -620,6 +620,7 @@
     <ClCompile Include="D2DRenderer.cpp" />
     <ClCompile Include="DisplayListJson.cpp" />
     <ClCompile Include="DisplayListPainter.cpp" />
+    <ClCompile Include="ColorPalette.cpp" />
     <ClCompile Include="DrawingOrder.cpp" />
     <ClCompile Include="S100LayerBuildPortrayal.cpp" />
     <ClCompile Include="S100LayerPortrayal.cpp" />
@@ -1011,6 +1012,7 @@
     <ClInclude Include="D2DRenderer.h" />
     <ClInclude Include="DisplayListJson.h" />
     <ClInclude Include="DisplayListPainter.h" />
+    <ClInclude Include="ColorPalette.h" />
     <ClInclude Include="DrawingOrder.h" />
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="S100Layer.h" />

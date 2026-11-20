@@ -29,6 +29,11 @@
 #include <GISLibrary/SENC_DisplayList.h>
 #include <GISLibrary/SENC_Instruction.h>
 #include <GISLibrary/SENC_InstructionVisitor.h>
+#ifdef OPENS100_CONSUMER_HAS_SKIA
+#include <GISLibrary/ColorPalette.h>
+#include <RenderSkia/SkiaImage.h>
+#include <RenderSkia/SkiaRenderer.h>
+#endif
 
 namespace
 {
@@ -307,7 +312,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [dataset ...]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [--png <directory>] [dataset ...]\n";
 		return 2;
 	}
 
@@ -397,13 +402,41 @@ int main(int argc, char** argv)
 		}
 
 		// --json <directory>: the display list of each dataset as a JSON file there.
+		// --png <directory>: a picture of each dataset there (a package with a render backend).
 		const char* jsonDirectory = nullptr;
+		const char* pngDirectory = nullptr;
 		int firstDataset = 3;
-		if (argc >= 5 && std::string(argv[3]) == "--json")
+		while (firstDataset + 1 < argc)
 		{
-			jsonDirectory = argv[4];
-			firstDataset = 5;
+			const std::string option(argv[firstDataset]);
+			if (option == "--json")
+			{
+				jsonDirectory = argv[firstDataset + 1];
+			}
+			else if (option == "--png")
+			{
+				pngDirectory = argv[firstDataset + 1];
+			}
+			else
+			{
+				break;
+			}
+			firstDataset += 2;
 		}
+#ifdef OPENS100_CONSUMER_HAS_SKIA
+		s100::render::ColorPalette palette;
+		if (pngDirectory && !palette.Read(pc))
+		{
+			std::cerr << "no Day palette in " << argv[2] << "\n";
+			return 1;
+		}
+#else
+		if (pngDirectory)
+		{
+			std::cerr << "--png: this opens100 package has no render backend (port feature render-skia)\n";
+			return 2;
+		}
+#endif
 
 		for (int i = firstDataset; i < argc; i++)
 		{
@@ -463,12 +496,16 @@ int main(int argc, char** argv)
 				<< std::dec << std::setfill(' ') << "\n";
 
 			// Drawing, as far as the library does it without a backend: the dataset fitted to a
-			// 1600 x 1000 surface, a frame of it painted on the recording renderer as a display
-			// paints one (the instructions the view shows, one drawing priority after another).
+			// 1600 x 1000 surface (the map range is what the surface shows of it, as in a
+			// viewer), a frame of it painted on the recording renderer as a display paints one
+			// (the instructions the view shows, one drawing priority after another).
 			// Colours are left as tokens (a renderer resolves them in its palette).
+			const int width = 1600;
+			const int height = 1000;
 			Scaler scaler;
-			scaler.SetScreen(0, 0, 1600, 1000);
+			scaler.SetScreen(0, 0, width, height);
 			scaler.SetMap(layer.m_mbr);
+			scaler.SetMapFromScreen(0, 0, width, height);
 			RecordingRenderer renderer;
 			s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring& token) {
 				return s100::render::ColorF{ static_cast<float>(token.size()), token.empty() ? 0.0f : static_cast<float>(token[0]), 0.0f, 1.0f };
@@ -491,6 +528,37 @@ int main(int argc, char** argv)
 					std::ios::binary | std::ios::trunc);
 				out << renderer.text;
 			}
+
+#ifdef OPENS100_CONSUMER_HAS_SKIA
+			// The same frame as a picture: the Skia backend on a surface in memory, the
+			// colours of the Day palette on white.
+			if (pngDirectory)
+			{
+				s100::render::SkiaImage image(width, height, s100::render::ColorF{ 1.0f, 1.0f, 1.0f, 1.0f });
+				if (!image.Valid())
+				{
+					std::cerr << "no surface of " << width << " x " << height << "\n";
+					return 1;
+				}
+				s100::render::SkiaRenderer skia(image.Canvas());
+				s100::render::DisplayListPainter picture(skia, scaler,
+					[&palette](const std::wstring& token) { return palette.Color(token); });
+				for (const int priority : priorities)
+				{
+					s100::render::PaintPriority(priority, frame, picture, true);
+				}
+				const auto png = std::filesystem::path(pngDirectory) / (cellPath.stem().string() + ".png");
+				if (!image.WritePng(png))
+				{
+					std::cerr << "cannot write " << png.string() << "\n";
+					return 1;
+				}
+				const auto& omitted = skia.NotDrawn();
+				std::cout << "picture:       " << png.string() << " (not drawn yet: " << omitted.symbols << " symbols, "
+					<< omitted.texts << " texts, " << omitted.lineStyles << " line styles, " << omitted.patternFills
+					<< " pattern fills)\n";
+			}
+#endif
 		}
 	}
 #endif
