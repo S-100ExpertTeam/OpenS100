@@ -31,6 +31,7 @@
 #include <GISLibrary/SENC_InstructionVisitor.h>
 #ifdef OPENS100_CONSUMER_HAS_SKIA
 #include <GISLibrary/ColorPalette.h>
+#include <GISLibrary/SymbolPicture.h>
 #include <RenderSkia/SkiaImage.h>
 #include <RenderSkia/SkiaRenderer.h>
 #endif
@@ -424,6 +425,7 @@ int main(int argc, char** argv)
 			firstDataset += 2;
 		}
 #ifdef OPENS100_CONSUMER_HAS_SKIA
+		s100::render::SymbolLibrary symbols(pc);
 		s100::render::ColorPalette palette;
 		if (pngDirectory && !palette.Read(pc))
 		{
@@ -540,9 +542,9 @@ int main(int argc, char** argv)
 					std::cerr << "no surface of " << width << " x " << height << "\n";
 					return 1;
 				}
-				s100::render::SkiaRenderer skia(image.Canvas());
-				s100::render::DisplayListPainter picture(skia, scaler,
-					[&palette](const std::wstring& token) { return palette.Color(token); });
+				const s100::render::ColorLookup color = [&palette](const std::wstring& token) { return palette.Color(token); };
+				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, color });
+				s100::render::DisplayListPainter picture(skia, scaler, color);
 				for (const int priority : priorities)
 				{
 					s100::render::PaintPriority(priority, frame, picture, true);

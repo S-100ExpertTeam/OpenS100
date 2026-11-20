@@ -30,7 +30,7 @@ leaves drawing instructions; a renderer of your own visits them:
     #include <GISLibrary/S100Layer.h>
     #include <GISLibrary/SENC_InstructionVisitor.h>
 
-Drawing the instructions with Skia (feature "render-skia", in progress: paths only so far)
+Drawing the instructions with Skia (feature "render-skia", in progress: paths and symbols so far)
 is opens100::render-skia. The canvas is yours; a surface in memory with PNG output is included:
 
     #include <RenderSkia/SkiaRenderer.h>

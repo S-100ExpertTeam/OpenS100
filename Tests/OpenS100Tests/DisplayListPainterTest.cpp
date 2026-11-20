@@ -11,6 +11,7 @@
 #include "TestPaths.h"
 #include "DisplayListJson.h"
 #include "ColorPalette.h"
+#include "SymbolPicture.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -474,4 +475,170 @@ TEST(ColorPalette, ReadsThePalettesOfTheS101Catalogue)
 	s100::render::ColorPalette none;
 	EXPECT_FALSE(none.Read(pc, "Noon"));
 	EXPECT_EQ(none.Size(), 0u);
+}
+
+namespace
+{
+	std::filesystem::path WriteSymbol(const char* name, const char* body)
+	{
+		const auto path = testpaths::tempDir() / name;
+		std::ofstream(path, std::ios::binary | std::ios::trunc)
+			<< "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns=\"http://www.w3.org/2000/svg\">\n" << body << "</svg>\n";
+		return path;
+	}
+}
+
+// A symbol file is read into shapes: what is drawn, how it is coloured, how wide its lines are.
+TEST(SymbolPicture, ReadsTheShapesOfASymbolFile)
+{
+	const auto path = WriteSymbol("TESTSYM1.svg",
+		"<title>a test symbol</title>\n"
+		"<rect class=\"symbolBox layout\" fill=\"none\" x=\"-9\" y=\"-9\" height=\"18\" width=\"18\"/>\n"
+		"<rect class=\"svgBox layout\" fill=\"none\" x=\"-2\" y=\"-3\" height=\"6\" width=\"4\"/>\n"
+		"<path d=\" M -1,-2 L 1,-2 L 1,2\" class=\"sl f0 sCHBLK\" stroke-width=\"0.32\" />\n"
+		"<path d=\"M 0,0 L 2,0 L 2,2 Z M 5,5 L 6,5 6,6\" class=\"fCHMGD\" style=\"fill-opacity:0.5\" />\n"
+		"<path d=\"m 1,1 h 2 v 3 H 0 V 0 l 1,1 z\" class=\"sl f0 sCHRED\" style=\"stroke-width:0.64;\" />\n"
+		"<path d=\"M 0,0 L 1,1 C 1,2 3,4 5,6 L 9,9\" class=\"sl f0 sCHBLK\" stroke-width=\"0.32\" />\n"
+		"<rect class=\"sl f0 sCHGRD\" x=\"1\" y=\"2\" width=\"3\" height=\"4\" stroke-width=\"0.3\"/>\n"
+		"<circle class=\"fCHYLW\" cx=\"1\" cy=\"-1\" r=\"0.5\"/>\n"
+		"<circle class=\"pivotPoint layout\" fill=\"none\" cx=\"0\" cy=\"0\" r=\"1\"/>\n"
+		"<g><path d=\"M 0,0 L 1,1\" class=\"sl f0 sCHBLK\" stroke-width=\"0.32\"/></g>\n");
+
+	s100::render::SymbolPicture picture;
+	ASSERT_TRUE(s100::render::ReadSymbolPicture(path, picture));
+	EXPECT_EQ(picture.name, "TESTSYM1");
+	EXPECT_FLOAT_EQ(picture.x, -2.0f);
+	EXPECT_FLOAT_EQ(picture.y, -3.0f);
+	EXPECT_FLOAT_EQ(picture.width, 4.0f);
+	EXPECT_FLOAT_EQ(picture.height, 6.0f);
+	EXPECT_EQ(picture.unsupported, 1);   // the path with a curve
+	ASSERT_EQ(picture.shapes.size(), 6u);   // the layout boxes, the pivot and the group are no shapes
+
+	// An open line, stroked.
+	const auto& line = picture.shapes[0];
+	EXPECT_FALSE(line.fill);
+	EXPECT_EQ(line.colorToken, "CHBLK");
+	EXPECT_FLOAT_EQ(line.strokeWidth, 0.32f);
+	EXPECT_FLOAT_EQ(line.opacity, 1.0f);
+	ASSERT_EQ(line.figures.size(), 1u);
+	EXPECT_FALSE(line.figures[0].closed);
+	EXPECT_FLOAT_EQ(line.figures[0].start.x, -1.0f);
+	ASSERT_EQ(line.figures[0].lines.size(), 2u);
+	EXPECT_FLOAT_EQ(line.figures[0].lines[1].y, 2.0f);
+
+	// Two figures in one path: a closed one, and an open one whose last pair has no letter.
+	const auto& filled = picture.shapes[1];
+	EXPECT_TRUE(filled.fill);
+	EXPECT_EQ(filled.colorToken, "CHMGD");
+	EXPECT_FLOAT_EQ(filled.opacity, 0.5f);
+	ASSERT_EQ(filled.figures.size(), 2u);
+	EXPECT_TRUE(filled.figures[0].closed);
+	EXPECT_EQ(filled.figures[0].lines.size(), 2u);
+	EXPECT_FALSE(filled.figures[1].closed);
+	EXPECT_FLOAT_EQ(filled.figures[1].start.x, 5.0f);
+	ASSERT_EQ(filled.figures[1].lines.size(), 2u);
+	EXPECT_FLOAT_EQ(filled.figures[1].lines[1].x, 6.0f);
+	EXPECT_FLOAT_EQ(filled.figures[1].lines[1].y, 6.0f);
+
+	// Relative commands, horizontal and vertical lines.
+	const auto& relative = picture.shapes[2];
+	EXPECT_EQ(relative.colorToken, "CHRED");
+	EXPECT_FLOAT_EQ(relative.strokeWidth, 0.64f);
+	ASSERT_EQ(relative.figures.size(), 1u);
+	EXPECT_TRUE(relative.figures[0].closed);
+	EXPECT_FLOAT_EQ(relative.figures[0].start.x, 1.0f);
+	ASSERT_EQ(relative.figures[0].lines.size(), 5u);
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[0].x, 3.0f);   // h 2
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[1].y, 4.0f);   // v 3
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[2].x, 0.0f);   // H 0
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[3].y, 0.0f);   // V 0
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[4].x, 1.0f);   // l 1,1
+	EXPECT_FLOAT_EQ(relative.figures[0].lines[4].y, 1.0f);
+
+	// A path with a curve is kept up to the curve.
+	ASSERT_EQ(picture.shapes[3].figures.size(), 1u);
+	EXPECT_EQ(picture.shapes[3].figures[0].lines.size(), 1u);
+
+	// A rectangle that is not layout is a closed figure.
+	const auto& box = picture.shapes[4];
+	EXPECT_EQ(box.colorToken, "CHGRD");
+	ASSERT_EQ(box.figures.size(), 1u);
+	EXPECT_TRUE(box.figures[0].closed);
+	EXPECT_FLOAT_EQ(box.figures[0].lines[1].x, 4.0f);
+	EXPECT_FLOAT_EQ(box.figures[0].lines[1].y, 6.0f);
+
+	const auto& circle = picture.shapes[5];
+	EXPECT_TRUE(circle.fill);
+	EXPECT_EQ(circle.colorToken, "CHYLW");
+	EXPECT_FLOAT_EQ(circle.radius, 0.5f);
+	EXPECT_FLOAT_EQ(circle.center.y, -1.0f);
+
+	s100::render::SymbolPicture none;
+	EXPECT_FALSE(s100::render::ReadSymbolPicture(testpaths::tempDir() / "NO_SUCH_SYMBOL.svg", none));
+}
+
+// A symbol is drawn as paths: scaled, turned and moved to its place, fills antialiased, strokes
+// as wide on the screen as their millimetres say whatever the scale.
+TEST(SymbolPicture, IsDrawnAsPaths)
+{
+	const auto path = WriteSymbol("TESTSYM2.svg",
+		"<path d=\"M 0,0 L 2,0 L 2,2 Z\" class=\"fCHMGD\" style=\"fill-opacity:0.5\" />\n"
+		"<path d=\"M -1,-2 L 1,-2\" class=\"sl f0 sCHBLK\" stroke-width=\"0.32\" />\n"
+		"<path d=\"M -1,-2 L 1,-2\" class=\"sl f0 sCHBLK\" />\n"
+		"<circle class=\"sl f0 sCHYLW\" cx=\"0\" cy=\"0\" r=\"1\" stroke-width=\"0.5\"/>\n");
+	s100::render::SymbolPicture picture;
+	ASSERT_TRUE(s100::render::ReadSymbolPicture(path, picture));
+
+	RecordingRenderer renderer;
+	s100::render::DrawSymbolPicture(renderer, picture, { 100.0f, 200.0f }, 90.0f, 5.0f, [](const std::wstring& token) {
+		return s100::render::ColorF{ static_cast<float>(token.size()), 0.0f, 0.0f, 1.0f };
+	});
+
+	EXPECT_EQ(renderer.fills, 1);
+	EXPECT_EQ(renderer.strokes, 2);   // the line with no width is not stroked
+	EXPECT_NE(renderer.text.find("transform scale 5 rotate 90 about 0 0 translate 100 200\n"), std::string::npos) << renderer.text;
+	// The fill takes the opacity of the shape; the stroke is 0.32 mm at 96 pixels to an inch.
+	EXPECT_NE(renderer.text.find("fill color 5 0 0 0.5 | from 0 0 line 2 0 line 2 2 closed"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("stroke width 1.209 color 5 0 0 1 dashes | from -1 -2 line 1 -2 open"), std::string::npos) << renderer.text;
+	// The circle: a closed figure of chords, 4 pi r of them at 5 pixels to the millimetre.
+	EXPECT_NE(renderer.text.find("stroke width 1.89 color 5 0 0 1 dashes | from 1 0 line"), std::string::npos) << renderer.text;
+	EXPECT_EQ(std::count(renderer.text.begin(), renderer.text.end(), '\n'), 4);
+}
+
+// Every symbol of the S-101 catalogue is read whole, and a name the catalogue does not have is
+// drawn as its question mark.
+TEST(SymbolPicture, ReadsTheSymbolsOfTheS101Catalogue)
+{
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	s100::render::SymbolLibrary symbols(pc);
+	EXPECT_GT(symbols.Size(), 500u);
+
+	size_t read = 0;
+	size_t shapes = 0;
+	int unsupported = 0;
+	for (auto file : *pc.GetSymbols()->GetSymbolsVector())
+	{
+		const std::string name = std::filesystem::path(file->GetFileNameW()).stem().string();
+		const auto picture = symbols.Find(name);
+		ASSERT_NE(picture, nullptr) << name;
+		EXPECT_EQ(picture, symbols.Find(name));   // read once
+		read++;
+		shapes += picture->shapes.size();
+		unsupported += picture->unsupported;
+	}
+	EXPECT_EQ(read, symbols.Size());
+	EXPECT_GT(shapes, read);
+	EXPECT_EQ(unsupported, 0);
+
+	EXPECT_EQ(symbols.Find("NO_SUCH_SYMBOL"), nullptr);
+
+	const auto color = [](const std::wstring&) { return s100::render::ColorF{}; };
+	RecordingRenderer unknown;
+	EXPECT_TRUE(s100::render::DrawSymbol(unknown, symbols, "NO_SUCH_SYMBOL", { 0.0f, 0.0f }, 0.0f, 5.0f, color));
+	RecordingRenderer questionMark;
+	EXPECT_TRUE(s100::render::DrawSymbol(questionMark, symbols, "QUESMRK1", { 0.0f, 0.0f }, 0.0f, 5.0f, color));
+	EXPECT_FALSE(unknown.text.empty());
+	EXPECT_EQ(unknown.text, questionMark.text);
 }

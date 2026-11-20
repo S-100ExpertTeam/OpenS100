@@ -1,5 +1,7 @@
 #include "SkiaRenderer.h"
 
+#include "../GISLibrary/SymbolPicture.h"
+
 #include "include/core/SkCanvas.h"
 #include "include/core/SkColor.h"
 #include "include/core/SkPaint.h"
@@ -81,7 +83,7 @@ namespace
 
 namespace s100::render
 {
-	SkiaRenderer::SkiaRenderer(SkCanvas& canvas) : canvas(canvas)
+	SkiaRenderer::SkiaRenderer(SkCanvas& canvas, SkiaResources resources) : canvas(canvas), resources(std::move(resources))
 	{
 	}
 
@@ -159,7 +161,7 @@ namespace s100::render
 			return;
 		}
 		SkPaint paint;
-		paint.setAntiAlias(false);   // areas side by side must not show a seam
+		paint.setAntiAlias(fill.smooth);   // off for areas: two side by side must not show a seam
 		paint.setStyle(SkPaint::kFill_Style);
 		paint.setColor4f(ToSk(fill.color), nullptr);
 		canvas.drawPath(path.makeTransform(matrix), paint);
@@ -208,9 +210,17 @@ namespace s100::render
 		omitted.lineStyles++;
 	}
 
-	void SkiaRenderer::DrawSymbol(const std::string&, PointF, float, float)
+	void SkiaRenderer::DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale)
 	{
-		omitted.symbols++;
+		// The shared code draws the symbol as paths, on this renderer, under a transform of its
+		// own; the one in force comes back afterwards.
+		const SkMatrix before = matrix;
+		if (!resources.symbols || !resources.color
+			|| !s100::render::DrawSymbol(*this, *resources.symbols, reference, at, rotationDegrees, scale, resources.color))
+		{
+			omitted.symbols++;
+		}
+		matrix = before;
 	}
 
 	SizeF SkiaRenderer::MeasureText(const std::string&, const TextFont&)

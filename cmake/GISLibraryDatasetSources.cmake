@@ -15,8 +15,8 @@
 # dataset, the run itself (Lua 5.1 for S-101, XSLT 1.0 for the other products), and the
 # instructions as JSON text (DisplayListJson). DisplayListPainter is the S-100 side of drawing
 # them on an IRenderer, DrawingOrder says which of them a view shows and in what order and
-# ColorPalette gives the colours of their tokens; they are here until they get a target of
-# their own.
+# ColorPalette gives the colours of their tokens; SymbolPicture is a symbol of the catalogue as
+# shapes and draws it on an IRenderer. They are here until they get a target of their own.
 set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
     ColorPalette DisplayListJson DisplayListPainter DrawingOrder PCOutputSchemaManager ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
     S101LuaScriptingReference host_data host_functions
@@ -25,7 +25,7 @@ set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
     SENC_HatchFill SENC_Instruction SENC_LineInstruction SENC_LineStyle SENC_LineStyleBase
     SENC_LineStyleReference SENC_NullInstruction SENC_OverrideColor SENC_Pen SENC_Pixmap
     SENC_PointInstruction SENC_SimpleLineStyle SENC_Symbol SENC_SymbolFill SENC_Template
-    SENC_TextInstruction SENC_TextPoint SENC_pixmapFill)
+    SENC_TextInstruction SENC_TextPoint SENC_pixmapFill SymbolPicture)
 
 # Draws with Direct2D or GDI, or builds their resources. In no package target until a portable
 # render backend replaces them (Documents/TechDocs/2026-11-17-render-separation-design.md).

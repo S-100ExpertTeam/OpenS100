@@ -135,6 +135,10 @@ namespace s100::render
 		Kind kind = Kind::Color;
 		ColorF color;
 
+		// Antialiased edges: for a shape on its own (a part of a symbol). Areas of a chart are
+		// filled without, so that two side by side show no seam.
+		bool smooth = false;
+
 		// AreaFill: the name, and the area fill drawn when the catalogue has none of that name
 		// (empty: nothing is drawn then).
 		std::string reference;
@@ -182,7 +186,8 @@ namespace s100::render
 		virtual void StrokePath(const RetainedPath& path, const ColorF& color, const Stroke& stroke) = 0;
 
 		// The inside of a path by the even-odd rule (a ring inside a ring is a hole), without
-		// antialiasing: areas side by side must not show a seam.
+		// antialiasing unless the fill asks for it (Fill::smooth). A figure left open is filled
+		// as if it were closed.
 		virtual void FillPath(const Path& path, const Fill& fill) = 0;
 		virtual void FillPath(const RetainedPath& path, const Fill& fill) = 0;
 

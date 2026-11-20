@@ -4,9 +4,10 @@
 // It draws on a canvas it is handed and knows nothing else of the surface: whether the pixels
 // are in memory or on a GPU, and where they go afterwards, is the application's business.
 //
-// What it draws so far: paths stroked (solid, dashed, arcs) and filled with a colour. Symbols,
-// line styles, pattern fills and texts are counted and left out (NotDrawn); they come with the
-// neutral symbol model and the fonts.
+// What it draws so far: paths stroked (solid, dashed, arcs) and filled with a colour, and the
+// symbols of the catalogue (by the shared code of SymbolPicture, which draws them as paths).
+// Line styles, pattern fills and texts are counted and left out (NotDrawn).
+#include "../GISLibrary/DisplayListPainter.h"
 #include "../GISLibrary/IRenderer.h"
 
 #include "include/core/SkMatrix.h"
@@ -16,12 +17,24 @@ class SkPath;
 
 namespace s100::render
 {
+	class SymbolLibrary;
+
+	// What the backend draws with besides the canvas. The application owns what it points to
+	// and keeps it for as long as it draws.
+	struct SkiaResources
+	{
+		// The symbols of the portrayal catalogue; without them no symbol is drawn.
+		SymbolLibrary* symbols = nullptr;
+		// The colours of the palette in use, for the symbols.
+		ColorLookup color;
+	};
+
 	class SkiaRenderer final : public IRenderer
 	{
 	public:
 		// The canvas outlives the renderer. Its matrix is taken as device pixels: the renderer
 		// draws under that matrix and leaves it as it found it.
-		explicit SkiaRenderer(SkCanvas& canvas);
+		explicit SkiaRenderer(SkCanvas& canvas, SkiaResources resources = {});
 
 		const void* Backend() const override;
 
@@ -56,6 +69,7 @@ namespace s100::render
 		void Fill_(const SkPath& path, const Fill& fill);
 
 		SkCanvas& canvas;
+		SkiaResources resources;
 		SkMatrix matrix;   // the transform of the painter, onto device pixels
 		Omitted omitted;
 	};
