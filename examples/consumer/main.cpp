@@ -32,6 +32,7 @@
 #ifdef OPENS100_CONSUMER_HAS_SKIA
 #include <GISLibrary/ColorPalette.h>
 #include <GISLibrary/SymbolPicture.h>
+#include <RenderSkia/SkiaFonts.h>
 #include <RenderSkia/SkiaImage.h>
 #include <RenderSkia/SkiaRenderer.h>
 #endif
@@ -308,12 +309,13 @@ namespace
 #include <iostream>
 #include <set>
 #include <string>
+#include <vector>
 
 int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [--png <directory>] [dataset ...]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [--png <directory>] [--font <file>]... [dataset ...]\n";
 		return 2;
 	}
 
@@ -404,8 +406,11 @@ int main(int argc, char** argv)
 
 		// --json <directory>: the display list of each dataset as a JSON file there.
 		// --png <directory>: a picture of each dataset there (a package with a render backend).
+		// --font <file>: a font to write the texts of the picture in; the first is the display
+		// font, the later ones are searched for the characters it lacks. With none, no text.
 		const char* jsonDirectory = nullptr;
 		const char* pngDirectory = nullptr;
+		std::vector<std::string> fontFiles;
 		int firstDataset = 3;
 		while (firstDataset + 1 < argc)
 		{
@@ -418,6 +423,10 @@ int main(int argc, char** argv)
 			{
 				pngDirectory = argv[firstDataset + 1];
 			}
+			else if (option == "--font")
+			{
+				fontFiles.push_back(argv[firstDataset + 1]);
+			}
 			else
 			{
 				break;
@@ -426,6 +435,15 @@ int main(int argc, char** argv)
 		}
 #ifdef OPENS100_CONSUMER_HAS_SKIA
 		s100::render::SymbolLibrary symbols(pc);
+		s100::render::SkiaFonts fonts;
+		for (const std::string& file : fontFiles)
+		{
+			if (!fonts.Add(std::filesystem::path(file)))
+			{
+				std::cerr << "cannot read the font " << file << "\n";
+				return 1;
+			}
+		}
 		s100::render::ColorPalette palette;
 		if (pngDirectory && !palette.Read(pc))
 		{
@@ -543,7 +561,7 @@ int main(int argc, char** argv)
 					return 1;
 				}
 				const s100::render::ColorLookup color = [&palette](const std::wstring& token) { return palette.Color(token); };
-				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, color });
+				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, color, &fonts });
 				s100::render::DisplayListPainter picture(skia, scaler, color);
 				for (const int priority : priorities)
 				{

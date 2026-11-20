@@ -6,6 +6,7 @@
 #include "include/core/SkPixmap.h"
 #include "include/core/SkStream.h"
 #include "include/core/SkSurface.h"
+#include "include/core/SkSurfaceProps.h"
 #include "include/encode/SkPngEncoder.h"
 
 #include <fstream>
@@ -15,7 +16,10 @@ namespace s100::render
 {
 	SkiaImage::SkiaImage(int width, int height, const GISLibrary::ColorF& background)
 	{
-		surface = SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height, nullptr));
+		// Texts at full contrast: thin strokes of small glyphs come out as dark as a display
+		// with DirectWrite shows them, not as a grey haze.
+		const SkSurfaceProps props(0, kUnknown_SkPixelGeometry, SkSurfaceProps::kMaxContrastInclusive, 2.2f);
+		surface = SkSurfaces::Raster(SkImageInfo::MakeN32Premul(width, height, nullptr), &props);
 		if (surface)
 		{
 			surface->getCanvas()->clear(SkColor4f{ background.r, background.g, background.b, background.a });

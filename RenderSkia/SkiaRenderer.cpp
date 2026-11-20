@@ -1,4 +1,5 @@
 #include "SkiaRenderer.h"
+#include "SkiaText.h"
 
 #include "../GISLibrary/SymbolPicture.h"
 
@@ -223,13 +224,37 @@ namespace s100::render
 		matrix = before;
 	}
 
-	SizeF SkiaRenderer::MeasureText(const std::string&, const TextFont&)
+	SizeF SkiaRenderer::MeasureText(const std::string& text, const TextFont& font)
 	{
-		return {};
+		if (!resources.fonts)
+		{
+			return {};
+		}
+		return LayOut(resources.fonts->Get(), text, font).size;
 	}
 
-	void SkiaRenderer::FillText(const std::string&, PointF, const TextFont&, const ColorF&)
+	void SkiaRenderer::FillText(const std::string& text, PointF topLeft, const TextFont& font, const ColorF& color)
 	{
-		omitted.texts++;
+		if (!resources.fonts || resources.fonts->Size() == 0)
+		{
+			omitted.texts++;
+			return;
+		}
+		const TextLine line = LayOut(resources.fonts->Get(), text, font);
+
+		SkPaint paint;
+		paint.setAntiAlias(true);
+		paint.setColor4f(ToSk(color), nullptr);
+
+		canvas.save();
+		canvas.concat(matrix);
+		float x = topLeft.x;
+		for (const TextRun& run : line.runs)
+		{
+			canvas.drawSimpleText(run.text.data(), run.text.size(), SkTextEncoding::kUTF8, x, topLeft.y + line.ascent,
+				run.font, paint);
+			x += run.advance;
+		}
+		canvas.restore();
 	}
 }

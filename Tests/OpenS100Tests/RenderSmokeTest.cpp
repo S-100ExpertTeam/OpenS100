@@ -451,7 +451,7 @@ namespace
 	class PathsOnly final : public s100::render::IRenderer
 	{
 	public:
-		PathsOnly(s100::render::IRenderer& inner, bool symbols) : inner(inner), symbols(symbols)
+		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts) : inner(inner), symbols(symbols), texts(texts)
 		{
 		}
 
@@ -490,18 +490,29 @@ namespace
 				inner.DrawSymbol(reference, at, rotationDegrees, scale);
 			}
 		}
-		s100::render::SizeF MeasureText(const std::string&, const s100::render::TextFont&) override { return {}; }
-		void FillText(const std::string&, s100::render::PointF, const s100::render::TextFont&, const s100::render::ColorF&) override {}
+		s100::render::SizeF MeasureText(const std::string& text, const s100::render::TextFont& font) override
+		{
+			return texts ? inner.MeasureText(text, font) : s100::render::SizeF{};
+		}
+		void FillText(const std::string& text, s100::render::PointF topLeft, const s100::render::TextFont& font,
+			const s100::render::ColorF& color) override
+		{
+			if (texts)
+			{
+				inner.FillText(text, topLeft, font, color);
+			}
+		}
 
 	private:
 		s100::render::IRenderer& inner;
 		bool symbols;   // the symbols too
+		bool texts;     // the texts too
 	};
 
 	// Draws `cell` fitted to the canvas as RenderCell does, but only its paths (PathsOnly), by
 	// the neutral frame (DrawingOrder) on the Direct2D renderer. The reference picture for a
 	// backend that draws paths only.
-	void RenderCellPaths(const std::filesystem::path& cell, bool symbols)
+	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts)
 	{
 		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
@@ -539,7 +550,7 @@ namespace
 			s100::render::SuppressSharedCurves(priorities, frame);
 
 			GISLibrary::D2DRenderer renderer(d2, pc);
-			PathsOnly paths(renderer, symbols);
+			PathsOnly paths(renderer, symbols, texts);
 			s100::render::DisplayListPainter painter(paths, scaler,
 				[pc](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
 			for (const int priority : priorities)
@@ -558,7 +569,7 @@ namespace
 
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
 // With S100_RENDER_PRIMITIVES=paths only the stroked and colour-filled paths are drawn; with
-// "paths,symbols" the symbols too.
+// "paths,symbols" the symbols too, with "paths,symbols,texts" the texts as well.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
 	char* value = nullptr;
@@ -579,10 +590,12 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 
 	bool pathsOnly = false;
 	bool withSymbols = false;
+	bool withTexts = false;
 	char* primitives = nullptr;
 	if (_dupenv_s(&primitives, &length, "S100_RENDER_PRIMITIVES") == 0 && primitives)
 	{
-		withSymbols = std::string(primitives) == "paths,symbols";
+		withTexts = std::string(primitives) == "paths,symbols,texts";
+		withSymbols = withTexts || std::string(primitives) == "paths,symbols";
 		pathsOnly = withSymbols || std::string(primitives) == "paths";
 		free(primitives);
 	}
@@ -601,7 +614,7 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
 		if (pathsOnly)
 		{
-			RenderCellPaths(cell, withSymbols);
+			RenderCellPaths(cell, withSymbols, withTexts);
 			continue;
 		}
 		std::size_t nonWhite = 0;
