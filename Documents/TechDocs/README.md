@@ -17,6 +17,6 @@ OpenS100 개발자용 기술 문서. 새 세션은 **DIRECTIVES → 로드맵 �
 
 | [2026-11-11-coverage-backport-plan.md](2026-11-11-coverage-backport-plan.md) | 커버리지 역이식: PC zip 설치, S-102 표시(PC의 Lua와 커버리지 래스터), 강화 안전등심선(ESC), 수위 보정(WLA). 웹 구현 요약, 모듈 설계, 작업 항목 CV-0~8 |
 | [2026-11-17-render-separation-design.md](2026-11-17-render-separation-design.md) | 그리기를 인스트럭션 모델 밖으로 빼는 설계: 인스트럭션은 데이터만, `IRenderer` 뒤의 D2D·Skia, 단계 R1~R6. 초안(결정 대기) |
-| [2026-11-19-r6-skia-backend-design.md](2026-11-19-r6-skia-backend-design.md) | R6 Skia 백엔드 설계: `IRenderer` 연산별 난이도, D2D 백엔드가 기대는 자원, vcpkg Skia 포트, 중립 심벌 모델, 서체, 비교 방법, 단계 R6-0~R6f. R6-0·R6a~R6e 완료(Skia가 여섯 종류를 모두 그린다, Linux 포함). R6f 측정 완료: GCC로 빌드한 Skia는 CPU만으로 D2D보다 빠르고, MSVC로 빌드한 Skia는 5.6배 느리다. clang-cl로 빌드하면(포트에 다섯 줄) Windows에서도 D2D보다 빠르다(8.8). 사용자 확인 대기 |
+| [2026-11-19-r6-skia-backend-design.md](2026-11-19-r6-skia-backend-design.md) | R6 Skia 백엔드 설계: `IRenderer` 연산별 난이도, D2D 백엔드가 기대는 자원, vcpkg Skia 포트, 중립 심벌 모델, 서체, 비교 방법, 단계 R6-0~R6f. R6-0·R6a~R6e 완료(Skia가 여섯 종류를 모두 그린다, Linux 포함). R6f 측정 완료: GCC로 빌드한 Skia는 CPU만으로 D2D보다 빠르고, MSVC로 빌드한 Skia는 5.6배 느리다. clang-cl로 빌드하면 Windows에서도 D2D보다 빠르다(8.8) — 그렇게 빌드하는 Skia 오버레이 포트를 `ports/skia`에 두었다. 그림에 대한 사용자 확인 대기 |
 
 기존 문서: 상위 `../Functions/`(기능 설명), `../../BUILD.md`, `../../CONVENTIONS.md`, `../../DOXYGEN.md`.

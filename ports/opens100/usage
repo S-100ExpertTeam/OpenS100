@@ -38,6 +38,10 @@ with PNG output is included:
     #include <RenderSkia/SkiaFonts.h>
     #include <RenderSkia/SkiaImage.h>
 
+On Windows, Skia built by MSVC draws on the CPU about six times slower than Skia built by
+clang-cl. The overlay port "skia" next to this port (ports/skia of the OpenS100 repository)
+builds it with clang-cl; vcpkg's own skia port uses MSVC.
+
 The same instructions as JSON text, identical on every platform (to compare two builds or
 to feed another renderer):
 

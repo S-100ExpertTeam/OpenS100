@@ -87,6 +87,10 @@ The viewer of the Visual Studio solution draws with Direct2D. The portable rende
 (`render-skia`) draws every kind of instruction on Windows and Linux; its pictures are being
 compared with the viewer's before the viewer moves to it.
 
+`ports/` also carries a copy of vcpkg's `skia` port that compiles Skia with clang-cl on Windows
+x64 ([ports/skia](ports/skia/README.md)): Skia built by MSVC draws on the CPU about six times
+slower. Pointing `overlay-ports` at `ports/` is enough to get it; vcpkg fetches LLVM itself.
+
 ## What it supports
 
 OpenS100 is catalogue-driven: a product specification is supported through its feature catalogue and
