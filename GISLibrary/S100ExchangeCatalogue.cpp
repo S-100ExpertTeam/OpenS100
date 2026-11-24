@@ -6,7 +6,9 @@
 #include <filesystem>
 #include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
-#include "D2DGeometryCache.h"
+#include "D2DRenderer.h"
+#include "IRenderer.h"
+#include "SkiaViewFrame.h"
 #include "GISLibrary.h"
 #include "Inventory.h"
 #include "S100Utilities.h"
@@ -234,6 +236,27 @@ void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*off
     D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 }
 
+namespace
+{
+    // The largest font from `largest` down to `smallest`, a pixel at a time, in which a line is
+    // no wider and no taller than a box; 0 if none is.
+    float FittingFontSize(s100::render::IRenderer& renderer, const std::string& text, float largest, float smallest,
+        float width, float height)
+    {
+        for (float size = largest; size >= smallest; size -= 1.0f)
+        {
+            s100::render::TextFont font;
+            font.size = size;
+            const s100::render::SizeF box = renderer.MeasureText(text, font);
+            if (box.width <= width && box.height <= height)
+            {
+                return size;
+            }
+        }
+        return 0.0f;
+    }
+}
+
 void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 {
     std::vector<std::shared_ptr<InventoryItem>> items;
@@ -242,328 +265,123 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
     m_pLayerManager->Draw(hDC, offset);
 
-
-    D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-    D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
-
-    auto pRenderTarget = D2->pRT;
-
-    pRenderTarget->BeginDraw();
-
-    // 현재 스케일에 맞는 아이템만 처리
-    for (const auto& item : items)
+    // The overlay is a frame of its own, by the backend the viewer draws with.
+    if (GISLibrary::DrawsWithSkia())
     {
-        // items에 있는 파일명과 일치하는 DatasetDiscoveryMetadata 찾기
-        for (int i = 0; i < m_DataPtr->DatasetDiscoveryMetadata.size(); i++)
+        auto& frame = GISLibrary::SkiaViewFrame::Shared();
+        if (frame.Begin(*scaler))
         {
-            auto& ddm = m_DataPtr->DatasetDiscoveryMetadata[i];
-            const std::wstring fixedFileName = FixFileName(ddm.FileName);
-                
-            if (item->strFilePath != fixedFileName)
-                continue;
-
-            if (std::string::npos != ddm.productSpecification->ProductIdentifier.find("101"))
+            if (auto* renderer = frame.Renderer(nullptr))
             {
-                auto brush = D2->pBrush;
-
-                auto object = new GM::Surface();
-                auto curve = new GM::Curve();
-
-                auto bb = ddm.BoundingBox;
-
-                double lon = bb->WestBoundLongitude;
-                double lat = bb->NorthBoundLatitude;
-                curve->Add(lon, lat);
-
-                lon = bb->EastBoundLongitude;
-                lat = bb->NorthBoundLatitude;
-                curve->Add(lon, lat);
-
-                lon = bb->EastBoundLongitude;
-                lat = bb->SouthBoundLatitude;
-                curve->Add(lon, lat);
-
-                lon = bb->WestBoundLongitude;
-                lat = bb->SouthBoundLatitude;
-                curve->Add(lon, lat);
-
-                object->SetExteriorRing(curve);
-
-                S10XGML* cls = new S10XGML();
-                auto sSurface = cls->SurfaceToSSurface(object);
-                brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-                pRenderTarget->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
-                pRenderTarget->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, D2->Factory()), brush, 1.0, D2->SolidStrokeStyle());
-
-                delete object;
-                delete cls;
-                delete curve;
-                delete sSurface;
-
-                D2D1_POINT_2F ptTopLeft;
-                D2D1_POINT_2F ptBottomRight;
-                ptTopLeft.x = bb->WestBoundLongitude;
-                ptTopLeft.y = bb->NorthBoundLatitude;
-                ptBottomRight.x = bb->EastBoundLongitude;
-                ptBottomRight.y = bb->SouthBoundLatitude;
-
-                projection(ptTopLeft.x, ptTopLeft.y);
-                projection(ptBottomRight.x, ptBottomRight.y);
-
-                scaler->WorldToDevice_F(ptTopLeft.x, ptTopLeft.y, &ptTopLeft.x, &ptTopLeft.y);
-                scaler->WorldToDevice_F(ptBottomRight.x, ptBottomRight.y, &ptBottomRight.x, &ptBottomRight.y);
-
-                // 스크린 좌표에서의 사각형 크기 계산
-                float rectWidth = abs(ptBottomRight.x - ptTopLeft.x);
-                float rectHeight = abs(ptBottomRight.y - ptTopLeft.y);
-
-                const std::wstring fileName = L"FileName : " + s100::text::ToWide(ddm.FileName);
-
-                // 사각형 크기 기반으로 폰트 크기 계산 (한 줄로 들어오도록)
-                float fontSize = 12.0f;
-                IDWriteTextFormat* dynamicTextFormat = nullptr;
-                IDWriteTextLayout* textLayout = nullptr;
-                bool canDrawText = false;
-                    
-                // 최대 폰트 크기를 사각형 높이의 30%로 제한
-                float maxFontSize = min(50.0f, rectHeight * 0.3f);
-                float minFontSize = 10.0f;
-                    
-                // 폰트 크기를 사각형에 맞춰 조정 (한 줄로 표시되도록)
-                for (fontSize = maxFontSize; fontSize >= minFontSize; fontSize -= 1.0f)
-                {
-                    if (dynamicTextFormat) dynamicTextFormat->Release();
-                        
-                    D2->WriteFactory()->CreateTextFormat(
-                        L"Arial",
-                        nullptr,
-                        DWRITE_FONT_WEIGHT_NORMAL,
-                        DWRITE_FONT_STYLE_NORMAL,
-                        DWRITE_FONT_STRETCH_NORMAL,
-                        fontSize,
-                        L"ko-kr",
-                        &dynamicTextFormat
-                    );
-
-                    if (textLayout) textLayout->Release();
-                    D2->WriteFactory()->CreateTextLayout(
-                        fileName.c_str(),
-                        static_cast<UINT32>(fileName.size()),
-                        dynamicTextFormat,
-                        rectWidth * 0.95f,  // 가로 여백 5%
-                        rectHeight,
-                        &textLayout
-                    );
-
-                    DWRITE_TEXT_METRICS textMetrics;
-                    textLayout->GetMetrics(&textMetrics);
-
-                    // 한 줄로 들어오고 사각형 안에 들어오며 폰트 크기가 50 이하인지 확인
-                    if (textMetrics.lineCount <= 1 && 
-                        textMetrics.width <= rectWidth * 0.95f && 
-                        textMetrics.height <= rectHeight * 0.3f &&
-                        fontSize <= 50.0f)
-                    {
-                        canDrawText = true;
-                        break;
-                    }
-                }
-
-                // 텍스트 그리기 (스크린 좌표 기반, 한 줄에 들어올 때만)
-                if (canDrawText)
-                {
-                    brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-                    brush->SetOpacity(1.0f);
-                    pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
-                    // 좌상단 좌표 계산
-                    float left = min(ptTopLeft.x, ptBottomRight.x);
-                    float top = min(ptTopLeft.y, ptBottomRight.y);
-                    float right = max(ptTopLeft.x, ptBottomRight.x);
-
-                    // 텍스트를 좌상단에 표시하기 위한 영역 설정
-                    D2D1_RECT_F textRect = D2D1::RectF(
-                        left,
-                        top,
-                        right,
-                        top + fontSize * 1.2f  // 폰트 크기에 맞춰 높이 설정
-                    );
-
-                    if (dynamicTextFormat)
-                    {
-                        dynamicTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);  // 왼쪽 정렬
-                        dynamicTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);  // 위쪽 정렬
-                        pRenderTarget->DrawTextW(fileName.c_str(), static_cast<UINT32>(fileName.size()), dynamicTextFormat, textRect, brush);
-                        dynamicTextFormat->Release();
-                    }
-
-                    if (textLayout) textLayout->Release();
-
-                    //Datacorverage
-                    // 텍스트 간 간격 설정 (파일명 폰트 크기의 20%)
-                    float textSpacing = fontSize * 0.2f;
-                    float currentY = textRect.bottom + textSpacing;
-                    
-                for (int j = 0; j < ddm.dataCoverage.size(); j++)
-                {
-                    D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
-
-                    auto dc = ddm.dataCoverage[j];
-                    auto _object = new GM::Surface();
-
-                    bool reverse = false;
-
-                    if (dc.BoundingPolygon.Polygon.srsName.find("4326") != std::string::npos)
-                        reverse = true;
-
-                    for (int geoms = 0; geoms < dc.BoundingPolygon.Polygon.Geom.size(); geoms++)
-                    {
-                        auto _curve = new GM::Curve();
-
-                        auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dc.BoundingPolygon.Polygon.Geom[geoms]), " ");
-                        int posCnt = strPosList.size();
-
-                        if (posCnt < 4 && posCnt % 2 != 0)
-                            break;
-
-                        for (int _i = 0; _i < posCnt; _i += 2)
-                        {
-                            double _lon = cpp_util::stod(strPosList.at(_i));
-                            double _lat = cpp_util::stod(strPosList.at(_i + 1));
-
-                            if (reverse)
-                                _curve->Add(_lat, _lon);
-                            else
-                                _curve->Add(_lon, _lat);
-                        }
-                        _object->SetExteriorRing(_curve);
-
-                        delete _curve;
-                    }
-
-                    S10XGML* _cls = new S10XGML();
-                    auto _sSurface = _cls->SurfaceToSSurface(_object);
-
-                    delete _object;
-                    delete _cls;
-                    delete _sSurface;
-
-                    std::wstring optimumDisplayScale;
-                    if (dc.OptimumDisplayScale != nullptr) {
-                                                optimumDisplayScale = L"Opt Scale: " + std::to_wstring(*dc.OptimumDisplayScale);
-                    }
-                    else {
-                        optimumDisplayScale = L"Opt Scale: -";
-                    }
-                    
-                    std::wstring minimumDisplayScale;
-                    if (dc.MinimumDisplayScale != nullptr) {
-                                                minimumDisplayScale = L"Min Scale: " + std::to_wstring(*dc.MinimumDisplayScale);
-                    }
-                    else {
-                        minimumDisplayScale = L"Min Scale: -";
-                    }
-
-                    // 스케일 정보를 사각형 크기에 맞게 동적으로 계산 (파일명의 60% 크기)
-                    float scaleFontSize = fontSize * 0.6f;
-                    float maxScaleFontSize = 30.0f;  // 스케일 정보는 최대 30
-                    float minScaleFontSize = 10.0f;
-                        
-                    if (scaleFontSize > maxScaleFontSize) scaleFontSize = maxScaleFontSize;
-                    if (scaleFontSize < minScaleFontSize) scaleFontSize = minScaleFontSize;
-                        
-                    IDWriteTextFormat* scaleTextFormat = nullptr;
-                    IDWriteTextLayout* scaleLayout = nullptr;
-                    bool canDrawScale = false;
-
-                    // 스케일 정보 폰트 크기 조정 (한 줄로 들어오도록)
-                    const std::wstring& longerText = optimumDisplayScale.size() > minimumDisplayScale.size() ? optimumDisplayScale : minimumDisplayScale;
-                        
-                    for (float testSize = scaleFontSize; testSize >= minScaleFontSize; testSize -= 1.0f)
-                    {
-                        if (scaleTextFormat) scaleTextFormat->Release();
-                            
-                        D2->WriteFactory()->CreateTextFormat(
-                            L"Arial",
-                            nullptr,
-                            DWRITE_FONT_WEIGHT_NORMAL,
-                            DWRITE_FONT_STYLE_NORMAL,
-                            DWRITE_FONT_STRETCH_NORMAL,
-                            testSize,
-                            L"ko-kr",
-                            &scaleTextFormat
-                        );
-
-                        if (scaleLayout) scaleLayout->Release();
-                        D2->WriteFactory()->CreateTextLayout(
-                            longerText.c_str(),
-                            static_cast<UINT32>(longerText.size()),
-                            scaleTextFormat,
-                            rectWidth * 0.95f,
-                            rectHeight,
-                            &scaleLayout
-                        );
-
-                        DWRITE_TEXT_METRICS scaleMetrics;
-                        scaleLayout->GetMetrics(&scaleMetrics);
-
-                        if (scaleMetrics.lineCount <= 1 && 
-                            scaleMetrics.width <= rectWidth * 0.95f &&
-                            testSize <= maxScaleFontSize)
-                        {
-                            scaleFontSize = testSize;
-                            canDrawScale = true;
-                            break;
-                        }
-                    }
-
-                    if (scaleLayout) {
-                        scaleLayout->Release();
-                    }
-
-                    if (canDrawScale && scaleTextFormat)
-                    {
-                        scaleTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-                        scaleTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
-
-                        brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-                        brush->SetOpacity(1);
-                        pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
-                        D2D1_RECT_F maxScaleRect = D2D1::RectF(
-                            left,
-                            currentY,
-                            right,
-                            currentY + scaleFontSize * 1.2f
-                        );
-                            
-                        pRenderTarget->DrawTextW(optimumDisplayScale.c_str(), static_cast<UINT32>(optimumDisplayScale.size()), scaleTextFormat, maxScaleRect, brush);
-                        currentY += scaleFontSize * 1.2f + textSpacing;
-
-                        D2D1_RECT_F minScaleRect = D2D1::RectF(
-                            left,
-                            currentY,
-                            right,
-                            currentY + scaleFontSize * 1.2f
-                        );
-                            
-                        pRenderTarget->DrawTextW(minimumDisplayScale.c_str(), static_cast<UINT32>(minimumDisplayScale.size()), scaleTextFormat, minScaleRect, brush);
-                        currentY += scaleFontSize * 1.2f + textSpacing;  // 다음 dataCoverage를 위해 Y 위치 증가
-                    }
-                        
-                    if (scaleTextFormat) scaleTextFormat->Release();
-                }
-                } // canDrawText
-                else
-                {
-                    // 텍스트를 그릴 수 없으면 리소스 정리
-                    if (dynamicTextFormat) dynamicTextFormat->Release();
-                    if (textLayout) textLayout->Release();
-                }
+                DrawOverlay(*renderer, *scaler, items);
             }
-            break; // 일치하는 항목 찾았으므로 내부 루프 종료
+            frame.End(hDC);
         }
+        return;
     }
-    pRenderTarget->EndDraw();
+
+    auto rt = D2 ? D2->pRT : nullptr;
+    if (!rt)
+    {
+        return;
+    }
+    const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
+    if (FAILED(rt->BindDC(hDC, &screen)))
+    {
+        return;
+    }
+    rt->BeginDraw();
+    {
+        GISLibrary::D2DRenderer renderer(D2, nullptr);
+        DrawOverlay(renderer, *scaler, items);
+    }
+    rt->SetTransform(D2D1::Matrix3x2F::Identity());
+    rt->EndDraw();
 }
 
+// The box of every S-101 dataset shown, with its file name and the scales of its data
+// coverages inside the box when they fit on a line.
+void S100ExchangeCatalogue::DrawOverlay(s100::render::IRenderer& renderer, Scaler& scaler,
+    const std::vector<std::shared_ptr<InventoryItem>>& items)
+{
+    const s100::render::ColorF red{ 1.0f, 0.0f, 0.0f, 1.0f };
+    const s100::render::ColorF black{ 0.0f, 0.0f, 0.0f, 1.0f };
+    renderer.SetTransform({});
+
+    for (const auto& item : items)
+    {
+        for (auto& ddm : m_DataPtr->DatasetDiscoveryMetadata)
+        {
+            if (item->strFilePath != FixFileName(ddm.FileName))
+            {
+                continue;
+            }
+            if (std::string::npos == ddm.productSpecification->ProductIdentifier.find("101"))
+            {
+                break;
+            }
+
+            // The bounding box on the screen.
+            const auto bb = ddm.BoundingBox;
+            const auto onScreen = [&scaler](double lon, double lat) {
+                projection(lon, lat);
+                s100::render::PointF point;
+                scaler.WorldToDevice_F(lon, lat, &point.x, &point.y);
+                return point;
+            };
+            const s100::render::PointF topLeft = onScreen(bb->WestBoundLongitude, bb->NorthBoundLatitude);
+            const s100::render::PointF bottomRight = onScreen(bb->EastBoundLongitude, bb->SouthBoundLatitude);
+            s100::render::PathFigure box;
+            box.start = topLeft;
+            box.lines = { onScreen(bb->EastBoundLongitude, bb->NorthBoundLatitude), bottomRight,
+                onScreen(bb->WestBoundLongitude, bb->SouthBoundLatitude) };
+            box.closed = true;
+            s100::render::Path path;
+            path.figures.push_back(std::move(box));
+            s100::render::Stroke stroke;
+            stroke.width = 1.0f;
+            renderer.StrokePath(path, red, stroke);
+
+            const float rectWidth = std::fabs(bottomRight.x - topLeft.x);
+            const float rectHeight = std::fabs(bottomRight.y - topLeft.y);
+            const float left = (std::min)(topLeft.x, bottomRight.x);
+            const float top = (std::min)(topLeft.y, bottomRight.y);
+
+            // The file name at the top left, as large as fits on one line: at most 50 pixels
+            // and three tenths of the height of the box.
+            const std::string fileName = "FileName : " + std::string(ddm.FileName);
+            const float fontSize = FittingFontSize(renderer, fileName, (std::min)(50.0f, rectHeight * 0.3f), 10.0f,
+                rectWidth * 0.95f, rectHeight * 0.3f);
+            if (fontSize <= 0.0f)
+            {
+                break;
+            }
+            s100::render::TextFont font;
+            font.size = fontSize;
+            renderer.FillText(fileName, { left, top }, font, black);
+
+            // Under it, the scales of each data coverage at six tenths of that size.
+            const float textSpacing = fontSize * 0.2f;
+            float currentY = top + fontSize * 1.2f + textSpacing;
+            for (const auto& dc : ddm.dataCoverage)
+            {
+                const std::string optimum = "Opt Scale: " + (dc.OptimumDisplayScale ? std::to_string(*dc.OptimumDisplayScale) : std::string("-"));
+                const std::string minimum = "Min Scale: " + (dc.MinimumDisplayScale ? std::to_string(*dc.MinimumDisplayScale) : std::string("-"));
+                const std::string& longer = optimum.size() > minimum.size() ? optimum : minimum;
+                const float scaleSize = FittingFontSize(renderer, longer, std::clamp(fontSize * 0.6f, 10.0f, 30.0f), 10.0f,
+                    rectWidth * 0.95f, rectHeight);
+                if (scaleSize <= 0.0f)
+                {
+                    continue;
+                }
+                s100::render::TextFont scaleFont;
+                scaleFont.size = scaleSize;
+                renderer.FillText(optimum, { left, currentY }, scaleFont, black);
+                currentY += scaleSize * 1.2f + textSpacing;
+                renderer.FillText(minimum, { left, currentY }, scaleFont, black);
+                currentY += scaleSize * 1.2f + textSpacing;
+            }
+            break;   // the dataset of the item is found
+        }
+    }
+}

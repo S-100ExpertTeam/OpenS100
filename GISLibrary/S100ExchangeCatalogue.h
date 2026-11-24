@@ -9,6 +9,8 @@
 
 #include "../SystemDatabase/DatasetSelection.h"
 
+#include "IRenderer.h"
+
 #include <memory>
 #include <span>
 #include <utility>
@@ -53,6 +55,8 @@ public:
 	void Draw(HDC& hDC, Scaler* scaler, double offset) override;
 
 	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
+	// The boxes of the datasets shown, their file names and scales, in device pixels.
+	void DrawOverlay(s100::render::IRenderer& renderer, Scaler& scaler, const std::vector<std::shared_ptr<InventoryItem>>& items);
 	
 	std::wstring FixFileName(const std::string& str);
 
