@@ -461,6 +461,35 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 	}
 }
 
+// The background map of the world (a shapefile) is drawn: land white with a black edge.
+TEST(RenderSmoke, DrawsTheBackgroundMapOfTheWorld)
+{
+	const auto world = testpaths::repoRoot() / "ProgramData" / "World" / "World.shp";
+	if (!std::filesystem::exists(world))
+	{
+		GTEST_SKIP() << "no world map";
+	}
+	CGISLibraryApp gis;
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddBackgroundLayer(world.wstring()));
+	MBR eastAsia(100.0, 20.0, 150.0, 50.0);   // degrees
+	projection(eastAsia);
+	gis.SetMap(eastAsia);
+
+	MemoryCanvas canvas(kWidth, kHeight);
+	ASSERT_TRUE(canvas.valid());
+	gis.Draw(canvas.dc());
+	::GdiFlush();
+	const auto png = OutputDirectory() / "background-world.png";
+	EXPECT_TRUE(canvas.SavePng(png)) << png.string();
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	canvas.Measure(nonWhite, colours);
+	std::cout << "[ background ] " << png.string() << "  non-white pixels: " << nonWhite << std::endl;
+	EXPECT_GT(nonWhite, 1000u) << "the coastlines are not drawn";
+}
+
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {

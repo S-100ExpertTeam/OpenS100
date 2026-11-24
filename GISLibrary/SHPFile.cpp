@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "SHPFile.h"
 #include "BinaryFile.h"
-#include "GdiGeometryRenderer.h"
+#include "GeometryPainter.h"
+#include "SkiaViewFrame.h"
 
 SHPFile::SHPFile(void) : SpatialObject()
 {
@@ -265,9 +266,19 @@ void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 	}
 	offset *= ex;
 
-	for (unsigned int i = 0; i < m_nRecords; i++) {
-		GISLibrary::GdiRender::Draw(*m_pSHPObject[i], hDC, scaler, offset);
+	// A layer of its own on the device context.
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (!scaler || !frame.Begin(*scaler))
+	{
+		return;
 	}
+	if (auto* renderer = frame.Renderer(nullptr))
+	{
+		for (unsigned int i = 0; i < m_nRecords; i++) {
+			GISLibrary::DrawGeometry(*renderer, *m_pSHPObject[i], *scaler, offset);
+		}
+	}
+	frame.End(hDC);
 }
 
 //transforms Big Endian and Little Endian into each other.

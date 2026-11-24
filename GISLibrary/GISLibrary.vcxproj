@@ -647,7 +647,7 @@
     <ClCompile Include="SCommonFuction.cpp" />
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
-    <ClCompile Include="GdiGeometryRenderer.cpp" />
+    <ClCompile Include="GeometryPainter.cpp" />
     <ClCompile Include="PathUtil.cpp" />
     <ClCompile Include="PortrayalRenderCache.cpp" />
     <ClCompile Include="SCurve.cpp" />
@@ -1043,7 +1043,7 @@
     <ClInclude Include="BinaryFile.h" />
     <ClInclude Include="BinaryWriter.h" />
     <ClInclude Include="RecordMap.h" />
-    <ClInclude Include="GdiGeometryRenderer.h" />
+    <ClInclude Include="GeometryPainter.h" />
     <ClInclude Include="PathUtil.h" />
     <ClInclude Include="TextCompare.h" />
     <ClInclude Include="PortrayalRenderCache.h" />

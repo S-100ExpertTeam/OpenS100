@@ -32,7 +32,7 @@ set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
 # Draws with Direct2D or GDI, or builds their resources. In no package target until a portable
 # render backend replaces them (Documents/TechDocs/2026-11-17-render-separation-design.md).
 set(OPENS100_GISLIBRARY_DISPLAY_SOURCES
-    CoverageDataset ExchangeCatalogue GISLibrary GdiGeometryRenderer Inventory InventoryItem
+    CoverageDataset ExchangeCatalogue GISLibrary GeometryPainter Inventory InventoryItem
     LayerManager LayerOpen PortrayalRenderCache S100EditRender S100ExchangeCatalogue SkiaViewFrame FeatureHighlight
     S100LayerPortrayal S100Utilities SHPFile)
 
