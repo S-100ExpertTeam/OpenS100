@@ -382,7 +382,7 @@ namespace s100::render
 	}
 
 	void DrawSymbolPicture(IRenderer& renderer, const SymbolPicture& picture, PointF at, float rotationDegrees, float scale,
-		const ColorLookup& color)
+		const ColorLookup& color, float strokeScale)
 	{
 		renderer.SetTransform({ TransformStep::Scale(scale), TransformStep::Rotate(rotationDegrees),
 			TransformStep::Translate(at.x, at.y) });
@@ -412,7 +412,7 @@ namespace s100::render
 			else if (shape.strokeWidth > 0.0f)
 			{
 				Stroke stroke;
-				stroke.width = SymbolStrokePixels(shape.strokeWidth);
+				stroke.width = SymbolStrokePixels(shape.strokeWidth) * strokeScale;
 				renderer.StrokePath(path, ink, stroke);
 			}
 		}

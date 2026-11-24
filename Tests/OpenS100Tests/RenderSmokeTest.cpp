@@ -502,6 +502,15 @@ namespace
 				inner.FillPath(path, fill);
 			}
 		}
+		std::unique_ptr<s100::render::RetainedImage> RetainImage(const std::uint8_t* pixels, int width, int height) override
+		{
+			return inner.RetainImage(pixels, width, height);
+		}
+		void DrawImage(const s100::render::RetainedImage& image, const s100::render::ImageRect& source,
+			const s100::render::ImageRect& target) override
+		{
+			inner.DrawImage(image, source, target);
+		}
 		void PushClip(const s100::render::Path& path) override { inner.PushClip(path); }
 		void PopClip() override { inner.PopClip(); }
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,

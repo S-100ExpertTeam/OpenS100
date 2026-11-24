@@ -13,6 +13,11 @@
 
 #include <memory>
 
+namespace s100::render
+{
+	class IRenderer;
+}
+
 class DrawingSet;
 class PortrayalCatalogue;
 class Scaler;
@@ -40,6 +45,10 @@ namespace GISLibrary
 
 		// One drawing priority of a drawing set, with the colours and symbols of a catalogue.
 		void Paint(int priority, DrawingSet& drawingSet, PortrayalCatalogue* catalogue, Scaler& scaler, bool texts);
+
+		// The renderer of the frame in hand for what is drawn with a catalogue (none: no symbols).
+		// Null outside a frame.
+		s100::render::IRenderer* Renderer(PortrayalCatalogue* catalogue);
 
 		// Blends what was painted onto the device context, at the place of the view.
 		void End(HDC target);

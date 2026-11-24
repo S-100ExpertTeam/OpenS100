@@ -3,7 +3,11 @@
 #include "CoverageDataset.h"
 
 #include "D2D1Resources.h"
+#include "D2DRenderer.h"
 #include "D2DView.h"
+#include "DisplayListPainter.h"
+#include "SkiaViewFrame.h"
+#include "SymbolPicture.h"
 #include "GF_FeatureType.h"
 #include "Layer.h"
 #include "PathUtil.h"
@@ -132,7 +136,8 @@ namespace GISLibrary
 		// with latitude: in bands of rows, each short enough that its rows, drawn evenly spaced
 		// between its ends, are within a quarter of a pixel of their place. Drawn as one picture the
 		// rows in the middle of a large grid would be off by a good part of a cell.
-		void drawRowBands(ID2D1RenderTarget* rt, Scaler* scaler, const s100::coverage::CoverageRaster& raster, ID2D1Bitmap* bitmap)
+		void drawRowBands(s100::render::IRenderer& renderer, Scaler* scaler, const s100::coverage::CoverageRaster& raster,
+			const s100::render::RetainedImage& bitmap)
 		{
 			const auto& extent = raster.extent();
 			const int rows = raster.height();
@@ -140,7 +145,7 @@ namespace GISLibrary
 			{
 				return;
 			}
-			const float screenHeight = rt->GetSize().height;
+			const float screenHeight = static_cast<float>(scaler->GetScreenHeight());
 			// The screen position of the northern edge of a row (of the southern edge of the last).
 			const auto edge = [&](int row, float* x, double longitude) {
 				double worldX = longitude;
@@ -179,8 +184,8 @@ namespace GISLibrary
 						continue;
 					}
 				}
-				rt->DrawBitmap(bitmap, D2D1::RectF(left, band.top, right, band.bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
-					D2D1::RectF(0.0f, static_cast<float>(band.first), static_cast<float>(raster.width()), static_cast<float>(band.end)));
+				renderer.DrawImage(bitmap, { 0.0f, static_cast<float>(band.first), static_cast<float>(raster.width()), static_cast<float>(band.end) },
+					{ left, band.top, right, band.bottom });
 			}
 		}
 	}
@@ -589,10 +594,6 @@ namespace GISLibrary
 		registry().erase(this);
 		++suppressionVersion();
 		ReleaseImages();
-		for (ID2D1StrokeStyle* stroke : { s102BoundaryStroke_, wlaBoundaryStroke_ })
-		{
-			if (stroke) stroke->Release();
-		}
 	}
 
 	const s100::coverage::CoverageSource* CoverageDataset::Source() const noexcept
@@ -809,19 +810,11 @@ namespace GISLibrary
 
 	void CoverageDataset::ReleaseImages()
 	{
-		for (auto& [id, image] : images_)
-		{
-			if (image.bitmap)
-			{
-				image.bitmap->Release();
-				image.bitmap = nullptr;
-			}
-		}
 		images_.clear();
 		lines_.clear();
 	}
 
-	void CoverageDataset::DrawLines(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+	void CoverageDataset::DrawLines(s100::render::IRenderer& renderer, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
 		const s100::coverage::Values& depth, double fillValue)
 	{
 		const DepthSettings& depthSettings = settings();
@@ -843,19 +836,12 @@ namespace GISLibrary
 			lines.key = key;
 		}
 
-		auto* rt = d2->RenderTarget();
-		auto* brush = d2->SolidColorBrush();
-		if (!rt || !brush)
-		{
-			return;
-		}
-		// Millimetres at 96 device pixels per inch; Direct2D dashes are in stroke widths.
+		// Millimetres at 96 device pixels per inch; the dashes of a stroke are in stroke widths.
 		constexpr float pixelsPerMillimetre = 96.0f / 25.4f;
-		const RECT screen = D2DView::ScreenRECT(*scaler);
+		const auto screen = scaler->GetScreenRect();
 		const auto draw = [&](const s100::coverage::GridEdges& edges, const s100::coverage::S98LineStyle& style, const s100::coverage::Rgb& color,
-			ID2D1StrokeStyle* stroke) {
-			brush->SetColor(D2D1::ColorF(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, 1.0f));
-			const float width = static_cast<float>(style.width) * pixelsPerMillimetre;
+			bool dashed) {
+			s100::render::Path path;
 			for (std::size_t i = 0; i + 3 < edges.size(); i += 4)
 			{
 				double x1 = edges[i], y1 = edges[i + 1], x2 = edges[i + 2], y2 = edges[i + 3];
@@ -870,48 +856,61 @@ namespace GISLibrary
 				{
 					continue;
 				}
-				rt->DrawLine(D2D1::Point2F(sx1, sy1), D2D1::Point2F(sx2, sy2), brush, width, stroke);
+				s100::render::PathFigure edge;
+				edge.start = { sx1, sy1 };
+				edge.lines.push_back({ sx2, sy2 });
+				path.figures.push_back(std::move(edge));
 			}
+			if (path.figures.empty())
+			{
+				return;
+			}
+			s100::render::Stroke stroke;
+			stroke.width = static_cast<float>(style.width) * pixelsPerMillimetre;
+			stroke.flatCaps = true;
+			if (dashed)
+			{
+				for (const double length : style.dash) stroke.dashes.push_back(static_cast<float>(length / style.width));
+			}
+			renderer.SetTransform({});
+			renderer.StrokePath(path, { color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, 1.0f }, stroke);
 		};
 		const std::string palette = paletteName();
 		if (lines.lines.s102Boundary)
 		{
-			draw(*lines.lines.s102Boundary, s100::coverage::s102BoundaryStyle(), s100::coverage::depwlColor(palette),
-				DashedStroke(d2, s100::coverage::s102BoundaryStyle(), s102BoundaryStroke_));
+			draw(*lines.lines.s102Boundary, s100::coverage::s102BoundaryStyle(), s100::coverage::depwlColor(palette), true);
 		}
 		if (lines.lines.wlaBoundary)
 		{
-			draw(*lines.lines.wlaBoundary, s100::coverage::wlaBoundaryStyle(), s100::coverage::depwlColor(palette),
-				DashedStroke(d2, s100::coverage::wlaBoundaryStyle(), wlaBoundaryStroke_));
+			draw(*lines.lines.wlaBoundary, s100::coverage::wlaBoundaryStyle(), s100::coverage::depwlColor(palette), true);
 		}
 		if (lines.lines.safetyContour)
 		{
-			draw(*lines.lines.safetyContour, s100::coverage::safetyContourStyle(), ResolveColor(s100::coverage::safetyContourStyle().token), nullptr);
+			draw(*lines.lines.safetyContour, s100::coverage::safetyContourStyle(), ResolveColor(s100::coverage::safetyContourStyle().token), false);
 		}
-	}
-
-	ID2D1StrokeStyle* CoverageDataset::DashedStroke(D2D1Resources* d2, const s100::coverage::S98LineStyle& style, ID2D1StrokeStyle*& cache)
-	{
-		// Direct2D dashes are in stroke widths.
-		if (!cache && d2->Factory())
-		{
-			std::vector<float> dashes;
-			for (const double length : style.dash) dashes.push_back(static_cast<float>(length / style.width));
-			d2->Factory()->CreateStrokeStyle(D2D1::StrokeStyleProperties(D2D1_CAP_STYLE_FLAT, D2D1_CAP_STYLE_FLAT, D2D1_CAP_STYLE_FLAT,
-				D2D1_LINE_JOIN_MITER, 10.0f, D2D1_DASH_STYLE_CUSTOM, 0.0f), dashes.data(), static_cast<UINT32>(dashes.size()), &cache);
-		}
-		return cache;
 	}
 
 	void CoverageDataset::DrawCoverage(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
 	{
-		if (!raw_ || !d2 || !scaler || fillsByFeature_.empty())
+		if (!raw_ || !scaler || fillsByFeature_.empty())
 		{
 			return;
 		}
-		PrepareAdjustment();
-		const s100::coverage::CoverageSource* source = Source();
-		auto* rt = d2->RenderTarget();
+		if (DrawsWithSkia())
+		{
+			auto& frame = SkiaViewFrame::Shared();
+			if (frame.Begin(*scaler))
+			{
+				if (auto* renderer = frame.Renderer(pc_))
+				{
+					DrawCoverage(*renderer, *scaler);
+				}
+				frame.End(hDC);
+			}
+			return;
+		}
+
+		auto* rt = d2 ? d2->RenderTarget() : nullptr;
 		if (!rt)
 		{
 			return;
@@ -923,6 +922,27 @@ namespace GISLibrary
 		}
 		rt->BeginDraw();
 		rt->SetTransform(D2D1::Matrix3x2F::Identity());
+		{
+			D2DRenderer renderer(d2, pc_);
+			DrawCoverage(renderer, *scaler);
+		}
+		rt->SetTransform(D2D1::Matrix3x2F::Identity());
+		if (rt->EndDraw() == static_cast<HRESULT>(D2DERR_RECREATE_TARGET))
+		{
+			ReleaseImages();
+		}
+	}
+
+	void CoverageDataset::DrawCoverage(s100::render::IRenderer& renderer, Scaler& view)
+	{
+		if (!raw_ || fillsByFeature_.empty())
+		{
+			return;
+		}
+		Scaler* scaler = &view;
+		PrepareAdjustment();
+		const s100::coverage::CoverageSource* source = Source();
+		renderer.SetTransform({});
 
 		const auto& dataset = source->dataset();
 		const auto now = DisplayTime();
@@ -942,7 +962,7 @@ namespace GISLibrary
 			}
 			if (hasSymbols(fill.instruction))
 			{
-				DrawSymbols(d2, scaler, *feature, fill.instruction, *component, *timeIndex);
+				DrawSymbols(renderer, scaler, *feature, fill.instruction, *component, *timeIndex);
 				continue;
 			}
 			const std::string key = std::format("{}|{}|{}|{}", paletteName(), *timeIndex, source->revision(),
@@ -950,11 +970,7 @@ namespace GISLibrary
 			Image& image = images_[fill.featureId];
 			if (image.key != key || !image.raster)
 			{
-				if (image.bitmap)
-				{
-					image.bitmap->Release();
-					image.bitmap = nullptr;
-				}
+				image.bitmap.reset();
 				const auto values = source->readValues(feature->id, { .timeIndex = *timeIndex, .component = *component });
 				if (!values)
 				{
@@ -974,6 +990,11 @@ namespace GISLibrary
 			{
 				continue;
 			}
+			// A bitmap belongs to the backend that made it.
+			if (image.backend != renderer.Backend())
+			{
+				image.bitmap.reset();
+			}
 			if (!image.bitmap)
 			{
 				auto bgra = toPremultipliedBgra(raster.pixels());
@@ -992,11 +1013,12 @@ namespace GISLibrary
 						continue;
 					}
 				}
-				const D2D1_BITMAP_PROPERTIES properties = D2D1::BitmapProperties(
-					D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED));
-				if (FAILED(rt->CreateBitmap(D2D1::SizeU(width, height), bgra.data(), width * 4, properties, &image.bitmap)))
+				image.bitmap = renderer.RetainImage(reinterpret_cast<const std::uint8_t*>(bgra.data()), static_cast<int>(width), static_cast<int>(height));
+				image.backend = renderer.Backend();
+				image.bitmapWidth = static_cast<float>(width);
+				image.bitmapHeight = static_cast<float>(height);
+				if (!image.bitmap)
 				{
-					image.bitmap = nullptr;
 					continue;
 				}
 			}
@@ -1008,38 +1030,38 @@ namespace GISLibrary
 				float left = 0, top = 0, right = 0, bottom = 0;
 				scaler->WorldToDevice_F(image.worldWest, image.worldNorth, &left, &top);
 				scaler->WorldToDevice_F(image.worldEast, image.worldSouth, &right, &bottom);
-				rt->DrawBitmap(image.bitmap, D2D1::RectF(left, top, right, bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+				renderer.DrawImage(*image.bitmap, { 0.0f, 0.0f, image.bitmapWidth, image.bitmapHeight }, { left, top, right, bottom });
 			}
 			else
 			{
-				drawRowBands(rt, scaler, raster, image.bitmap);
+				drawRowBands(renderer, scaler, raster, *image.bitmap);
 			}
 
 			if (fill.instruction.attributeCode == "depth")
 			{
-				DrawLines(d2, scaler, *feature, source->readValues(feature->id, { .timeIndex = *timeIndex, .component = *component }),
+				DrawLines(renderer, scaler, *feature, source->readValues(feature->id, { .timeIndex = *timeIndex, .component = *component }),
 					feature->components[*component].fillValue);
 			}
 		}
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
-		if (rt->EndDraw() == static_cast<HRESULT>(D2DERR_RECREATE_TARGET))
-		{
-			ReleaseImages();
-		}
+		renderer.SetTransform({});
 	}
 
-	void CoverageDataset::DrawSymbols(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+	void CoverageDataset::DrawSymbols(s100::render::IRenderer& renderer, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
 		const s100::coverage::CoverageInstruction& instruction, std::size_t component, std::size_t timeIndex)
 	{
 		namespace cov = s100::coverage;
-		auto* manager = pc_ ? GISLibrary::PortrayalRender::Caches(pc_) : nullptr;
-		auto* profile = manager ? manager->GetS100ColorProfile() : nullptr;
-		auto* rt = d2->RenderTarget();
-		auto* brush = d2->SolidColorBrush();
-		if (!manager || !profile || !rt || !brush)
+		if (!pc_)
 		{
 			return;
 		}
+		if (!symbols_ || symbolsOf_ != pc_)
+		{
+			symbols_ = std::make_unique<s100::render::SymbolLibrary>(*pc_);
+			symbolsOf_ = pc_;
+		}
+		const s100::render::ColorLookup color = [catalogue = pc_](const std::wstring& token) {
+			return GISLibrary::PortrayalRender::Color(catalogue, token);
+		};
 		const cov::CoverageSource* source = Source();
 		const auto values = source->readValues(feature.id, { .timeIndex = timeIndex, .component = component });
 		if (!values || values->size() < feature.grid.nodeCount())
@@ -1052,7 +1074,7 @@ namespace GISLibrary
 		struct Drawn
 		{
 			const cov::CoverageSymbol* symbol = nullptr;
-			SVGReader* svg = nullptr;
+			const s100::render::SymbolPicture* picture = nullptr;
 			cov::Values rotation;
 			double rotationFill = 0;
 			cov::Values scale;
@@ -1081,24 +1103,18 @@ namespace GISLibrary
 			{
 				continue;
 			}
-			SVGReader* svg = manager->s100SymbolManager.GetSVG(entry.symbol->reference);
-			if (!svg)
+			const s100::render::SymbolPicture* picture = symbols_->Find(entry.symbol->reference);
+			if (!picture)
 			{
 				continue;
 			}
-			// The catalogue's symbol geometry, when the viewer has not prepared it yet
-			// (PortrayalRender::Prepare).
-			if (svg->geometry.empty() && !svg->figures.empty() && d2->pD2Factory)
-			{
-				manager->CreateSVGGeometry(d2->pD2Factory);
-			}
-			Drawn item{ .symbol = &*entry.symbol, .svg = svg };
+			Drawn item{ .symbol = &*entry.symbol, .picture = picture };
 			if (!valuesOf(entry.symbol->rotationAttribute, item.rotation, item.rotationFill)
 				|| !valuesOf(entry.symbol->scaleAttribute, item.scale, item.scaleFill))
 			{
 				continue;
 			}
-			symbolLength = (std::max)(symbolLength, (std::max)(svg->bounding_width, svg->bounding_height));
+			symbolLength = (std::max)(symbolLength, (std::max)(picture->width, picture->height));
 			drawn[i] = std::move(item);
 		}
 		if (!(symbolLength > 0))
@@ -1157,7 +1173,7 @@ namespace GISLibrary
 			: cov::thinnedNodes(feature.grid, 1, view);
 		symbolStatus_.thinningFactor = nodes.factor;
 
-		const RECT screen = D2DView::ScreenRECT(*scaler);
+		const auto screen = scaler->GetScreenRect();
 		const float margin = static_cast<float>(longest);
 		for (int j = 0; j < nodes.rows; ++j)
 		{
@@ -1202,31 +1218,13 @@ namespace GISLibrary
 					rotation += static_cast<float>(NorthAngle(x, y));
 				}
 				// The symbol's millimetres to pixels, turned clockwise from north (up), at the point.
-				rt->SetTransform(D2D1::Matrix3x2F::Scale(scale, scale) * D2D1::Matrix3x2F::Rotation(rotation)
-					* D2D1::Matrix3x2F::Translation(static_cast<float>(at.x), static_cast<float>(at.y)));
-				for (const SVGGeometry& shape : item.svg->geometry)
-				{
-					if (!shape.pGeometry)
-					{
-						continue;
-					}
-					brush->SetOpacity(shape.alpha);
-					if (shape.bFill)
-					{
-						brush->SetColor(profile->GetColor(shape.fillColorName));
-						rt->FillGeometry(shape.pGeometry, brush);
-					}
-					if (shape.bStoke)
-					{
-						brush->SetColor(profile->GetColor(shape.strokeColorName));
-						rt->DrawGeometry(shape.pGeometry, brush, shape.width, d2->SolidStrokeStyle());
-					}
-				}
+				// The lines of an arrow scale with it, as they always have here.
+				s100::render::DrawSymbolPicture(renderer, *item.picture, { static_cast<float>(at.x), static_cast<float>(at.y) }, rotation, scale, color,
+					scale / pixelsPerMillimetre);
 				++symbolStatus_.drawn;
 			}
 		}
-		brush->SetOpacity(1.0f);
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
+		renderer.SetTransform({});
 	}
 
 	namespace

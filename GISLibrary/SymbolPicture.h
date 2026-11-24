@@ -83,9 +83,11 @@ namespace s100::render
 
 	// Draws a symbol picture with its pivot at a point of the surface (device pixels), turned
 	// clockwise, at so many pixels to a millimetre. Sets the transform of the renderer and
-	// leaves it set.
+	// leaves it set. The strokes are as wide as the symbol says whatever the scale, times
+	// `strokeScale`: a symbol that is sized by a value (the arrow of a current) gets thinner
+	// lines as it gets smaller.
 	void DrawSymbolPicture(IRenderer& renderer, const SymbolPicture& picture, PointF at, float rotationDegrees, float scale,
-		const ColorLookup& color);
+		const ColorLookup& color, float strokeScale = 1.0f);
 
 	// Draws the symbol of a name as a display does: the question mark of the catalogue
 	// (QUESMRK1) for a name it does not have, and no information symbol (INFORM01) when those

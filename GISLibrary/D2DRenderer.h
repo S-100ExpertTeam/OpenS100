@@ -31,6 +31,9 @@ namespace GISLibrary
 			const s100::render::Stroke& stroke) override;
 		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override;
 		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override;
+		std::unique_ptr<s100::render::RetainedImage> RetainImage(const std::uint8_t* pixels, int width, int height) override;
+		void DrawImage(const s100::render::RetainedImage& image, const s100::render::ImageRect& source,
+			const s100::render::ImageRect& target) override;
 		void PushClip(const s100::render::Path& path) override;
 		void PopClip() override;
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,

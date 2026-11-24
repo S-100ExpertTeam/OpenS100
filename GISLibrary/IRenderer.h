@@ -16,6 +16,7 @@
 // D2DInstructionPainter to DisplayListPainter brings the primitives it needs.
 #include "DrawTypes.h"
 
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
@@ -116,6 +117,26 @@ namespace s100::render
 		float width = 1.0f;
 		// Ink and gap lengths in turn, in multiples of the width; empty for a solid line.
 		std::vector<float> dashes;
+		// The other look, for lines laid along the cells of a grid: the ends of the line and of
+		// its dashes cut square, mitre joins.
+		bool flatCaps = false;
+	};
+
+	// A box of an image or of the surface: left and top inside, right and bottom outside.
+	struct ImageRect
+	{
+		float left = 0.0f;
+		float top = 0.0f;
+		float right = 0.0f;
+		float bottom = 0.0f;
+	};
+
+	// An image a backend keeps in its own form (IRenderer::RetainImage). It belongs to the
+	// backend that made it.
+	class RetainedImage
+	{
+	public:
+		virtual ~RetainedImage() = default;
 	};
 
 	// What a path is filled with.
@@ -190,6 +211,15 @@ namespace s100::render
 		// as if it were closed.
 		virtual void FillPath(const Path& path, const Fill& fill) = 0;
 		virtual void FillPath(const RetainedPath& path, const Fill& fill) = 0;
+
+		// An image to keep, from 32-bit pixels with the blue first and the colours multiplied by
+		// their alpha, the top row first. Nothing if it cannot be made.
+		virtual std::unique_ptr<RetainedImage> RetainImage(const std::uint8_t* pixels, int width, int height) = 0;
+
+		// A part of an image (in its pixels) into a box in the coordinates of the transform. A
+		// pixel of the image is one colour on the surface, however large: values of a grid are
+		// not blended into one another.
+		virtual void DrawImage(const RetainedImage& image, const ImageRect& source, const ImageRect& target) = 0;
 
 		// From here to the PopClip that answers it, nothing is drawn outside the inside of a
 		// path (even-odd rule, in the coordinates of the transform in force now; a transform

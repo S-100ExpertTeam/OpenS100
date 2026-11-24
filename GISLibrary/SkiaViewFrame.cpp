@@ -250,27 +250,44 @@ namespace GISLibrary
 		return true;
 	}
 
+	s100::render::IRenderer* SkiaViewFrame::Renderer(PortrayalCatalogue* catalogue)
+	{
+		if (!state->surface)
+		{
+			return nullptr;
+		}
+		auto& renderer = state->renderers[catalogue];
+		if (!renderer)
+		{
+			s100::render::SkiaResources with;
+			with.fonts = state->fonts.get();
+			if (catalogue)
+			{
+				auto& resources = state->catalogues[catalogue];
+				if (!resources)
+				{
+					resources = std::make_unique<CatalogueResources>(*catalogue);
+				}
+				with.symbols = &resources->symbols;
+				with.areaFills = &resources->areaFills;
+				with.lineStyles = &resources->lineStyles;
+				with.color = [catalogue](const std::wstring& token) { return PortrayalRender::Color(catalogue, token); };
+			}
+			renderer = std::make_unique<s100::render::SkiaRenderer>(*state->surface->getCanvas(), with);
+		}
+		return renderer.get();
+	}
+
 	void SkiaViewFrame::Paint(int priority, DrawingSet& drawingSet, PortrayalCatalogue* catalogue, Scaler& scaler, bool texts)
 	{
-		if (!state->surface || !catalogue)
+		s100::render::IRenderer* renderer = catalogue ? Renderer(catalogue) : nullptr;
+		if (!renderer)
 		{
 			return;
 		}
 		const s100::render::ColorLookup color = [catalogue](const std::wstring& token) {
 			return PortrayalRender::Color(catalogue, token);
 		};
-
-		auto& renderer = state->renderers[catalogue];
-		if (!renderer)
-		{
-			auto& resources = state->catalogues[catalogue];
-			if (!resources)
-			{
-				resources = std::make_unique<CatalogueResources>(*catalogue);
-			}
-			renderer = std::make_unique<s100::render::SkiaRenderer>(*state->surface->getCanvas(),
-				s100::render::SkiaResources{ &resources->symbols, &resources->areaFills, &resources->lineStyles, color, state->fonts.get() });
-		}
 
 		s100::render::DisplayListPainter painter(*renderer, scaler, color);
 		s100::render::DepthMaskStages stages(*renderer, scaler, state->DepthMask());

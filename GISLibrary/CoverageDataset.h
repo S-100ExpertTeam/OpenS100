@@ -2,6 +2,7 @@
 #include "DeviceTypes.h"
 #include <cstdint>
 
+#include "IRenderer.h"
 #include "S100SpatialObject.h"
 
 #include "../Coverage/ArrowThinning.h"
@@ -21,12 +22,15 @@
 class FeatureCatalogue;
 class PortrayalCatalogue;
 class Scaler;
-struct ID2D1Bitmap;
-struct ID2D1StrokeStyle;
 
 namespace GF
 {
 	class FeatureType;
+}
+
+namespace s100::render
+{
+	class SymbolLibrary;
 }
 
 namespace GISLibrary
@@ -64,7 +68,10 @@ namespace GISLibrary
 		bool Portray(FeatureCatalogue* fc, PortrayalCatalogue* pc);
 		// Draws every CoverageFill into the device context, in the current palette, and over it the
 		// S-98 Appendix D lines when EnhancedSafetyContour is on.
+		// A frame of its own on the device context, by the backend the viewer draws with.
 		void DrawCoverage(D2D1Resources* d2, HDC& hDC, Scaler* scaler);
+		// The grids, their lines and symbols on a renderer, in device pixels.
+		void DrawCoverage(s100::render::IRenderer& renderer, Scaler& scaler);
 
 		// The viewer's S-98 depth settings: the enhanced safety contour selector (D-1.4: the safety
 		// contour drawn from the grid at the viewer's safety contour, with the S-102 coverage
@@ -181,7 +188,10 @@ namespace GISLibrary
 		{
 			std::string key;   // palette, time group, revision of the values
 			std::unique_ptr<s100::coverage::CoverageRaster> raster;
-			ID2D1Bitmap* bitmap = nullptr;
+			std::unique_ptr<s100::render::RetainedImage> bitmap;
+			const void* backend = nullptr;   // of the renderer that keeps the bitmap
+			float bitmapWidth = 0;
+			float bitmapHeight = 0;
 			// About a pole the bitmap is the raster resampled into this box of the world.
 			double worldWest = 0;
 			double worldSouth = 0;
@@ -193,14 +203,13 @@ namespace GISLibrary
 		// The catalogue's XSLT rules over the coverage features: the display list's coverage
 		// instructions (S-111).
 		void PortrayXslt(FeatureCatalogue* fc, PortrayalCatalogue* pc, const std::string& mainRule);
-		void DrawSymbols(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+		void DrawSymbols(s100::render::IRenderer& renderer, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
 			const s100::coverage::CoverageInstruction& instruction, std::size_t component, std::size_t timeIndex);
-		void DrawLines(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+		void DrawLines(s100::render::IRenderer& renderer, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
 			const s100::coverage::Values& depth, double fillValue);
 		[[nodiscard]] const s100::coverage::CoverageSource* Source() const noexcept;
 		// Adjusts the S-102 depths again when the settings or the S-104 datasets changed.
 		void PrepareAdjustment();
-		[[nodiscard]] ID2D1StrokeStyle* DashedStroke(D2D1Resources* d2, const s100::coverage::S98LineStyle& style, ID2D1StrokeStyle*& cache);
 		[[nodiscard]] s100::coverage::Rgb ResolveColor(std::string_view token) const;
 
 		std::shared_ptr<const s100::coverage::CoverageSource> raw_;
@@ -224,8 +233,9 @@ namespace GISLibrary
 		[[nodiscard]] std::optional<s100::coverage::TimePoint> FirstRecordInsteadOfNow() const;
 		// The time whose records of this dataset are drawn.
 		[[nodiscard]] s100::coverage::TimePoint DisplayTime() const;
-		ID2D1StrokeStyle* s102BoundaryStroke_ = nullptr;
-		ID2D1StrokeStyle* wlaBoundaryStroke_ = nullptr;
+		// The symbols of the catalogue last drawn with (S-111 arrows), read when first drawn.
+		std::unique_ptr<s100::render::SymbolLibrary> symbols_;
+		PortrayalCatalogue* symbolsOf_ = nullptr;
 
 		// The feature catalogue's names, by feature code and by attribute code (the pick report).
 		std::map<std::string, std::string> featureNames_;

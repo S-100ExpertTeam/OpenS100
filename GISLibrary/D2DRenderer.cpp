@@ -136,7 +136,30 @@ namespace GISLibrary
 		auto brush = d2->SolidColorBrush();
 		brush->SetColor(ToD2D(color));
 
-		if (!stroke.dashes.empty())
+		if (stroke.flatCaps)
+		{
+			// Square ends, of the line and of its dashes.
+			ID2D1StrokeStyle1* flat = nullptr;
+			d2->Factory()->CreateStrokeStyle(
+				D2D1::StrokeStyleProperties1(
+					D2D1_CAP_STYLE_FLAT,
+					D2D1_CAP_STYLE_FLAT,
+					D2D1_CAP_STYLE_FLAT,
+					D2D1_LINE_JOIN_MITER,
+					10.0f,
+					stroke.dashes.empty() ? D2D1_DASH_STYLE_SOLID : D2D1_DASH_STYLE_CUSTOM,
+					0.0f,
+					D2D1_STROKE_TRANSFORM_TYPE_FIXED),
+				stroke.dashes.empty() ? nullptr : stroke.dashes.data(),
+				static_cast<UINT32>(stroke.dashes.size()),
+				&flat);
+			rt->DrawGeometry(geometry, brush, stroke.width, flat);
+			if (flat)
+			{
+				flat->Release();
+			}
+		}
+		else if (!stroke.dashes.empty())
 		{
 			// The look of a dashed line (see Stroke); the width is not scaled by the transform.
 			ID2D1StrokeStyle1* dash = nullptr;
@@ -328,6 +351,51 @@ namespace GISLibrary
 			return;   // a path of another backend is not drawn
 		}
 		StrokeGeometry(retained->geometry, color, stroke);
+	}
+
+	namespace
+	{
+		struct RetainedBitmap : s100::render::RetainedImage
+		{
+			~RetainedBitmap() override
+			{
+				if (bitmap)
+				{
+					bitmap->Release();
+				}
+			}
+
+			ID2D1Bitmap* bitmap = nullptr;
+		};
+	}
+
+	std::unique_ptr<s100::render::RetainedImage> D2DRenderer::RetainImage(const std::uint8_t* pixels, int width, int height)
+	{
+		if (!Ready() || !pixels || width <= 0 || height <= 0)
+		{
+			return nullptr;
+		}
+		auto retained = std::make_unique<RetainedBitmap>();
+		const D2D1_BITMAP_PROPERTIES properties = D2D1::BitmapProperties(
+			D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED));
+		if (FAILED(d2->RenderTarget()->CreateBitmap(D2D1::SizeU(static_cast<UINT32>(width), static_cast<UINT32>(height)), pixels,
+			static_cast<UINT32>(width) * 4, properties, &retained->bitmap)) || !retained->bitmap)
+		{
+			return nullptr;
+		}
+		return retained;
+	}
+
+	void D2DRenderer::DrawImage(const s100::render::RetainedImage& image, const s100::render::ImageRect& source,
+		const s100::render::ImageRect& target)
+	{
+		auto retained = dynamic_cast<const RetainedBitmap*>(&image);
+		if (!Ready() || !retained)
+		{
+			return;
+		}
+		d2->RenderTarget()->DrawBitmap(retained->bitmap, D2D1::RectF(target.left, target.top, target.right, target.bottom), 1.0f,
+			D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, D2D1::RectF(source.left, source.top, source.right, source.bottom));
 	}
 
 	void D2DRenderer::PushClip(const s100::render::Path& path)

@@ -154,6 +154,17 @@ namespace
 			text += " | path " + std::to_string(static_cast<const Kept&>(path).number) + "\n";
 		}
 
+		std::unique_ptr<s100::render::RetainedImage> RetainImage(const std::uint8_t*, int width, int height) override
+		{
+			text += "image " + std::to_string(width) + " " + std::to_string(height) + "\n";
+			return std::make_unique<s100::render::RetainedImage>();
+		}
+
+		void DrawImage(const s100::render::RetainedImage&, const s100::render::ImageRect&, const s100::render::ImageRect&) override
+		{
+			text += "draw image\n";
+		}
+
 		void PushClip(const s100::render::Path& path) override
 		{
 			text += "clip";

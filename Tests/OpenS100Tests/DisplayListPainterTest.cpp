@@ -125,6 +125,19 @@ namespace
 			text += std::format(" | path {}\n", static_cast<const Kept&>(path).number);
 		}
 
+		std::unique_ptr<s100::render::RetainedImage> RetainImage(const std::uint8_t*, int width, int height) override
+		{
+			text += std::format("image {} {}\n", width, height);
+			return std::make_unique<s100::render::RetainedImage>();
+		}
+
+		void DrawImage(const s100::render::RetainedImage&, const s100::render::ImageRect& source,
+			const s100::render::ImageRect& target) override
+		{
+			text += std::format("draw image {} {} {} {} to {} {} {} {}\n", Q(source.left), Q(source.top), Q(source.right), Q(source.bottom),
+				Q(target.left), Q(target.top), Q(target.right), Q(target.bottom));
+		}
+
 		void PushClip(const s100::render::Path& path) override
 		{
 			clips++;

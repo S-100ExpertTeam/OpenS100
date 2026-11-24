@@ -11,7 +11,12 @@
 #include "include/core/SkPath.h"
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathEffect.h"
+#include "include/core/SkColorSpace.h"
+#include "include/core/SkImage.h"
+#include "include/core/SkImageInfo.h"
 #include "include/core/SkPathTypes.h"
+#include "include/core/SkPixmap.h"
+#include "include/core/SkSamplingOptions.h"
 #include "include/core/SkPicture.h"
 #include "include/core/SkPictureRecorder.h"
 #include "include/core/SkSamplingOptions.h"
@@ -26,6 +31,11 @@ namespace
 	using namespace s100::render;
 
 	// A path kept as a Skia path, in the coordinates it was given in.
+	struct RetainedSkImage : RetainedImage
+	{
+		sk_sp<SkImage> image;
+	};
+
 	struct RetainedSkPath : RetainedPath
 	{
 		SkPath path;
@@ -133,8 +143,9 @@ namespace s100::render
 
 		if (stroke.dashes.empty())
 		{
-			paint.setStrokeCap(SkPaint::kRound_Cap);
-			paint.setStrokeJoin(SkPaint::kRound_Join);
+			paint.setStrokeCap(stroke.flatCaps ? SkPaint::kButt_Cap : SkPaint::kRound_Cap);
+			paint.setStrokeJoin(stroke.flatCaps ? SkPaint::kMiter_Join : SkPaint::kRound_Join);
+			paint.setStrokeMiter(10.0f);
 		}
 		else
 		{
@@ -149,7 +160,7 @@ namespace s100::render
 				length += interval;
 			}
 			// Skia has one cap for the ends of the line and of the dashes: the dashes' round one.
-			paint.setStrokeCap(SkPaint::kRound_Cap);
+			paint.setStrokeCap(stroke.flatCaps ? SkPaint::kButt_Cap : SkPaint::kRound_Cap);
 			paint.setStrokeJoin(SkPaint::kMiter_Join);
 			paint.setStrokeMiter(10.0f);
 			if (length > 0.0f)
@@ -267,6 +278,40 @@ namespace s100::render
 		{
 			Fill_(retained->path, fill);
 		}
+	}
+
+	std::unique_ptr<RetainedImage> SkiaRenderer::RetainImage(const std::uint8_t* pixels, int width, int height)
+	{
+		if (!pixels || width <= 0 || height <= 0)
+		{
+			return nullptr;
+		}
+		const SkImageInfo info = SkImageInfo::Make(width, height, kBGRA_8888_SkColorType, kPremul_SkAlphaType);
+		auto retained = std::make_unique<RetainedSkImage>();
+		retained->image = SkImages::RasterFromPixmapCopy(SkPixmap(info, pixels, static_cast<size_t>(width) * 4));
+		if (!retained->image)
+		{
+			return nullptr;
+		}
+		return retained;
+	}
+
+	void SkiaRenderer::DrawImage(const RetainedImage& image, const ImageRect& source, const ImageRect& target)
+	{
+		auto retained = dynamic_cast<const RetainedSkImage*>(&image);
+		if (!retained)
+		{
+			return;
+		}
+		// Under the painter's transform, each pixel of the image one colour.
+		SkPaint paint;
+		paint.setAntiAlias(false);
+		canvas.save();
+		canvas.concat(matrix);
+		canvas.drawImageRect(retained->image, SkRect::MakeLTRB(source.left, source.top, source.right, source.bottom),
+			SkRect::MakeLTRB(target.left, target.top, target.right, target.bottom), SkSamplingOptions(SkFilterMode::kNearest),
+			&paint, SkCanvas::kFast_SrcRectConstraint);
+		canvas.restore();
 	}
 
 	void SkiaRenderer::PushClip(const Path& path)
