@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "SkiaViewFrame.h"
+#include "ViewFrame.h"
 #include "FeatureHighlight.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
@@ -49,7 +49,6 @@
 #include "../LatLonUtility/cpp_util.h"
 
 #include <ctime> 
-#include <mmsystem.h> 
 #include <string>
 #include <vector>
 #include <map>
@@ -390,21 +389,17 @@ int LayerManager::AddLayerFront(const std::wstring& _filepath)
 }
 
 
-void LayerManager::Draw(HDC& hdc, int offset)
+void LayerManager::Draw(GISLibrary::ViewFrame& frame, int offset)
 {
-	// Everything a refresh draws is one scene: the layers are rasterised together and put on
-	// the device context once.
-	GISLibrary::SkiaViewFrame::Scene scene(GISLibrary::SkiaViewFrame::Shared(), hdc);
-
-	DrawBackground(hdc, offset);
+	DrawBackground(frame, offset);
 
 	// Layer containers (the System Database chart, exchange sets) are base charts: drawn under
 	// the datasets opened on their own.
-	DrawLayerContainers(hdc, offset);
+	DrawLayerContainers(frame, offset);
 
-	DrawS100Datasets(hdc, offset);
+	DrawS100Datasets(frame, offset);
 
-	DrawNonS100Datasets(hdc, offset);
+	DrawNonS100Datasets(frame, offset);
 
 	//gisLib->D2.Begin(hdc, rectView);
 	//gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
@@ -412,7 +407,7 @@ void LayerManager::Draw(HDC& hdc, int offset)
 	//gisLib->D2.End();
 }
 
-void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
+void LayerManager::DrawInformationLayer(GISLibrary::ViewFrame& frame, Layer* layer)
 {
 	if (nullptr == layer)
 	{
@@ -434,7 +429,6 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 	long symin = 0;
 	scaler->WorldToDevice(_mbr.xmax, _mbr.ymax, &sxmax, &symin);
 
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
 	if (!frame.Begin(*scaler))
 	{
 		return;
@@ -444,7 +438,7 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 		GISLibrary::DrawInformationBox(*renderer, static_cast<float>(sxmin), static_cast<float>(symin), static_cast<float>(sxmax), static_cast<float>(symax),
 			"LayerName : " + pugi::as_utf8(layer->GetLayerName()), "LayerType : " + pugi::as_utf8(layer->GetLayerType()));
 	}
-	frame.End(hDC);
+	frame.End();
 }
 
 // The instructions of the layer the view shows, into its drawing set.
@@ -462,7 +456,7 @@ void LayerManager::CollectInstructions(S100Layer* layer)
 }
 
 
-void LayerManager::DrawBackground(HDC &hDC, int offset)
+void LayerManager::DrawBackground(GISLibrary::ViewFrame& frame, int offset)
 {
 	if (m_baseMapOn)
 	{
@@ -473,19 +467,19 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 				// On Mercator the world goes round: the copies a turn of longitude either side.
 				if (!IsPolarProjection())
 				{
-					backgroundLayer.Draw(hDC, scaler, offset - 360);
+					backgroundLayer.Draw(frame, scaler, offset - 360);
 				}
-				backgroundLayer.Draw(hDC, scaler, offset);
+				backgroundLayer.Draw(frame, scaler, offset);
 				if (!IsPolarProjection())
 				{
-					backgroundLayer.Draw(hDC, scaler, offset + 360);
+					backgroundLayer.Draw(frame, scaler, offset + 360);
 				}
 			}
 		}
 	}
 }
 
-void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
+void LayerManager::DrawS100Datasets(GISLibrary::ViewFrame& frame, int offset)
 {
 	if (onIC == false)
 	{
@@ -495,11 +489,11 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 		const auto drawGroup = [&]() {
 			if (group.size() == 1)
 			{
-				DrawS100Layer(hdc, offset, group.front());
+				DrawS100Layer(frame, offset, group.front());
 			}
 			else if (group.size() > 1)
 			{
-				DrawS100Layers(hdc, offset, group);
+				DrawS100Layers(frame, offset, group);
 			}
 			group.clear();
 		};
@@ -521,7 +515,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 						}
 						if (key == drawGroups.end())
 						{
-							DrawS100Layer(hdc, offset, (S100Layer*)layer);
+							DrawS100Layer(frame, offset, (S100Layer*)layer);
 						}
 						else
 						{
@@ -533,9 +527,9 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 					{
 						drawGroup();
 						// A grid without a renderer of its own shows where it lies.
-						if (!static_cast<S100Layer*>(layer)->DrawGrid(hdc, scaler))
+						if (!static_cast<S100Layer*>(layer)->DrawGrid(frame, scaler))
 						{
-							DrawInformationLayer(hdc, layer);
+							DrawInformationLayer(frame, layer);
 						}
 					}
 				}
@@ -571,7 +565,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						DrawS100Layer(hdc, offset, (S100Layer*)layer, 0, 3);
+						DrawS100Layer(frame, offset, (S100Layer*)layer, 0, 3);
 					}
 				}
 			}
@@ -587,7 +581,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
-						static_cast<S100Layer*>(layer)->DrawGrid(hdc, scaler);
+						static_cast<S100Layer*>(layer)->DrawGrid(frame, scaler);
 					}
 				}
 			}
@@ -603,7 +597,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						DrawS100Layer(hdc, offset, (S100Layer*)layer, 4, 100);
+						DrawS100Layer(frame, offset, (S100Layer*)layer, 4, 100);
 					}
 				}
 			}
@@ -628,7 +622,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 	}
 }
 
-void LayerManager::DrawECDISMode(HDC& hDC, int offset)
+void LayerManager::DrawECDISMode(GISLibrary::ViewFrame& frame, int offset)
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
@@ -636,23 +630,23 @@ void LayerManager::DrawECDISMode(HDC& hDC, int offset)
 
 		if (!layer->IsS100Layer())
 		{
-			layer->Draw(hDC, scaler, offset);
+			layer->Draw(frame, scaler, offset);
 		}
 	}
 }
 
-void LayerManager::DrawLayerContainers(HDC& hDC, int offset)
+void LayerManager::DrawLayerContainers(GISLibrary::ViewFrame& frame, int offset)
 {
 	for (auto layer : layers)
 	{
 		if (dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
 		{
-			layer->Draw(hDC, scaler, offset);
+			layer->Draw(frame, scaler, offset);
 		}
 	}
 }
 
-void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
+void LayerManager::DrawNonS100Datasets(GISLibrary::ViewFrame& frame, int offset)
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
@@ -660,12 +654,12 @@ void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 
 		if (!layer->IsS100Layer() && !dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
 		{
-			layer->Draw(hDC, scaler, offset);
+			layer->Draw(frame, scaler, offset);
 		}
 	}
 }
 
-void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer)
+void LayerManager::DrawS100Layer(GISLibrary::ViewFrame& frame, int /*offset*/, S100Layer* layer)
 {
 	auto pc = layer->GetPC();
 	layer->InitDraw();
@@ -687,14 +681,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer)
 	// Line Suppression
 	s100::render::SuppressSharedCurves(layer->drawingPriority, layer->drawingSet);
 
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
 	if (frame.Begin(*scaler))
 	{
 		for (const int priority : layer->drawingPriority)
 		{
 			frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
 		}
-		frame.End(hDC);
+		frame.End();
 	}
 }
 
@@ -721,7 +714,7 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 	}
 }
 
-void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int minPriority, int maxPriority)
+void LayerManager::DrawS100Layer(GISLibrary::ViewFrame& frame, int /*offset*/, S100Layer* layer, int minPriority, int maxPriority)
 {
 	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr)) {
 		return;
@@ -733,7 +726,6 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int
 		return;
 	}
 
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
 	if (frame.Begin(*scaler))
 	{
 		for (const int priority : layer->drawingPriority)
@@ -744,11 +736,11 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int
 			}
 			frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
 		}
-		frame.End(hDC);
+		frame.End();
 	}
 }
 
-void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S100Layer*>& group)
+void LayerManager::DrawS100Layers(GISLibrary::ViewFrame& frame, int /*offset*/, const std::vector<S100Layer*>& group)
 {
 	std::set<int> priorities;
 	std::vector<PortrayalCatalogue*> catalogues;
@@ -772,7 +764,6 @@ void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S1
 		return;
 	}
 
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
 	if (frame.Begin(*scaler))
 	{
 		for (const int priority : priorities)
@@ -785,7 +776,7 @@ void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S1
 				}
 			}
 		}
-		frame.End(hDC);
+		frame.End();
 	}
 }
 
@@ -838,7 +829,7 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileNameW();
 		auto rootPath = pc->GetRootPathW();
-		auto mainRulePath = rootPath + L"Rules\\" + fileName;
+		auto mainRulePath = rootPath + L"Rules/" + fileName;
 
 		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) 
 		{

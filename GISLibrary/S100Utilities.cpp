@@ -4,6 +4,7 @@
 
 #include "../LatLonUtility/cpp_util.h"
 
+#include <algorithm>
 #include <string>
 #include <filesystem>
 #include <cctype>
@@ -54,7 +55,7 @@ ScaleBand S100Utilities::GetLegacyScaleband(int scale)
 int S100Utilities::GetLevel(std::wstring path)
 {
 	// get without extension
-	std::wstring name = std::filesystem::path(path).stem();
+	std::wstring name = std::filesystem::path(path).stem().wstring();
 	if (name.length() >= 8)
 	{
 		auto levelStr = name.substr(7, 1);
@@ -97,7 +98,7 @@ std::vector<int> S100Utilities::algorithm_ScaleBand(S100::DataCoverage dataCover
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (min(minDS, scaleBand[i].GetMinimumDisplayScale()) > max(optDS, scaleBand[i].GetOptimumDisplayScale())) {
+		if ((std::min)(minDS, scaleBand[i].GetMinimumDisplayScale()) > (std::max)(optDS, scaleBand[i].GetOptimumDisplayScale())) {
 			S.push_back(i);
 		}
 	}
@@ -117,7 +118,7 @@ std::vector<int> S100Utilities::GetScaleBand(ScaleBand sb)
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(maxDS, scaleBand[i].GetOptimumDisplayScale()) < min(minDS, scaleBand[i].GetMinimumDisplayScale())) {
+		if ((std::max)(maxDS, scaleBand[i].GetOptimumDisplayScale()) < (std::min)(minDS, scaleBand[i].GetMinimumDisplayScale())) {
 			S.push_back(i);
 		}
 	}

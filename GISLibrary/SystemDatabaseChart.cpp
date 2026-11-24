@@ -124,7 +124,7 @@ namespace GISLibrary
 		m_pLayer->SetMBR(extent);
 	}
 
-	void SystemDatabaseChart::Draw(HDC& hDC, Scaler* scaler, double offset)
+	void SystemDatabaseChart::Draw(ViewFrame& frame, Scaler* scaler, double offset)
 	{
 		if (!scaler)
 		{
@@ -167,7 +167,7 @@ namespace GISLibrary
 				drawer_->drawGroups.try_emplace(layer, coverage.scaleBand);
 			}
 		}
-		drawer_->Draw(hDC, static_cast<int>(offset));
+		drawer_->Draw(frame, static_cast<int>(offset));
 	}
 
 	void SystemDatabaseChart::Reload()

@@ -15,12 +15,14 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include <direct.h>
+#include <filesystem>
+#include <system_error>
 
 CGISLibraryApp::CGISLibraryApp()
 {
-	std::string str = "..\\TEMP"; // read path
-	_mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
+	// The directory the editing functions write their files to, next to the working directory.
+	std::error_code ignored;
+	std::filesystem::create_directory(std::filesystem::path("..") / "TEMP", ignored);
 
 	m_pScaler = new Scaler();
 	m_pCatalogManager = new CatalogManager();
@@ -80,9 +82,9 @@ bool CGISLibraryApp::AddBackgroundLayer(const std::wstring& _filepath)
 	return m_pLayerManager->AddBackgroundLayer(_filepath);
 }
 
-void CGISLibraryApp::Draw(HDC& hDC, int offset)
+void CGISLibraryApp::Draw(GISLibrary::ViewFrame& frame, int offset)
 {
-	m_pLayerManager->Draw(hDC, offset);
+	m_pLayerManager->Draw(frame, offset);
 		
 	//if (D2)
 	//{

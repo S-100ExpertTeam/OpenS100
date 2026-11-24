@@ -40,6 +40,11 @@ option(OPENS100_BUILD_PORTRAYAL "Build opens100::portrayal (GISLibrary: drawing 
 if(OPENS100_BUILD_PORTRAYAL AND NOT (OPENS100_BUILD_DATASET AND OPENS100_BUILD_LUASCRIPTING))
     message(FATAL_ERROR "opens100::portrayal needs opens100::dataset and opens100::luascripting")
 endif()
+option(OPENS100_BUILD_VIEW "Build opens100::view (GISLibrary: a view of layers - the layer manager, grids, exchange catalogues, the System Database chart)" ON)
+
+if(OPENS100_BUILD_VIEW AND NOT (OPENS100_BUILD_PORTRAYAL AND OPENS100_BUILD_SYSTEMDATABASE AND OPENS100_BUILD_COVERAGE))
+    message(FATAL_ERROR "opens100::view needs opens100::portrayal, opens100::sdb and opens100::coverage")
+endif()
 option(OPENS100_BUILD_RENDER_SKIA "Build opens100::render-skia (RenderSkia: the Skia backend of the renderer)" OFF)
 
 if(OPENS100_BUILD_RENDER_SKIA AND NOT OPENS100_BUILD_PORTRAYAL)
@@ -259,6 +264,44 @@ if(OPENS100_BUILD_RENDER_SKIA)
     # file for drawing with no window (Documents/TechDocs/2026-11-19-r6-skia-backend-design.md).
     # Skia is public: the canvas is the application's.
     opens100_add_module(render-skia RenderSkia DEPENDS portrayal unofficial::skia::skia)
+endif()
+
+if(OPENS100_BUILD_VIEW)
+    # A view of layers: what is open, in what order it is drawn, and the layers that draw
+    # themselves. It draws on a ViewFrame; the frame of a backend is another target.
+    opens100_add_module(view GISLibrary
+        DEPENDS portrayal sdb coverage
+        SOURCES ${OPENS100_GISLIBRARY_VIEW_SOURCES})
+    target_compile_definitions(view PRIVATE GISLIBRARY_MODEL_ONLY)
+    if(MSVC)
+        target_compile_options(view PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251 /wd4505)
+    else()
+        target_compile_options(view PRIVATE -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function)
+    endif()
+endif()
+
+if(OPENS100_BUILD_VIEW AND OPENS100_BUILD_RENDER_SKIA)
+    # The frame of a view on Skia: a view drawn with no window, as a PNG file; on Windows also
+    # onto a device context.
+    opens100_add_module(view-skia GISLibrary
+        DEPENDS view render-skia
+        SOURCES ${OPENS100_GISLIBRARY_VIEW_SKIA_SOURCES})
+    target_compile_definitions(view-skia PRIVATE GISLIBRARY_MODEL_ONLY)
+    if(MSVC)
+        target_compile_options(view-skia PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251)
+    else()
+        target_compile_options(view-skia PRIVATE -Wno-sign-compare -Wno-unused-parameter)
+    endif()
+endif()
+
+option(OPENS100_BUILD_EXAMPLES "Build the examples that are part of this build (examples/view)" OFF)
+if(OPENS100_BUILD_EXAMPLES AND TARGET view-skia)
+    # A view of several layers drawn with no window, as a PNG file.
+    add_executable(opens100_view examples/view/main.cpp)
+    target_link_libraries(opens100_view PRIVATE view-skia)
+    if(MSVC)
+        target_compile_options(opens100_view PRIVATE /utf-8 /W4)
+    endif()
 endif()
 
 # --- package ------------------------------------------------------------------------------

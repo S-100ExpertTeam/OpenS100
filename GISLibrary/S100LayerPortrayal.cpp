@@ -131,7 +131,7 @@ bool GISLibrary::OpenLayer(S100Layer& layer, const std::wstring& _filepath, Laye
 	return false;
 }
 
-bool S100Layer::DrawGrid(HDC& hDC, Scaler* scaler)
+bool S100Layer::DrawGrid(GISLibrary::ViewFrame& frame, Scaler* scaler)
 {
 	if (GetFileType() != S100_FileType::FILE_S_100_GRID_H5 || !m_spatialObject)
 	{
@@ -140,7 +140,7 @@ bool S100Layer::DrawGrid(HDC& hDC, Scaler* scaler)
 
 	if (auto coverage = dynamic_cast<GISLibrary::CoverageDataset*>(m_spatialObject))
 	{
-		coverage->DrawCoverage(hDC, scaler);
+		coverage->DrawCoverage(frame, scaler);
 		return true;
 	}
 

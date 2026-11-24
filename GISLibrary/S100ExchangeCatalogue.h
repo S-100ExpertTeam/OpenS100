@@ -50,9 +50,9 @@ public:
 	bool Open(const std::wstring& _filepath) override;
 	bool OpenMetadata(const std::wstring& _filepath) override;
 
-	void Draw(HDC& hDC, Scaler* scaler, double offset) override;
+	void Draw(GISLibrary::ViewFrame& frame, Scaler* scaler, double offset) override;
 
-	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
+	void DrawFiles(Scaler* scaler, std::vector<std::shared_ptr<InventoryItem>>& item);
 	// The boxes of the datasets shown, their file names and scales, in device pixels.
 	void DrawOverlay(s100::render::IRenderer& renderer, Scaler& scaler, const std::vector<std::shared_ptr<InventoryItem>>& items);
 	

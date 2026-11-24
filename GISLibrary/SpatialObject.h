@@ -5,6 +5,7 @@
 #include "Enum_S100_FileType.h"
 #include "Namespace_GISLibrary.h"
 #include "SpatialObjectType.h"
+#include "ViewFrame.h"
 
 using namespace GISLibrary;
 
@@ -31,9 +32,10 @@ public:
 	virtual bool OpenMetadata(const std::wstring& _filepath) = 0;
 	virtual bool Save(std::wstring /*path*/) { return true; }
 
-	// Legacy GDI drawing entry used by shapefile layers and the exchange-set coverage view.
-	// S-100 datasets do not draw themselves; renderers do (Phase 1 step 2).
-	virtual void Draw(HDC &/*hDC*/, Scaler */*scaler*/, double /*offset*/ = 0) {};
+	// Draws on the frame of a view: shapefile layers, an exchange catalogue and the System
+	// Database chart draw themselves. The instructions of an S-100 dataset are drawn by the
+	// layer manager.
+	virtual void Draw(GISLibrary::ViewFrame& /*frame*/, Scaler* /*scaler*/, double /*offset*/ = 0) {};
 
 	virtual int getEPSGNumber() { return 0; }
 

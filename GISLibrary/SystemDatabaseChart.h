@@ -47,7 +47,7 @@ namespace GISLibrary
 
 		bool Open(const std::wstring& /*path*/) override { return true; }
 		bool OpenMetadata(const std::wstring& /*path*/) override { return true; }
-		void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
+		void Draw(ViewFrame& frame, Scaler* scaler, double offset = 0) override;
 
 		// Reads the coverages again and closes every open dataset: after datasets were installed
 		// or removed.

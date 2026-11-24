@@ -24,7 +24,7 @@ public:
 	bool Open(const std::wstring& _filepath) override;
 	bool OpenMetadata(const std::wstring& _filepath) override;
 
-	void Draw(HDC &hDC, Scaler *scaler, double offset = 0) override;
+	void Draw(GISLibrary::ViewFrame& frame, Scaler *scaler, double offset = 0) override;
 
 	/*
 	** Description: Translate Big Endian and Little Endian into each other.

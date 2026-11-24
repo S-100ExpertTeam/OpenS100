@@ -1,7 +1,9 @@
+#ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
 #include <windows.h>
+#endif
 
 #include "SkiaViewFrame.h"
 
@@ -9,6 +11,7 @@
 #include "DepthMaskStages.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
+#include "GISLibrary.h"
 #include "LineStylePicture.h"
 #include "PatternTile.h"
 #include "PortrayalRenderCache.h"
@@ -18,19 +21,25 @@
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../RenderSkia/SkiaFonts.h"
+#include "../RenderSkia/SkiaImage.h"
 #include "../RenderSkia/SkiaRenderer.h"
 
 #include "include/core/SkBBHFactory.h"
 #include "include/core/SkCanvas.h"
 #include "include/core/SkColor.h"
 #include "include/core/SkColorSpace.h"
+#include "include/core/SkImage.h"
 #include "include/core/SkImageInfo.h"
+#include "include/core/SkPaint.h"
 #include "include/core/SkPicture.h"
 #include "include/core/SkPictureRecorder.h"
+#include "include/core/SkPixmap.h"
+#include "include/core/SkSamplingOptions.h"
 #include "include/core/SkSurface.h"
 #include "include/core/SkSurfaceProps.h"
 
 #include <algorithm>
+#include <array>
 #include <condition_variable>
 #include <cstdint>
 #include <cstdlib>
@@ -41,12 +50,16 @@
 #include <thread>
 #include <vector>
 
+#ifdef _WIN32
 #pragma comment(lib, "msimg32.lib")   // AlphaBlend
+#endif
 
 namespace
 {
+#ifdef _WIN32
 	// Skia's native 32-bit pixels are what a Windows bitmap holds: blue first, premultiplied.
 	static_assert(kN32_SkColorType == kBGRA_8888_SkColorType, "the layer is blended as a BGRA bitmap");
+#endif
 
 	// What a catalogue's instructions are drawn with, read once.
 	struct CatalogueResources
@@ -190,14 +203,20 @@ namespace GISLibrary
 {
 	struct SkiaViewFrame::State
 	{
-		// The pixels: a bitmap of the view's size that both GDI and Skia know.
+		// The pixels of the view's size. On Windows a bitmap that both GDI and Skia know.
+#ifdef _WIN32
 		HDC memory = nullptr;
 		HBITMAP bitmap = nullptr;
 		HGDIOBJ previous = nullptr;
+#else
+		std::vector<std::uint32_t> owned;
+#endif
 		void* bits = nullptr;
 		int width = 0;
 		int height = 0;
-		RECT view{};
+		// The view on its device: left, top, right, bottom.
+		std::array<long, 4> view{};
+		bool drawn = false;              // the pixels hold a frame
 		sk_sp<SkSurface> surface;
 
 		// What is drawn in a frame is written down (a recording) and rasterised when the frame
@@ -224,6 +243,8 @@ namespace GISLibrary
 
 		// The fonts, of the display font the viewer is set to.
 		std::string fontName;
+		std::vector<std::filesystem::path> fontFiles;
+		bool fontFilesChanged = false;
 		std::unique_ptr<s100::render::SkiaFonts> fonts;
 
 		std::map<PortrayalCatalogue*, std::unique_ptr<CatalogueResources>> catalogues;
@@ -276,6 +297,7 @@ namespace GISLibrary
 			}
 			bands.clear();
 			surface.reset();
+#ifdef _WIN32
 			if (memory)
 			{
 				::SelectObject(memory, previous);
@@ -287,7 +309,11 @@ namespace GISLibrary
 				::DeleteObject(bitmap);
 				bitmap = nullptr;
 			}
+#else
+			owned.clear();
+#endif
 			bits = nullptr;
+			drawn = false;
 			width = 0;
 			height = 0;
 		}
@@ -304,6 +330,7 @@ namespace GISLibrary
 				return false;
 			}
 
+#ifdef _WIN32
 			BITMAPINFO info{};
 			info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 			info.bmiHeader.biWidth = newWidth;
@@ -319,6 +346,10 @@ namespace GISLibrary
 				return false;
 			}
 			previous = ::SelectObject(memory, bitmap);
+#else
+			owned.assign(static_cast<size_t>(newWidth) * static_cast<size_t>(newHeight), 0);
+			bits = owned.data();
+#endif
 
 			// Texts at full contrast, as SkiaImage sets them.
 			const SkSurfaceProps props(0, kUnknown_SkPixelGeometry, SkSurfaceProps::kMaxContrastInclusive, 2.2f);
@@ -368,6 +399,7 @@ namespace GISLibrary
 				return false;
 			}
 
+			drawn = true;
 			if (bands.empty() || recorded->approximateOpCount() < bandMinCalls)
 			{
 				SkCanvas* canvas = surface->getCanvas();
@@ -396,14 +428,26 @@ namespace GISLibrary
 		void Fonts()
 		{
 			const std::string& name = ENCCommon::DISPLAY_FONT_NAME;
-			if (fonts && name == fontName)
+			if (fonts && name == fontName && !fontFilesChanged)
 			{
 				return;
 			}
 			renderers.clear();
 			fonts = std::make_unique<s100::render::SkiaFonts>();
 			fontName = name;
-			// The font the viewer is set to, then fonts every Windows has for what it lacks.
+			fontFilesChanged = false;
+			// The files the application handed over come first; with them a text is the same on
+			// every system.
+			for (const auto& file : fontFiles)
+			{
+				fonts->Add(file);
+			}
+			if (!fontFiles.empty())
+			{
+				return;
+			}
+			// The font the viewer is set to, then fonts every Windows has for what it lacks. Where
+			// the system cannot be asked for a font by name these find none.
 			fonts->AddSystem(name);
 			for (const char* fallback : { "Malgun Gothic", "Segoe UI", "Segoe UI Symbol" })
 			{
@@ -430,14 +474,14 @@ namespace GISLibrary
 	bool SkiaViewFrame::Begin(const Scaler& scaler)
 	{
 		const auto screen = scaler.GetScreenRect();
-		const RECT view{ screen.left, screen.top, screen.right, screen.bottom };
+		const std::array<long, 4> view{ screen.left, screen.top, screen.right, screen.bottom };
 		state->renderers.clear();
 
 		// A frame of a scene goes on drawing where the frames before it left off, as long as the
 		// view is the same.
 		if (state->sceneWaiting && state->recording)
 		{
-			if (::EqualRect(&view, &state->view))
+			if (view == state->view)
 			{
 				state->Fonts();
 				state->frameSave = state->recording->save();
@@ -523,6 +567,10 @@ namespace GISLibrary
 		s100::render::PaintPriority(priority, drawingSet, painter, texts, &stages);
 	}
 
+	SkiaViewFrame::Scene::Scene(SkiaViewFrame& frame) : Scene(frame, nullptr)
+	{
+	}
+
 	SkiaViewFrame::Scene::Scene(SkiaViewFrame& frame, HDC target) : frame(frame)
 	{
 		if (frame.state->scenes++ == 0)
@@ -544,6 +592,11 @@ namespace GISLibrary
 		}
 	}
 
+	void SkiaViewFrame::End()
+	{
+		End(state->sceneTarget);
+	}
+
 	void SkiaViewFrame::End(HDC target)
 	{
 		state->renderers.clear();
@@ -554,7 +607,7 @@ namespace GISLibrary
 		// What the frame left set (a clip, a transform of the canvas) ends with it.
 		state->recording->restoreToCount(state->frameSave);
 
-		if (state->scenes > 0 && target && target == state->sceneTarget)
+		if (state->scenes > 0 && target == state->sceneTarget)
 		{
 			state->sceneWaiting = true;   // shown with the rest of the scene
 			return;
@@ -569,9 +622,50 @@ namespace GISLibrary
 		{
 			return;
 		}
+#ifdef _WIN32
 		const BLENDFUNCTION blend{ AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-		::AlphaBlend(target, state->view.left, state->view.top, state->width, state->height,
+		::AlphaBlend(target, state->view[0], state->view[1], state->width, state->height,
 			state->memory, 0, 0, state->width, state->height, blend);
+#endif
+	}
+
+	void SkiaViewFrame::SetFontFiles(std::vector<std::filesystem::path> files)
+	{
+		state->fontFiles = std::move(files);
+		state->fontFilesChanged = true;
+	}
+
+	bool SkiaViewFrame::WritePng(const std::filesystem::path& path, const ColorF& background) const
+	{
+		if (!state->bits || state->width <= 0 || state->height <= 0)
+		{
+			return false;
+		}
+		s100::render::SkiaImage image(state->width, state->height, background);
+		if (!image.Valid())
+		{
+			return false;
+		}
+		// A frame that drew nothing left the pixels as they were: the picture is the background.
+		if (state->drawn)
+		{
+			const SkPixmap pixels(SkImageInfo::MakeN32Premul(state->width, state->height, nullptr), state->bits,
+				static_cast<size_t>(state->width) * 4);
+			const sk_sp<SkImage> layer = SkImages::RasterFromPixmapCopy(pixels);
+			if (!layer)
+			{
+				return false;
+			}
+			image.Canvas().drawImage(layer, 0.0f, 0.0f, SkSamplingOptions(), nullptr);
+		}
+		return image.WritePng(path);
+	}
+
+	void SkiaViewFrame::Draw(CGISLibraryApp& view, int offset)
+	{
+		state->drawn = false;
+		const Scene scene(*this);
+		view.Draw(*this, offset);
 	}
 
 	void SkiaViewFrame::ForgetCatalogues()
@@ -580,3 +674,14 @@ namespace GISLibrary
 		state->catalogues.clear();
 	}
 }
+
+#ifdef _WIN32
+// Everything a refresh draws is one scene: the layers are rasterised together and put on the
+// device context once.
+void CGISLibraryApp::Draw(HDC& hDC, int offset)
+{
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	const GISLibrary::SkiaViewFrame::Scene scene(frame, hDC);
+	Draw(frame, offset);
+}
+#endif

@@ -35,7 +35,7 @@ public: // for draw
 public:
 	// Grid datasets (S-102 ...) are drawn by a renderer that receives the D2D resources explicitly.
 	// False for a grid that has no renderer (nothing is drawn).
-	bool DrawGrid(HDC& hDC, Scaler* scaler);
+	bool DrawGrid(GISLibrary::ViewFrame& frame, Scaler* scaler);
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
 	FeatureCatalogue* GetFC();

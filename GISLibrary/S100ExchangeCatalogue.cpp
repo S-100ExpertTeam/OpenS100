@@ -7,7 +7,7 @@
 #include "S100ExchangeCatalogue.h"
 #include "DatasetOpening.h"
 #include "IRenderer.h"
-#include "SkiaViewFrame.h"
+#include "ViewFrame.h"
 #include "GISLibrary.h"
 #include "Inventory.h"
 #include "S100Utilities.h"
@@ -107,8 +107,8 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
                 else
                 {
                     ScaleBand sb;
-                    sb.SetOptimumDisplayScale(min(inv->totalScaleBand.GetOptimumDisplayScale(), sr.GetOptimumDisplayScale()));
-                    sb.SetMinimumDisplayScale(min(inv->totalScaleBand.GetMinimumDisplayScale(), sr.GetMinimumDisplayScale()));
+                    sb.SetOptimumDisplayScale((std::min)(inv->totalScaleBand.GetOptimumDisplayScale(), sr.GetOptimumDisplayScale()));
+                    sb.SetMinimumDisplayScale((std::min)(inv->totalScaleBand.GetMinimumDisplayScale(), sr.GetMinimumDisplayScale()));
                     inv->totalScaleBand = sb;
                 }
 
@@ -233,7 +233,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100ExchangeCatalogue::ItemsOf(std::
     return items;
 }
 
-void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*offset*/, std::vector<std::shared_ptr<InventoryItem>>& item)
+void S100ExchangeCatalogue::DrawFiles(Scaler* scaler, std::vector<std::shared_ptr<InventoryItem>>& item)
 {
     item.clear();
     const auto view = GISLibrary::selectionView(*scaler);
@@ -268,23 +268,22 @@ namespace
     }
 }
 
-void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
+void S100ExchangeCatalogue::Draw(GISLibrary::ViewFrame& frame, Scaler* scaler, double offset)
 {
     std::vector<std::shared_ptr<InventoryItem>> items;
 
-    DrawFiles(hDC, scaler, offset, items);
+    DrawFiles(scaler, items);
 
-    m_pLayerManager->Draw(hDC, offset);
+    m_pLayerManager->Draw(frame, static_cast<int>(offset));
 
-    // The overlay is a frame of its own, by the backend the viewer draws with.
-    auto& frame = GISLibrary::SkiaViewFrame::Shared();
+    // The overlay, over the datasets.
     if (frame.Begin(*scaler))
     {
         if (auto* renderer = frame.Renderer(nullptr))
         {
             DrawOverlay(*renderer, *scaler, items);
         }
-        frame.End(hDC);
+        frame.End();
     }
 }
 

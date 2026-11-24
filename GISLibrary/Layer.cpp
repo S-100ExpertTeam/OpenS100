@@ -17,12 +17,12 @@ Layer::~Layer(void)
 	}
 }
 
-void Layer::Draw(HDC &hDC, Scaler *scaler, double offset)
+void Layer::Draw(GISLibrary::ViewFrame& frame, Scaler *scaler, double offset)
 {
 	// only draw layers when it's on.
 	if (On && m_spatialObject)
 	{
-		m_spatialObject->Draw(hDC, scaler, offset);
+		m_spatialObject->Draw(frame, scaler, offset);
 	}
 }
 

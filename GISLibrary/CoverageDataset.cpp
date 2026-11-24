@@ -3,7 +3,7 @@
 #include "CoverageDataset.h"
 
 #include "DisplayListPainter.h"
-#include "SkiaViewFrame.h"
+#include "ViewFrame.h"
 #include "SymbolPicture.h"
 #include "GF_FeatureType.h"
 #include "Layer.h"
@@ -82,7 +82,7 @@ namespace GISLibrary
 		// holds it, for a projection about a pole, where the meridians are not the chart's columns:
 		// about as many pixels as the grid has cells, each taking the cell it lies in.
 		std::vector<std::uint32_t> warpToWorld(const s100::coverage::CoverageRaster& raster, std::span<const std::uint32_t> source,
-			MBR& world, UINT32& width, UINT32& height)
+			MBR& world, std::uint32_t& width, std::uint32_t& height)
 		{
 			const auto& extent = raster.extent();
 			const double north = raster.latitude(extent.north);
@@ -101,13 +101,13 @@ namespace GISLibrary
 				return {};
 			}
 			const double longest = std::clamp(1.5 * (std::max)(columns, rows), 16.0, 4096.0);
-			width = static_cast<UINT32>((std::max)(1.0, std::round(worldWidth >= worldHeight ? longest : longest * worldWidth / worldHeight)));
-			height = static_cast<UINT32>((std::max)(1.0, std::round(worldHeight >= worldWidth ? longest : longest * worldHeight / worldWidth)));
+			width = static_cast<std::uint32_t>((std::max)(1.0, std::round(worldWidth >= worldHeight ? longest : longest * worldWidth / worldHeight)));
+			height = static_cast<std::uint32_t>((std::max)(1.0, std::round(worldHeight >= worldWidth ? longest : longest * worldHeight / worldWidth)));
 
 			std::vector<std::uint32_t> pixels(static_cast<std::size_t>(width) * height, 0);
-			for (UINT32 y = 0; y < height; ++y)
+			for (std::uint32_t y = 0; y < height; ++y)
 			{
-				for (UINT32 x = 0; x < width; ++x)
+				for (std::uint32_t x = 0; x < width; ++x)
 				{
 					double longitude = world.xmin + (x + 0.5) / width * worldWidth;
 					double latitude = world.ymax - (y + 0.5) / height * worldHeight;
@@ -729,7 +729,7 @@ namespace GISLibrary
 			}
 		}
 
-		const std::wstring mainRule = pc->GetRootPathW() + L"Rules\\" + pc->GetMainRuleFile()->GetFileNameW();
+		const std::wstring mainRule = pc->GetRootPathW() + L"Rules/" + pc->GetMainRuleFile()->GetFileNameW();
 		if (xslt)
 		{
 			PortrayXslt(fc, pc, utf8(mainRule));
@@ -884,20 +884,19 @@ namespace GISLibrary
 		}
 	}
 
-	void CoverageDataset::DrawCoverage(HDC& hDC, Scaler* scaler)
+	void CoverageDataset::DrawCoverage(ViewFrame& frame, Scaler* scaler)
 	{
 		if (!raw_ || !scaler || fillsByFeature_.empty())
 		{
 			return;
 		}
-		auto& frame = SkiaViewFrame::Shared();
 		if (frame.Begin(*scaler))
 		{
 			if (auto* renderer = frame.Renderer(pc_))
 			{
 				DrawCoverage(*renderer, *scaler);
 			}
-			frame.End(hDC);
+			frame.End();
 		}
 	}
 
@@ -966,8 +965,8 @@ namespace GISLibrary
 			if (!image.bitmap)
 			{
 				auto bgra = toPremultipliedBgra(raster.pixels());
-				UINT32 width = static_cast<UINT32>(raster.width());
-				UINT32 height = static_cast<UINT32>(raster.height());
+				std::uint32_t width = static_cast<std::uint32_t>(raster.width());
+				std::uint32_t height = static_cast<std::uint32_t>(raster.height());
 				if (IsPolarProjection())
 				{
 					MBR world;

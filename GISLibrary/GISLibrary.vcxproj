@@ -1028,6 +1028,7 @@
     <ClInclude Include="PatternTile.h" />
     <ClInclude Include="SymbolPicture.h" />
     <ClInclude Include="SkiaViewFrame.h" />
+    <ClInclude Include="ViewFrame.h" />
     <ClInclude Include="..\RenderSkia\SkiaFonts.h" />
     <ClInclude Include="..\RenderSkia\SkiaImage.h" />
     <ClInclude Include="..\RenderSkia\SkiaRenderer.h" />

@@ -67,7 +67,7 @@ namespace GISLibrary
 		// Draws every CoverageFill into the device context, in the current palette, and over it the
 		// S-98 Appendix D lines when EnhancedSafetyContour is on.
 		// A frame of its own on the device context, by the backend the viewer draws with.
-		void DrawCoverage(HDC& hDC, Scaler* scaler);
+		void DrawCoverage(ViewFrame& frame, Scaler* scaler);
 		// The grids, their lines and symbols on a renderer, in device pixels.
 		void DrawCoverage(s100::render::IRenderer& renderer, Scaler& scaler);
 

@@ -3,6 +3,7 @@
 #include <string>
 #include "Namespace_GISLibrary.h"
 #include "Enum_S100_FileType.h"
+#include "ViewFrame.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -31,7 +32,7 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
+	virtual void Draw(GISLibrary::ViewFrame& frame, Scaler *scaler, double offset = 0);
 	bool IsOn();
 	bool IsOn(int scale);
 	bool InfoOn();

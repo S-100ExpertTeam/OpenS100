@@ -5,7 +5,8 @@
 # code in one directory; the Visual Studio project builds all of it.
 #   opens100::dataset    every source except the ones listed in this file
 #   opens100::portrayal  OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
-#   (no target)          display, display clients, System Database, other
+#   opens100::view       OPENS100_GISLIBRARY_VIEW_SOURCES
+#   opens100::view-skia  OPENS100_GISLIBRARY_VIEW_SKIA_SOURCES
 #
 # Each target is closed: dataset alone, and portrayal on top of dataset and luascripting, link
 # with --whole-archive and no undefined symbol.
@@ -29,15 +30,20 @@ set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
     SENC_PointInstruction SENC_SimpleLineStyle SENC_Symbol SENC_SymbolFill SENC_Template
     SENC_TextInstruction SENC_TextPoint SENC_pixmapFill SymbolPicture)
 
-# Draws with Direct2D or GDI, or builds their resources. In no package target until a portable
-# render backend replaces them (Documents/TechDocs/2026-11-17-render-separation-design.md).
+# opens100::view - a view of layers: the layer manager, what opens a layer, the layers that draw
+# themselves (grids, shapefiles, an exchange catalogue) and the overlays of a view. They draw on
+# a ViewFrame and name no backend (Documents/TechDocs/2026-11-24-r8-view-on-every-platform.md).
 set(OPENS100_GISLIBRARY_DISPLAY_SOURCES
     CoverageDataset ExchangeCatalogue GISLibrary GeometryPainter Inventory InventoryItem
-    LayerManager LayerOpen PortrayalRenderCache S100EditRender S100ExchangeCatalogue SkiaViewFrame FeatureHighlight
+    LayerManager LayerOpen PortrayalRenderCache S100EditRender S100ExchangeCatalogue FeatureHighlight
     S100LayerPortrayal S100Utilities SHPFile)
 
-# Refers to the display code above: layers copied for editing, a product's portrayal catalogue
-# with the Direct2D resource store, the set of layers shown from the System Database.
+# opens100::view-skia - the frame of a view on the Skia backend.
+set(OPENS100_GISLIBRARY_VIEW_SKIA_SOURCES
+    SkiaViewFrame)
+
+# Refers to the view code above: layers copied for editing, a product's portrayal catalogue,
+# the set of layers shown from the System Database.
 set(OPENS100_GISLIBRARY_DISPLAY_CLIENT_SOURCES
     DatasetLayerSet Product S101Factory)
 
@@ -49,8 +55,15 @@ set(OPENS100_GISLIBRARY_SDB_SOURCES
 set(OPENS100_GISLIBRARY_OTHER_SOURCES
     Base64String)
 
+set(OPENS100_GISLIBRARY_VIEW_SOURCES
+    ${OPENS100_GISLIBRARY_DISPLAY_SOURCES}
+    ${OPENS100_GISLIBRARY_DISPLAY_CLIENT_SOURCES}
+    ${OPENS100_GISLIBRARY_SDB_SOURCES}
+    ${OPENS100_GISLIBRARY_OTHER_SOURCES})
+
 set(OPENS100_GISLIBRARY_NON_DATASET_SOURCES
     ${OPENS100_GISLIBRARY_PORTRAYAL_SOURCES}
+    ${OPENS100_GISLIBRARY_VIEW_SKIA_SOURCES}
     ${OPENS100_GISLIBRARY_DISPLAY_SOURCES}
     ${OPENS100_GISLIBRARY_DISPLAY_CLIENT_SOURCES}
     ${OPENS100_GISLIBRARY_SDB_SOURCES}

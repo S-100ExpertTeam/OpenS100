@@ -92,22 +92,22 @@ public:
 
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
-	void Draw(HDC &hDC, int offset = 0);
-	void DrawBackground(HDC &hDC, int offset = 0);
+	void Draw(GISLibrary::ViewFrame& frame, int offset = 0);
+	void DrawBackground(GISLibrary::ViewFrame& frame, int offset = 0);
 
-	void DrawS100Datasets(HDC &hDC, int offset = 0);
-	void DrawECDISMode(HDC& hDC, int offset = 0);
-	void DrawLayerContainers(HDC& hDC, int offset = 0);
-	void DrawNonS100Datasets(HDC &hDC, int offset = 0);
-	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
+	void DrawS100Datasets(GISLibrary::ViewFrame& frame, int offset = 0);
+	void DrawECDISMode(GISLibrary::ViewFrame& frame, int offset = 0);
+	void DrawLayerContainers(GISLibrary::ViewFrame& frame, int offset = 0);
+	void DrawNonS100Datasets(GISLibrary::ViewFrame& frame, int offset = 0);
+	void DrawS100Layer(GISLibrary::ViewFrame& frame, int offset, S100Layer* layer);
 	void SetDrawingInstruction(S100Layer* layer);
-	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority);
+	void DrawS100Layer(GISLibrary::ViewFrame& frame, int offset, S100Layer* layer, int minPriority, int maxPriority);
 	// Draws the layers priority by priority across them (see drawGroups).
-	void DrawS100Layers(HDC& hDC, int offset, const std::vector<S100Layer*>& group);
+	void DrawS100Layers(GISLibrary::ViewFrame& frame, int offset, const std::vector<S100Layer*>& group);
 	void AddSymbolDrawing(int drawingPrioriy, DrawingSet& drawingSet, PortrayalCatalogue* pc);
 	void CollectInstructions(S100Layer* layer);
 
-	void DrawInformationLayer(HDC& hDC, Layer* layer);
+	void DrawInformationLayer(GISLibrary::ViewFrame& frame, Layer* layer);
 
 	Layer* GetLayer(int index);
 	Layer* GetLayerByKey(int key);

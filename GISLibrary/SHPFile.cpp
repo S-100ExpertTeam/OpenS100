@@ -2,7 +2,7 @@
 #include "SHPFile.h"
 #include "BinaryFile.h"
 #include "GeometryPainter.h"
-#include "SkiaViewFrame.h"
+#include "ViewFrame.h"
 
 SHPFile::SHPFile(void) : SpatialObject()
 {
@@ -256,7 +256,7 @@ bool SHPFile::OpenMetadata(const std::wstring& /*_filepath*/)
 	return true;
 }
 
-void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
+void SHPFile::Draw(GISLibrary::ViewFrame& frame, Scaler *scaler, double offset)
 {
 	// The world a turn of longitude away (degrees): Mercator's x is the longitude in radians.
 	// About a pole there is no such copy.
@@ -266,8 +266,6 @@ void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 	}
 	offset *= ex;
 
-	// A layer of its own on the device context.
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
 	if (!scaler || !frame.Begin(*scaler))
 	{
 		return;
@@ -278,7 +276,7 @@ void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 			GISLibrary::DrawGeometry(*renderer, *m_pSHPObject[i], *scaler, offset);
 		}
 	}
-	frame.End(hDC);
+	frame.End();
 }
 
 //transforms Big Endian and Little Endian into each other.
