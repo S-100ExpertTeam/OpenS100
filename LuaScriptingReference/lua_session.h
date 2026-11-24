@@ -51,6 +51,9 @@ public:
 	// Loads a file into the Lua interpreter.
 	void load_file(std::string file_name);
 
+	// Runs a chunk of Lua given as text.
+	void load_string(const std::string& chunk);
+
 	// Registers a Lua-callable C function.
 	void register_function(std::string function_name, lua_CFunction function);
 

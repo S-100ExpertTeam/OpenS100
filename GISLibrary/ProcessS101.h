@@ -207,6 +207,11 @@ public:
 	static S101LuaScriptingReference theInstance;
 	inline static std::string g_unknown_attribute_value;
 
+	// Whether every trace of the rules reaches the debug output. Off, only the errors do: the
+	// rules call the debugger hundreds of thousands of times a dataset (traces and performance
+	// marks nothing reads), and each call into the host stops the Lua compiler short.
+	inline static bool traceRules = false;
+
 public:
 	static int ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer);
 	static int ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, PortrayalCatalogue* pc = nullptr);

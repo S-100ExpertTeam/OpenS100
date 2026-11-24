@@ -15,10 +15,13 @@
 #include "include/core/SkMatrix.h"
 #include "include/core/SkRefCnt.h"
 
+#include <cstdint>
 #include <map>
 #include <string>
+#include <unordered_map>
 
 class SkCanvas;
+class SkImage;
 class SkPath;
 class SkShader;
 
@@ -28,6 +31,64 @@ namespace s100::render
 	class LineStyleLibrary;
 	class SkiaFonts;
 	class SymbolLibrary;
+	struct SymbolPicture;
+
+	// The symbols of a catalogue as they come out on the screen, each drawn once and kept as an
+	// image: a chart shows the same few symbols thousands of times a frame, and laying an image
+	// down costs a fraction of drawing the shapes of a symbol again.
+	//
+	// An image is of one symbol at one size, turned one way, in the colours of the palette it
+	// was drawn in: whoever keeps the images empties them (Clear) when the palette changes.
+	class SkiaSymbolImages
+	{
+	public:
+		SkiaSymbolImages();
+		~SkiaSymbolImages();
+
+		struct Image
+		{
+			sk_sp<SkImage> image;   // nothing: the symbol leaves no mark
+			int left = 0;           // where the corner of the image is from the pivot, in pixels
+			int top = 0;
+		};
+
+		// The image kept for a symbol, or nothing when it has not been drawn yet.
+		const Image* Find(const SymbolPicture* picture, float rotationDegrees, float scale) const;
+		const Image& Keep(const SymbolPicture* picture, float rotationDegrees, float scale, Image image);
+
+		void Clear();
+
+		size_t Size() const
+		{
+			return images.size();
+		}
+
+		// A turn is kept to a quarter of a degree, so symbols turned to all sides (to north about
+		// a pole) still share images.
+		static float RoundedTurn(float rotationDegrees);
+
+	private:
+		struct Key
+		{
+			const SymbolPicture* picture;
+			std::int32_t quarterDegrees;
+			float scale;
+
+			bool operator==(const Key& other) const
+			{
+				return picture == other.picture && quarterDegrees == other.quarterDegrees && scale == other.scale;
+			}
+		};
+
+		struct KeyHash
+		{
+			size_t operator()(const Key& key) const;
+		};
+
+		static Key KeyOf(const SymbolPicture* picture, float rotationDegrees, float scale);
+
+		std::unordered_map<Key, Image, KeyHash> images;
+	};
 
 	// What the backend draws with besides the canvas. The application owns what it points to
 	// and keeps it for as long as it draws.
@@ -41,6 +102,9 @@ namespace s100::render
 		const LineStyleLibrary* lineStyles = nullptr;
 		// The colours of the palette in use, for the symbols.
 		ColorLookup color;
+		// Where the symbols drawn are kept as images, in the colours of `color`; without it every
+		// symbol is drawn from its shapes each time.
+		SkiaSymbolImages* symbolImages = nullptr;
 		// The fonts texts are written in; without them no text is drawn and every text
 		// measures nothing.
 		const SkiaFonts* fonts = nullptr;
@@ -92,6 +156,9 @@ namespace s100::render
 		// The tile of a pattern fill, repeated over the surface; nothing when there is no
 		// such pattern.
 		sk_sp<SkShader> Pattern(const Fill& fill);
+		// Lays the kept image of a symbol down with its pivot at a point. False when the symbol
+		// is to be drawn from its shapes (too large to keep, or a canvas that is scaled or turned).
+		bool DrawSymbolImage(const SymbolPicture& picture, PointF at, float rotationDegrees, float scale);
 
 		SkCanvas& canvas;
 		SkiaResources resources;

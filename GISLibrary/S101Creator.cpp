@@ -937,13 +937,11 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurve* geom)
 
 	for (int i = 0; i < numC2IL; i++)
 	{
-		auto sPoint = geom->GetPoint(i);
-		if (sPoint)
 		{
 			auto c2il = new C2IL();
 
-			double x = sPoint->x;
-			double y = sPoint->y;
+			double x = geom->GetX(i);
+			double y = geom->GetY(i);
 			inverseProjection(x, y);
 			x *= enc->GetCMFX();
 			y *= enc->GetCMFY();

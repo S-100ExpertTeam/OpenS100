@@ -5,6 +5,7 @@
 #include "../GISLibrary/PatternTile.h"
 #include "../GISLibrary/SymbolPicture.h"
 
+#include "include/core/SkBBHFactory.h"
 #include "include/core/SkCanvas.h"
 #include "include/core/SkColor.h"
 #include "include/core/SkPaint.h"
@@ -21,10 +22,13 @@
 #include "include/core/SkPictureRecorder.h"
 #include "include/core/SkSamplingOptions.h"
 #include "include/core/SkShader.h"
+#include "include/core/SkSurface.h"
+#include "include/core/SkSurfaceProps.h"
 #include "include/core/SkTileMode.h"
 #include "include/effects/SkDashPathEffect.h"
 
 #include <cmath>
+#include <functional>
 
 namespace
 {
@@ -101,6 +105,65 @@ namespace
 
 namespace s100::render
 {
+	namespace
+	{
+		// Past this many images the kept ones are let go and made again as they are asked for:
+		// a chart has a few hundred symbols, and only symbols turned to every side come near it.
+		constexpr size_t symbolImageLimit = 4096;
+
+		// A symbol larger than this a side is drawn from its shapes every time.
+		constexpr int symbolImageMaxSide = 512;
+	}
+
+	SkiaSymbolImages::SkiaSymbolImages() = default;
+
+	SkiaSymbolImages::~SkiaSymbolImages() = default;
+
+	float SkiaSymbolImages::RoundedTurn(float rotationDegrees)
+	{
+		return std::round(rotationDegrees * 4.0f) / 4.0f;
+	}
+
+	SkiaSymbolImages::Key SkiaSymbolImages::KeyOf(const SymbolPicture* picture, float rotationDegrees, float scale)
+	{
+		// A whole turn more or less is the same picture.
+		const float turn = std::fmod(rotationDegrees, 360.0f);
+		std::int32_t quarters = static_cast<std::int32_t>(std::lround(turn * 4.0f)) % 1440;
+		if (quarters < 0)
+		{
+			quarters += 1440;
+		}
+		return { picture, quarters, scale };
+	}
+
+	size_t SkiaSymbolImages::KeyHash::operator()(const Key& key) const
+	{
+		size_t hash = std::hash<const void*>()(key.picture);
+		hash ^= std::hash<std::int32_t>()(key.quarterDegrees) + 0x9e3779b97f4a7c15ull + (hash << 6) + (hash >> 2);
+		hash ^= std::hash<float>()(key.scale) + 0x9e3779b97f4a7c15ull + (hash << 6) + (hash >> 2);
+		return hash;
+	}
+
+	const SkiaSymbolImages::Image* SkiaSymbolImages::Find(const SymbolPicture* picture, float rotationDegrees, float scale) const
+	{
+		const auto found = images.find(KeyOf(picture, rotationDegrees, scale));
+		return found == images.end() ? nullptr : &found->second;
+	}
+
+	const SkiaSymbolImages::Image& SkiaSymbolImages::Keep(const SymbolPicture* picture, float rotationDegrees, float scale, Image image)
+	{
+		if (images.size() >= symbolImageLimit)
+		{
+			images.clear();
+		}
+		return images.insert_or_assign(KeyOf(picture, rotationDegrees, scale), std::move(image)).first->second;
+	}
+
+	void SkiaSymbolImages::Clear()
+	{
+		images.clear();
+	}
+
 	SkiaRenderer::SkiaRenderer(SkCanvas& canvas, SkiaResources resources) : canvas(canvas), resources(std::move(resources))
 	{
 	}
@@ -342,15 +405,96 @@ namespace s100::render
 
 	void SkiaRenderer::DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale)
 	{
+		const SymbolPicture* picture = resources.symbols && resources.color ? SymbolToDraw(*resources.symbols, reference) : nullptr;
+		if (!picture)
+		{
+			omitted.symbols++;
+			return;
+		}
+
+		// The symbol as an image drawn once, when there is somewhere to keep it.
+		if (resources.symbolImages && DrawSymbolImage(*picture, at, rotationDegrees, scale))
+		{
+			return;
+		}
+
 		// The shared code draws the symbol as paths, on this renderer, under a transform of its
 		// own; the one in force comes back afterwards.
 		const SkMatrix before = matrix;
-		if (!resources.symbols || !resources.color
-			|| !s100::render::DrawSymbol(*this, *resources.symbols, reference, at, rotationDegrees, scale, resources.color))
-		{
-			omitted.symbols++;
-		}
+		DrawSymbolPicture(*this, *picture, at, rotationDegrees, scale, resources.color);
 		matrix = before;
+	}
+
+	bool SkiaRenderer::DrawSymbolImage(const SymbolPicture& picture, PointF at, float rotationDegrees, float scale)
+	{
+		// An image is laid down pixel on pixel: on a canvas that is scaled or turned the symbol
+		// is drawn from its shapes instead.
+		const SkMatrix device = canvas.getTotalMatrix();
+		if (!device.isTranslate())
+		{
+			return false;
+		}
+
+		const SkiaSymbolImages::Image* kept = resources.symbolImages->Find(&picture, rotationDegrees, scale);
+		if (!kept)
+		{
+			// Drawn about the origin by the shared code, on a renderer of this backend that records:
+			// the recording knows how far the marks of the symbol reach.
+			SkRTreeFactory bounded;
+			SkPictureRecorder recorder;
+			const float far = 1.0e6f;
+			{
+				SkiaResources shapes = resources;
+				shapes.symbolImages = nullptr;
+				SkiaRenderer recording(*recorder.beginRecording(SkRect::MakeLTRB(-far, -far, far, far), &bounded), shapes);
+				DrawSymbolPicture(recording, picture, { 0.0f, 0.0f }, SkiaSymbolImages::RoundedTurn(rotationDegrees), scale,
+					resources.color);
+			}
+			const sk_sp<SkPicture> recorded = recorder.finishRecordingAsPicture();
+
+			// A pixel more on every side, for the soft edge of the strokes.
+			SkIRect bounds = recorded->cullRect().roundOut();
+			bounds.outset(1, 1);
+			if (recorded->cullRect().isEmpty())
+			{
+				kept = &resources.symbolImages->Keep(&picture, rotationDegrees, scale, {});
+			}
+			else if (bounds.width() > symbolImageMaxSide || bounds.height() > symbolImageMaxSide)
+			{
+				return false;
+			}
+			else
+			{
+				// Texts at full contrast, as on the surface of the view.
+				const SkSurfaceProps props(0, kUnknown_SkPixelGeometry, SkSurfaceProps::kMaxContrastInclusive, 2.2f);
+				const sk_sp<SkSurface> surface = SkSurfaces::Raster(
+					SkImageInfo::MakeN32Premul(bounds.width(), bounds.height(), nullptr), &props);
+				if (!surface)
+				{
+					return false;
+				}
+				SkCanvas* onImage = surface->getCanvas();
+				onImage->clear(SK_ColorTRANSPARENT);
+				onImage->translate(static_cast<float>(-bounds.left()), static_cast<float>(-bounds.top()));
+				onImage->drawPicture(recorded);
+
+				SkiaSymbolImages::Image image;
+				image.image = surface->makeImageSnapshot();
+				image.left = bounds.left();
+				image.top = bounds.top();
+				kept = &resources.symbolImages->Keep(&picture, rotationDegrees, scale, std::move(image));
+			}
+		}
+
+		if (kept->image)
+		{
+			// The pivot goes to the nearest whole pixel of the surface, so the image is copied and
+			// not sampled between pixels.
+			const float x = std::round(at.x + device.getTranslateX()) - device.getTranslateX() + static_cast<float>(kept->left);
+			const float y = std::round(at.y + device.getTranslateY()) - device.getTranslateY() + static_cast<float>(kept->top);
+			canvas.drawImage(kept->image, x, y);
+		}
+		return true;
 	}
 
 	SizeF SkiaRenderer::MeasureText(const std::string& text, const TextFont& font)

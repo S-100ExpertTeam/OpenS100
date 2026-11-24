@@ -20,17 +20,26 @@
 #include "../RenderSkia/SkiaFonts.h"
 #include "../RenderSkia/SkiaRenderer.h"
 
+#include "include/core/SkBBHFactory.h"
 #include "include/core/SkCanvas.h"
 #include "include/core/SkColor.h"
 #include "include/core/SkColorSpace.h"
 #include "include/core/SkImageInfo.h"
+#include "include/core/SkPicture.h"
+#include "include/core/SkPictureRecorder.h"
 #include "include/core/SkSurface.h"
 #include "include/core/SkSurfaceProps.h"
 
+#include <algorithm>
+#include <condition_variable>
 #include <cstdint>
 #include <cstdlib>
+#include <functional>
 #include <map>
+#include <mutex>
 #include <string>
+#include <thread>
+#include <vector>
 
 #pragma comment(lib, "msimg32.lib")   // AlphaBlend
 
@@ -50,7 +59,131 @@ namespace
 		s100::render::SymbolLibrary symbols;
 		s100::render::AreaFillLibrary areaFills;
 		s100::render::LineStyleLibrary lineStyles;
+
+		// The symbols drawn so far as images, in the colours of the palette named.
+		s100::render::SkiaSymbolImages symbolImages;
+		std::string symbolPalette;
 	};
+
+	// The threads a frame is rasterised on besides the one that draws it. They are started with
+	// the first frame that has work for them and wait between frames.
+	class BandWorkers
+	{
+	public:
+		explicit BandWorkers(int count)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				threads.emplace_back([this]() { Work(); });
+			}
+		}
+
+		~BandWorkers()
+		{
+			{
+				const std::lock_guard<std::mutex> lock(mutex);
+				stopping = true;
+			}
+			wake.notify_all();
+			for (std::thread& thread : threads)
+			{
+				thread.join();
+			}
+		}
+
+		BandWorkers(const BandWorkers&) = delete;
+		BandWorkers& operator=(const BandWorkers&) = delete;
+
+		// Calls job(0) ... job(count - 1), each once, on the workers and on the calling thread,
+		// and comes back when every call has returned.
+		void Run(int count, const std::function<void(int)>& job)
+		{
+			if (count <= 0)
+			{
+				return;
+			}
+			{
+				const std::lock_guard<std::mutex> lock(mutex);
+				current = &job;
+				total = count;
+				next = 0;
+				unfinished = count;
+				round++;
+			}
+			wake.notify_all();
+			Take(job, count);
+
+			std::unique_lock<std::mutex> lock(mutex);
+			done.wait(lock, [this]() { return unfinished == 0; });
+			current = nullptr;
+		}
+
+	private:
+		// Takes the calls that are left, one at a time, until there is none.
+		void Take(const std::function<void(int)>& job, int count)
+		{
+			for (;;)
+			{
+				int index = 0;
+				{
+					const std::lock_guard<std::mutex> lock(mutex);
+					if (current != &job || next >= count)
+					{
+						return;
+					}
+					index = next++;
+				}
+				job(index);
+				{
+					const std::lock_guard<std::mutex> lock(mutex);
+					if (--unfinished == 0)
+					{
+						done.notify_all();
+					}
+				}
+			}
+		}
+
+		void Work()
+		{
+			std::uint64_t seen = 0;
+			for (;;)
+			{
+				const std::function<void(int)>* job = nullptr;
+				int count = 0;
+				{
+					std::unique_lock<std::mutex> lock(mutex);
+					wake.wait(lock, [&]() { return stopping || (round != seen && current); });
+					if (stopping)
+					{
+						return;
+					}
+					seen = round;
+					job = current;
+					count = total;
+				}
+				Take(*job, count);
+			}
+		}
+
+		std::vector<std::thread> threads;
+		std::mutex mutex;
+		std::condition_variable wake;
+		std::condition_variable done;
+		const std::function<void(int)>* current = nullptr;   // the job of the round in hand
+		int total = 0;
+		int next = 0;          // the next call nobody has taken
+		int unfinished = 0;    // calls not yet returned
+		std::uint64_t round = 0;
+		bool stopping = false;
+	};
+
+	// A frame with fewer drawing calls than this is rasterised by the thread that drew it:
+	// handing it round would cost more than it saves.
+	constexpr int bandMinCalls = 512;
+
+	// No more threads than this rasterise a frame, however many the machine has.
+	constexpr int bandMaxThreads = 8;
 }
 
 namespace GISLibrary
@@ -66,6 +199,28 @@ namespace GISLibrary
 		int height = 0;
 		RECT view{};
 		sk_sp<SkSurface> surface;
+
+		// What is drawn in a frame is written down (a recording) and rasterised when the frame
+		// ends: the surface is cut into bands, each a surface over its own rows of the same
+		// pixels, and several threads play the recording back onto a band each. A band draws
+		// what touches it and nothing else, so no two threads write a pixel.
+		struct Band
+		{
+			sk_sp<SkSurface> surface;
+			int top = 0;
+		};
+		std::vector<Band> bands;
+		SkPictureRecorder recorder;
+		SkCanvas* recording = nullptr;   // the canvas of the frame in hand; null outside a frame
+		std::unique_ptr<BandWorkers> workers;
+		int threads = 1;                 // the threads a frame is rasterised on, this one counted
+
+		// The scene in hand: how many are open, the device context of the outermost, and whether
+		// frames ended on it wait in the recording to be shown.
+		int scenes = 0;
+		HDC sceneTarget = nullptr;
+		bool sceneWaiting = false;
+		int frameSave = 0;               // the save count of the recording when the frame began
 
 		// The fonts, of the display font the viewer is set to.
 		std::string fontName;
@@ -114,6 +269,12 @@ namespace GISLibrary
 		void Release()
 		{
 			renderers.clear();
+			if (recording)
+			{
+				recording = nullptr;
+				recorder.finishRecordingAsPicture();
+			}
+			bands.clear();
 			surface.reset();
 			if (memory)
 			{
@@ -170,6 +331,65 @@ namespace GISLibrary
 			}
 			width = newWidth;
 			height = newHeight;
+
+			// Two bands a thread, so a thread that gets an empty band has another to take.
+			threads = std::clamp(static_cast<int>(std::thread::hardware_concurrency()), 1, bandMaxThreads);
+			const int count = threads > 1 ? std::min(threads * 2, newHeight) : 0;
+			for (int i = 0; i < count; i++)
+			{
+				Band band;
+				band.top = static_cast<int>(static_cast<std::int64_t>(newHeight) * i / count);
+				const int bottom = static_cast<int>(static_cast<std::int64_t>(newHeight) * (i + 1) / count);
+				band.surface = SkSurfaces::WrapPixels(SkImageInfo::MakeN32Premul(newWidth, bottom - band.top, nullptr),
+					static_cast<std::uint8_t*>(bits) + static_cast<size_t>(band.top) * newWidth * 4,
+					static_cast<size_t>(newWidth) * 4, &props);
+				if (!band.surface)
+				{
+					bands.clear();   // the frame is rasterised whole
+					break;
+				}
+				bands.push_back(std::move(band));
+			}
+			return true;
+		}
+
+		// Puts what the frame recorded on the pixels.
+		// False when the frame drew nothing: there is nothing to put on the screen then.
+		bool Rasterise()
+		{
+			if (!recording)
+			{
+				return false;
+			}
+			recording = nullptr;
+			const sk_sp<SkPicture> recorded = recorder.finishRecordingAsPicture();
+			if (!recorded || !surface || recorded->approximateOpCount() == 0)
+			{
+				return false;
+			}
+
+			if (bands.empty() || recorded->approximateOpCount() < bandMinCalls)
+			{
+				SkCanvas* canvas = surface->getCanvas();
+				canvas->clear(SK_ColorTRANSPARENT);
+				canvas->drawPicture(recorded);
+				return true;
+			}
+
+			if (!workers)
+			{
+				workers = std::make_unique<BandWorkers>(threads - 1);
+			}
+			const SkPicture* picture = recorded.get();
+			workers->Run(static_cast<int>(bands.size()), [this, picture](int index) {
+				const Band& band = bands[static_cast<size_t>(index)];
+				SkCanvas* canvas = band.surface->getCanvas();
+				canvas->clear(SK_ColorTRANSPARENT);
+				canvas->save();
+				canvas->translate(0.0f, static_cast<float>(-band.top));
+				canvas->drawPicture(picture);
+				canvas->restore();
+			});
 			return true;
 		}
 
@@ -210,20 +430,50 @@ namespace GISLibrary
 	bool SkiaViewFrame::Begin(const Scaler& scaler)
 	{
 		const auto screen = scaler.GetScreenRect();
-		state->view = RECT{ screen.left, screen.top, screen.right, screen.bottom };
+		const RECT view{ screen.left, screen.top, screen.right, screen.bottom };
 		state->renderers.clear();
+
+		// A frame of a scene goes on drawing where the frames before it left off, as long as the
+		// view is the same.
+		if (state->sceneWaiting && state->recording)
+		{
+			if (::EqualRect(&view, &state->view))
+			{
+				state->Fonts();
+				state->frameSave = state->recording->save();
+				return true;
+			}
+			Show(state->sceneTarget);
+		}
+
+		state->view = view;
 		if (!state->Size(screen.right - screen.left, screen.bottom - screen.top))
 		{
 			return false;
 		}
 		state->Fonts();
-		state->surface->getCanvas()->clear(SK_ColorTRANSPARENT);
+		// What the frame draws is written down with where each call lands, so a band plays back
+		// only the calls that touch it.
+		if (state->recording)
+		{
+			// A frame begun and never ended: what it recorded is dropped.
+			state->recording = nullptr;
+			state->recorder.finishRecordingAsPicture();
+		}
+		SkRTreeFactory placed;
+		state->recording = state->recorder.beginRecording(
+			SkRect::MakeWH(static_cast<float>(state->width), static_cast<float>(state->height)), &placed);
+		if (!state->recording)
+		{
+			return false;
+		}
+		state->frameSave = state->recording->save();
 		return true;
 	}
 
 	s100::render::IRenderer* SkiaViewFrame::Renderer(PortrayalCatalogue* catalogue)
 	{
-		if (!state->surface)
+		if (!state->surface || !state->recording)
 		{
 			return nullptr;
 		}
@@ -239,12 +489,20 @@ namespace GISLibrary
 				{
 					resources = std::make_unique<CatalogueResources>(*catalogue);
 				}
+				// The images of the symbols are in the colours of a palette: another, and they go.
+				const std::string palette = catalogue->GetCurrentPaletteName();
+				if (palette != resources->symbolPalette)
+				{
+					resources->symbolImages.Clear();
+					resources->symbolPalette = palette;
+				}
+				with.symbolImages = &resources->symbolImages;
 				with.symbols = &resources->symbols;
 				with.areaFills = &resources->areaFills;
 				with.lineStyles = &resources->lineStyles;
 				with.color = [catalogue](const std::wstring& token) { return PortrayalRender::Color(catalogue, token); };
 			}
-			renderer = std::make_unique<s100::render::SkiaRenderer>(*state->surface->getCanvas(), with);
+			renderer = std::make_unique<s100::render::SkiaRenderer>(*state->recording, with);
 		}
 		return renderer.get();
 	}
@@ -265,10 +523,49 @@ namespace GISLibrary
 		s100::render::PaintPriority(priority, drawingSet, painter, texts, &stages);
 	}
 
+	SkiaViewFrame::Scene::Scene(SkiaViewFrame& frame, HDC target) : frame(frame)
+	{
+		if (frame.state->scenes++ == 0)
+		{
+			frame.state->sceneTarget = target;
+		}
+	}
+
+	SkiaViewFrame::Scene::~Scene()
+	{
+		State& held = *frame.state;
+		if (--held.scenes == 0)
+		{
+			if (held.sceneWaiting)
+			{
+				frame.Show(held.sceneTarget);
+			}
+			held.sceneTarget = nullptr;
+		}
+	}
+
 	void SkiaViewFrame::End(HDC target)
 	{
 		state->renderers.clear();
-		if (!state->surface || !target)
+		if (!state->recording)
+		{
+			return;   // no frame was begun
+		}
+		// What the frame left set (a clip, a transform of the canvas) ends with it.
+		state->recording->restoreToCount(state->frameSave);
+
+		if (state->scenes > 0 && target && target == state->sceneTarget)
+		{
+			state->sceneWaiting = true;   // shown with the rest of the scene
+			return;
+		}
+		Show(target);
+	}
+
+	void SkiaViewFrame::Show(HDC target)
+	{
+		state->sceneWaiting = false;
+		if (!state->Rasterise() || !target)
 		{
 			return;
 		}

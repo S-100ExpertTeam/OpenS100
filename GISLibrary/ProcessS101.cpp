@@ -1470,6 +1470,22 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S100SpatialObject* cel
 	theInstance.m_lua_session->register_function("HostDebuggerEntry", HostDebuggerEntry);
 	theInstance.m_lua_session->register_function("HostPortrayalEmit", HostPortrayalEmit);
 
+	// The debugger of the rules stays in Lua unless there is an error to report: the traces and
+	// the performance marks are dropped there and never cross to the host.
+	if (!traceRules)
+	{
+		theInstance.m_lua_session->load_string(
+			"local host = HostDebuggerEntry\n"
+			"local sub, type = string.sub, type\n"
+			"HostDebuggerEntry = function(action, message, depth)\n"
+			"\tif action == 'trace' then\n"
+			"\t\tif type(message) == 'string' and sub(message, 1, 5) == 'Error' then host(action, message) end\n"
+			"\telseif action == 'first_chance_error' or action == 'break' then\n"
+			"\t\thost(action, message, depth)\n"
+			"\tend\n"
+			"end\n");
+	}
+
 	// Extract rules path from top level rule file name
 	// (either separator: ".../Rules/main.lua" as well as the Windows form)
 	const auto separatorAt = top_level_rule.find_last_of("\\/");

@@ -862,7 +862,8 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	geo->Set(_vecPoint, boundaryList);
 
 	geo->SetMBR();
-	geo->CalculateCenterPoint();
+	// The point a symbol or a text of the surface is put at is worked out when one is first
+	// drawn (getCenterPoint): most surfaces have neither, and it is the dearest step of them all.
 
 	if (sr)
 	{
@@ -1101,13 +1102,11 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		if (1 == ORNT)
 		{
 			curve->Set(pointIndex, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
-			curve->GetPoint(pointIndex)->SetID(beginPointRecord->GetRCID());
 			pointIndex++;
 		}
 		else if (2 == ORNT)
 		{
 			curve->Set(pointIndex, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
-			curve->GetPoint(pointIndex)->SetID(endPointRecord->GetRCID());
 			pointIndex++;
 		}
 		else
@@ -1150,18 +1149,26 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		if (1 == ORNT)
 		{
 			curve->Set(pointIndex, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
-			curve->GetPoint(pointIndex)->SetID(endPointRecord->GetRCID());
 			pointIndex++;
 		}
 		else if (2 == ORNT)
 		{
 			curve->Set(pointIndex, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
-			curve->GetPoint(pointIndex)->SetID(beginPointRecord->GetRCID());
 			pointIndex++;
 		}
 		else
 		{
 			return false;
+		}
+
+		// The points the curve begins and ends at, in the direction it is taken in.
+		if (1 == ORNT)
+		{
+			curve->SetEndPointIDs(beginPointRecord->GetRCID(), endPointRecord->GetRCID());
+		}
+		else
+		{
+			curve->SetEndPointIDs(endPointRecord->GetRCID(), beginPointRecord->GetRCID());
 		}
 
 		curve->SetMultiplicationFactor(m_dsgir.m_dssi.m_cmfx, m_dsgir.m_dssi.m_cmfy);

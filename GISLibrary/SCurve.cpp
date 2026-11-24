@@ -9,6 +9,7 @@
 
 #include "../LatLonUtility/cpp_util.h"
 
+#include <algorithm>
 #include <sstream>
 
 #include <boost/geometry.hpp>
@@ -26,15 +27,14 @@ SCurve::SCurve(const SCurve& other) : SAbstractCurve(other)
 {
 	m_masking = other.m_masking;
 	suppress = other.suppress;
+	m_firstPointID = other.m_firstPointID;
+	m_lastPointID = other.m_lastPointID;
 
 	m_numPoints = other.m_numPoints;
 	if (m_numPoints > 0)
 	{
-		m_pPoints = new SPoint[m_numPoints];
-		for (int i = 0; i < m_numPoints; i++)
-		{
-			m_pPoints[i] = other.m_pPoints[i];
-		}
+		m_pPoints = new SVertex[m_numPoints];
+		std::copy(other.m_pPoints, other.m_pPoints + m_numPoints, m_pPoints);
 	}
 
 	if (other.centerPoint)
@@ -80,15 +80,16 @@ SCurve SCurve::operator=(const SCurve& other)
 
 	m_masking = other.m_masking;
 	suppress = other.suppress;
+	m_firstPointID = other.m_firstPointID;
+	m_lastPointID = other.m_lastPointID;
+	m_firstPoint.reset();
+	m_lastPoint.reset();
 
 	m_numPoints = other.m_numPoints;
 	if (m_numPoints > 0)
 	{
-		m_pPoints = new SPoint[m_numPoints];
-		for (int i = 0; i < m_numPoints; i++)
-		{
-			m_pPoints[i] = other.m_pPoints[i];
-		}
+		m_pPoints = new SVertex[m_numPoints];
+		std::copy(other.m_pPoints, other.m_pPoints + m_numPoints, m_pPoints);
 	}
 
 	if (other.centerPoint)
@@ -106,7 +107,15 @@ SGeometryType SCurve::GetType()
 
 int SCurve::GetRCID()
 {
-	return cpp_util::stoi(GetID());
+	// Asked for every frame, of every curve drawn: the text is read as a number once, and again
+	// when the identifier is another.
+	if (!m_rcidRead || m_rcidText != id)
+	{
+		m_rcid = cpp_util::stoi(id);
+		m_rcidText = id;
+		m_rcidRead = true;
+	}
+	return m_rcid;
 }
 
 int SCurve::GetNumPoints() const
@@ -215,8 +224,13 @@ void SCurve::Init(int size)
 	SetID(0);
 
 	delete[] m_pPoints;
-	m_pPoints = new SPoint[size];
+	m_pPoints = new SVertex[size];
 	m_numPoints = size;
+
+	m_firstPointID = noPointID;
+	m_lastPointID = noPointID;
+	m_firstPoint.reset();
+	m_lastPoint.reset();
 }
 
 void SCurve::Set(int index, double x, double y)
@@ -245,7 +259,6 @@ void SCurve::Projection()
 		{
 			double x;
 			double y;
-			SPoint* source;   // null for a point put between two of the curve's
 		};
 		std::vector<Position> positions;
 		for (int i = 0; i + 1 < m_numPoints; i++)
@@ -259,27 +272,24 @@ void SCurve::Projection()
 			{
 				for (int j = 0; j < i; j++)
 				{
-					positions.push_back({ m_pPoints[j].x, m_pPoints[j].y, &m_pPoints[j] });
+					positions.push_back({ m_pPoints[j].x, m_pPoints[j].y });
 				}
 			}
-			positions.push_back({ m_pPoints[i].x, m_pPoints[i].y, &m_pPoints[i] });
+			positions.push_back({ m_pPoints[i].x, m_pPoints[i].y });
 			for (const auto& [longitude, latitude] : between)
 			{
-				positions.push_back({ longitude, latitude, nullptr });
+				positions.push_back({ longitude, latitude });
 			}
 		}
 		if (!positions.empty())
 		{
-			SPoint& last = m_pPoints[m_numPoints - 1];
-			positions.push_back({ last.x, last.y, &last });
-			SPoint* points = new SPoint[positions.size()];
+			const SVertex& last = m_pPoints[m_numPoints - 1];
+			positions.push_back({ last.x, last.y });
+			// The ends stay the ends: the identifiers of their points stay with them.
+			SVertex* points = new SVertex[positions.size()];
 			for (std::size_t i = 0; i < positions.size(); i++)
 			{
 				points[i].SetPoint(positions[i].x, positions[i].y);
-				if (positions[i].source)
-				{
-					points[i].SetID(positions[i].source->GetID());
-				}
 			}
 			delete[] m_pPoints;
 			m_pPoints = points;
@@ -326,22 +336,31 @@ bool SCurve::IsClosed()
 	return false;
 }
 
-SPoint* SCurve::GetPoint(int index)
+void SCurve::SetEndPointIDs(int first, int last)
 {
-	if (index >= 0 && index < GetNumPoints())
+	m_firstPointID = first;
+	m_lastPointID = last;
+}
+
+SPoint* SCurve::EndPoint(std::unique_ptr<SPoint>& kept, int index, int pointID)
+{
+	if (!kept)
 	{
-		return m_pPoints + index;
+		kept = std::make_unique<SPoint>();
 	}
-	
-	return nullptr;
+	kept->SetPoint(m_pPoints[index].x, m_pPoints[index].y);
+	if (pointID != noPointID)
+	{
+		kept->SetID(pointID);
+	}
+	return kept.get();
 }
 
 SPoint* SCurve::GetFirstPoint()
 {
 	if (GetNumPoints() > 0)
 	{
-		auto point = GetPoint(0);
-		return point;
+		return EndPoint(m_firstPoint, 0, m_firstPointID);
 	}
 
 	return nullptr;
@@ -352,8 +371,7 @@ SPoint* SCurve::GetLastPoint()
 	int numPoints = GetNumPoints();
 	if (numPoints > 0)
 	{
-		auto point = GetPoint(numPoints - 1);
-		return point;
+		return EndPoint(m_lastPoint, numPoints - 1, m_lastPointID);
 	}
 
 	return nullptr;

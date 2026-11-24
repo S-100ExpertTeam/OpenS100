@@ -27,11 +27,8 @@ SSurface::SSurface(const SSurface& other) : SGeometry(other)
 
 	if (m_numPoints > 0)
 	{
-		m_pPoints = new GeoPoint[m_numPoints];
-		for (int i = 0; i < m_numPoints; i++)
-		{
-			m_pPoints[i] = other.m_pPoints[i];
-		}
+		m_pPoints = new SVertex[m_numPoints];
+		std::copy(other.m_pPoints, other.m_pPoints + m_numPoints, m_pPoints);
 	}
 	
 	for (const auto& iter : other.curveList)
@@ -60,7 +57,7 @@ SSurface::SSurface(MBR* mbr)
 	m_numPoints = 5;
 	m_pParts = new int[1];
 	m_pParts[0] = 0;
-	m_pPoints = new GeoPoint[5];
+	m_pPoints = new SVertex[5];
 	m_pPoints[0].x = mbr->xmin;
 	m_pPoints[0].y = mbr->ymin;
 	m_pPoints[1].x = mbr->xmax;
@@ -306,7 +303,7 @@ void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourcePar
 		}
 	}
 
-	m_pPoints = new GeoPoint[m_numPoints];
+	m_pPoints = new SVertex[m_numPoints];
 
 	if (m_numPoints > SGeometry::sizeOfPoint)
 	{
@@ -379,11 +376,8 @@ SSurface SSurface::operator=(const SSurface& other)
 
 	if (m_numPoints > 0)
 	{
-		m_pPoints = new GeoPoint[m_numPoints];
-		for (int i = 0; i < m_numPoints; i++)
-		{
-			m_pPoints[i] = other.m_pPoints[i];
-		}
+		m_pPoints = new SVertex[m_numPoints];
+		std::copy(other.m_pPoints, other.m_pPoints + m_numPoints, m_pPoints);
 	}
 
 	for (const auto& iter : other.curveList)
@@ -433,7 +427,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 
 	int offset = 0;
 
-	std::vector<GeoPoint> localPointArray;
+	std::vector<SVertex> localPointArray;
 
 	for (int i = 0; i < m_numParts; i++)
 	{
@@ -449,7 +443,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 
 		for (int j = 0; j < numPointPerPart; j++)
 		{
-			GeoPoint point;
+			SVertex point;
 			memcpy(&point.x, value + 9 + offset, 8);
 			memcpy(&point.y, value + 17 + offset, 8);
 			offset += 16;
@@ -463,7 +457,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 
 	m_numPoints = (int)localPointArray.size();
 
-	m_pPoints = new GeoPoint[m_numPoints];
+	m_pPoints = new SVertex[m_numPoints];
 	std::copy(localPointArray.begin(), localPointArray.end(), m_pPoints);
 
 	CalculateCenterPoint();
@@ -545,7 +539,8 @@ GeoPoint SSurface::GetXY(int ringIndex, int pointIndex)
 
 		if (pointIndex >= 0 && pointIndex < pointCountPerPart)
 		{
-			return m_pPoints[m_pParts[ringIndex] + pointIndex];
+			const SVertex& vertex = m_pPoints[m_pParts[ringIndex] + pointIndex];
+			return GeoPoint(vertex.x, vertex.y);
 		}
 	}
 
@@ -568,12 +563,21 @@ void SSurface::SetXY(int ringIndex, int pointIndex, double x, double y)
 
 double SSurface::GetX()
 {
-	return getCenterPoint().GetX();
+	// Asked for every frame, of every surface with a symbol: no copy of the point is made.
+	if (nullptr == m_centerPoint)
+	{
+		CalculateCenterPoint();
+	}
+	return m_centerPoint->x;
 }
 
 double SSurface::GetY()
 {
-	return getCenterPoint().GetY();
+	if (nullptr == m_centerPoint)
+	{
+		CalculateCenterPoint();
+	}
+	return m_centerPoint->y;
 }
 
 double SSurface::GetX(int index)

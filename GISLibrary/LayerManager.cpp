@@ -389,6 +389,10 @@ int LayerManager::AddLayerFront(const std::wstring& _filepath)
 
 void LayerManager::Draw(HDC& hdc, int offset)
 {
+	// Everything a refresh draws is one scene: the layers are rasterised together and put on
+	// the device context once.
+	GISLibrary::SkiaViewFrame::Scene scene(GISLibrary::SkiaViewFrame::Shared(), hdc);
+
 	DrawBackground(hdc, offset);
 
 	// Layer containers (the System Database chart, exchange sets) are base charts: drawn under
@@ -444,8 +448,13 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 void LayerManager::CollectInstructions(S100Layer* layer)
 {
 	auto cell = (S100SpatialObject*)layer->GetSpatialObject();
-	s100::render::CollectInstructions(*cell->pcManager->displayListSENC, GetS100Scale(), *scaler,
-		[this](const std::wstring& code) { return IsFeatureOn(code); },
+	// With no feature type turned off there is nothing to ask of an instruction.
+	s100::render::FeatureFilter shown;
+	if (!featureOnOffMap.empty())
+	{
+		shown = [this](const std::wstring& code) { return IsFeatureOn(code); };
+	}
+	s100::render::CollectInstructions(*cell->pcManager->displayListSENC, GetS100Scale(), *scaler, shown,
 		layer->drawingSet, layer->drawingPriority);
 }
 

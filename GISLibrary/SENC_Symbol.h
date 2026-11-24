@@ -27,7 +27,15 @@ public:
 	int rotationCRS;
 	float scaleFactor = 0;
 
+	// `reference` in UTF-8, converted when first asked for and again when `reference` is another:
+	// a renderer asks for it every time the symbol is drawn.
+	const std::string& ReferenceUtf8();
+
 private:
+	std::string referenceUtf8;
+	std::wstring referenceConverted;
+	bool referenceRead = false;
+
 	SENC_LinePlacement* linePlacement = nullptr;
 	SENC_AreaPlacement* areaPlacement = nullptr;
 };

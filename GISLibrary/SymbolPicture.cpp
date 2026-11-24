@@ -418,21 +418,23 @@ namespace s100::render
 		}
 	}
 
-	bool DrawSymbol(IRenderer& renderer, SymbolLibrary& symbols, const std::string& name, PointF at, float rotationDegrees,
-		float scale, const ColorLookup& color)
+	const SymbolPicture* SymbolToDraw(SymbolLibrary& symbols, const std::string& name)
 	{
 		if (name == "INFORM01" && !ENCCommon::Show_INFORM01)
 		{
-			return false;
+			return nullptr;
 		}
 		const SymbolPicture* picture = symbols.Find(name);
+		return picture ? picture : symbols.Find("QUESMRK1");
+	}
+
+	bool DrawSymbol(IRenderer& renderer, SymbolLibrary& symbols, const std::string& name, PointF at, float rotationDegrees,
+		float scale, const ColorLookup& color)
+	{
+		const SymbolPicture* picture = SymbolToDraw(symbols, name);
 		if (!picture)
 		{
-			picture = symbols.Find("QUESMRK1");
-			if (!picture)
-			{
-				return false;
-			}
+			return false;
 		}
 		DrawSymbolPicture(renderer, *picture, at, rotationDegrees, scale, color);
 		return true;

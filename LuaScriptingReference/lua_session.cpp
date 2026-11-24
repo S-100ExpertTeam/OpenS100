@@ -114,6 +114,13 @@ void lua_session::load_file(std::string file_name)
 	call_raw();
 }
 
+void lua_session::load_string(const std::string& chunk)
+{
+	check_status(luaL_loadstring(m_l, chunk.c_str()));
+
+	call_raw();
+}
+
 void lua_session::register_function(std::string function_name, lua_CFunction function)
 {
 	lua_pushcfunction(m_l, function);

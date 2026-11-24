@@ -36,6 +36,7 @@
 
 #include <pugixml.hpp>
 
+#include <climits>
 #include <cmath>
 #include <memory>
 #include <utility>
@@ -59,7 +60,97 @@ namespace
 	{
 		std::unique_ptr<s100::render::RetainedPath> path;   // nothing when there is nothing to draw
 		const void* backend = nullptr;                      // IRenderer::Backend of the one that made it
+
+		// The path with fewer vertices that is drawn at the zoom level named: nothing when the
+		// geometry loses too few at that zoom to be worth a path of its own.
+		std::unique_ptr<s100::render::RetainedPath> coarse;
+		int coarseLevel = noLevel;
+
+		static constexpr int noLevel = INT_MIN;
 	};
+
+	// A geometry of fewer vertices than this is always drawn whole.
+	constexpr int coarseMinVertices = 32;
+
+	// The width of the grid the vertices are gathered on at a zoom level, in the units of the
+	// dataset: a quarter of the size a pixel has at the start of the level, so between an
+	// eighth and a quarter of a pixel on the screen.
+	double GridOf(int zoomLevel)
+	{
+		return std::ldexp(0.25, zoomLevel);
+	}
+
+	// A run of vertices as one figure, each moved to the nearest node of the grid and left out
+	// when it lands on the one before. Which nodes a run passes does not depend on which end
+	// it is walked from, so an edge two surfaces share comes out the same for both. A run that
+	// falls on a single node is kept as a line of no length, which a round pen draws as a dot.
+	template <typename XAt, typename YAt>
+	s100::render::PathFigure GatheredFigure(int count, XAt xAt, YAt yAt, double grid, bool closed)
+	{
+		s100::render::PathFigure figure;
+		figure.closed = closed;
+		const double perUnit = 1.0 / grid;
+		double lastX = 0;
+		double lastY = 0;
+		for (int i = 0; i < count; i++)
+		{
+			const double x = std::floor(xAt(i) * perUnit + 0.5) * grid;
+			const double y = std::floor(yAt(i) * perUnit + 0.5) * grid;
+			if (i == 0)
+			{
+				figure.start = { static_cast<float>(x), static_cast<float>(-y) };
+			}
+			else if (x != lastX || y != lastY)
+			{
+				figure.lines.push_back({ static_cast<float>(x), static_cast<float>(-y) });
+			}
+			else
+			{
+				continue;
+			}
+			lastX = x;
+			lastY = y;
+		}
+		if (count > 1 && figure.lines.empty())
+		{
+			figure.lines.push_back(figure.start);
+		}
+		return figure;
+	}
+
+	size_t VerticesOf(const s100::render::Path& path)
+	{
+		size_t vertices = 0;
+		for (const auto& figure : path.figures)
+		{
+			vertices += figure.lines.size() + 1;
+		}
+		return vertices;
+	}
+
+	// The path a geometry of `vertices` vertices is drawn from at a zoom level: its coarse one,
+	// made by `build` from the width of the grid when the zoom has changed, or the whole one
+	// when the coarse one would keep more than three vertices in four.
+	template <typename Build>
+	const s100::render::RetainedPath* PathAtZoom(KeptPath& kept, s100::render::IRenderer& renderer, int vertices, int zoomLevel,
+		Build build)
+	{
+		if (!kept.path || vertices < coarseMinVertices || !s100::render::DisplayListPainter::gatherVertices)
+		{
+			return kept.path.get();
+		}
+		if (kept.coarseLevel != zoomLevel)
+		{
+			kept.coarseLevel = zoomLevel;
+			kept.coarse.reset();
+			const s100::render::Path path = build(GridOf(zoomLevel));
+			if (VerticesOf(path) * 4 <= static_cast<size_t>(vertices) * 3)
+			{
+				kept.coarse = renderer.Retain(path);
+			}
+		}
+		return kept.coarse ? kept.coarse.get() : kept.path.get();
+	}
 
 	// The rings of a surface as closed figures; the points are given by a function of the index.
 	template <typename PointAt>
@@ -157,7 +248,7 @@ namespace s100::render
 				rotation += northAngle;
 			}
 
-			renderer.DrawSymbol(pugi::as_utf8(instruction->symbol->reference), { pi->x, pi->y }, rotation, symbolScale);
+			renderer.DrawSymbol(instruction->symbol->ReferenceUtf8(), { pi->x, pi->y }, rotation, symbolScale);
 		}
 	}
 
@@ -246,10 +337,28 @@ namespace s100::render
 				surface->renderAttachment = std::move(attachment);
 			}
 
-			if (kept->path)
+			const RetainedPath* drawn = PathAtZoom(*kept, renderer, surface->m_numPoints, ZoomLevel(), [surface](double grid) {
+				Path path;
+				const int parts = surface->m_numParts <= 1 ? 1 : surface->m_numParts;
+				for (int part = 0; part < parts; part++)
+				{
+					const int start = surface->m_numParts <= 1 ? 0 : surface->m_pParts[part];
+					const int count = surface->m_numParts <= 1 ? surface->m_numPoints : surface->GetNumPointPerPart(part);
+					if (count < 2)
+					{
+						continue;
+					}
+					const SVertex* points = surface->m_pPoints + start;
+					path.figures.push_back(GatheredFigure(count, [points](int i) { return points[i].x; },
+						[points](int i) { return points[i].y; }, grid, true));
+				}
+				return path;
+			});
+
+			if (drawn)
 			{
 				renderer.SetTransform(ViewTransform());
-				renderer.FillPath(*kept->path, fill);
+				renderer.FillPath(*drawn, fill);
 			}
 		}
 		else
@@ -455,8 +564,29 @@ namespace s100::render
 		}
 	}
 
+	int DisplayListPainter::ZoomLevel()
+	{
+		if (!zoomLevelKnown)
+		{
+			// The size of a pixel in the units of the dataset, as ViewTransform has it.
+			const double xRatio = (scaler.mxMax - scaler.mxMin) / (scaler.sxMax - scaler.sxMin);
+			const double yRatio = (scaler.myMax - scaler.myMin) / (scaler.syMax - scaler.syMin);
+			const double pixel = xRatio > yRatio ? xRatio : yRatio;
+			zoomLevel = pixel > 0 && std::isfinite(pixel) ? static_cast<int>(std::floor(std::log2(pixel))) : 0;
+			zoomLevelKnown = true;
+		}
+		return zoomLevel;
+	}
+
 	const Transform& DisplayListPainter::ViewTransform()
 	{
+		// The view does not move while a painter draws.
+		if (viewTransformMade)
+		{
+			return viewTransform;
+		}
+		viewTransformMade = true;
+
 		// The map range fits the screen in both directions, so the larger of the two
 		// world-per-pixel ratios wins.
 		const double xRatio = (scaler.mxMax - scaler.mxMin) / (scaler.sxMax - scaler.sxMin);
@@ -505,10 +635,18 @@ namespace s100::render
 				curve->renderAttachment = std::move(attachment);
 			}
 
-			if (kept->path)
+			const RetainedPath* drawn = PathAtZoom(*kept, renderer, curve->m_numPoints, ZoomLevel(), [curve](double grid) {
+				const SVertex* points = curve->m_pPoints;
+				Path path;
+				path.figures.push_back(GatheredFigure(curve->m_numPoints, [points](int i) { return points[i].x; },
+					[points](int i) { return points[i].y; }, grid, false));
+				return path;
+			});
+
+			if (drawn)
 			{
 				renderer.SetTransform(ViewTransform());
-				renderer.StrokePath(*kept->path, penColor, stroke);
+				renderer.StrokePath(*drawn, penColor, stroke);
 			}
 		}
 		else

@@ -521,6 +521,111 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 	}
 }
 
+// Opt-in: how long the cells named in S100_BENCH_CELLS (';'-separated paths) take to open, to
+// draw (fitted to the view, then zoomed in about its middle) and to close, and the memory they
+// hold. A picture of every view goes to the output directory, to compare one build with another.
+//   set S100_BENCH_FRAMES=<n>   frames a view (5 unless given); the median is reported
+TEST(RenderSmoke, TimesCellsFromEnvironment)
+{
+	char* value = nullptr;
+	std::size_t length = 0;
+	if (_dupenv_s(&value, &length, "S100_BENCH_CELLS") != 0 || !value)
+	{
+		GTEST_SKIP() << "S100_BENCH_CELLS is not set";
+	}
+	const std::string list(value);
+	free(value);
+
+	int frames = 5;
+	if (_dupenv_s(&value, &length, "S100_BENCH_FRAMES") == 0 && value)
+	{
+		frames = (std::max)(1, std::atoi(value));
+		free(value);
+	}
+
+	// Windows slows a process with no window down after a couple of seconds (power throttling:
+	// the efficiency cores, a lower clock), which would make the later cells look slower than
+	// the first. The measurement asks for full speed throughout.
+	PROCESS_POWER_THROTTLING_STATE fullSpeed{};
+	fullSpeed.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
+	fullSpeed.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+	fullSpeed.StateMask = 0;
+	::SetProcessInformation(::GetCurrentProcess(), ProcessPowerThrottling, &fullSpeed, sizeof(fullSpeed));
+	::SetPriorityClass(::GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
+
+	using Clock = std::chrono::steady_clock;
+	const auto ms = [](Clock::time_point a, Clock::time_point b) { return std::chrono::duration<double, std::milli>(b - a).count(); };
+	const auto privateMegabytes = []() {
+		PROCESS_MEMORY_COUNTERS_EX counters{};
+		::GetProcessMemoryInfo(::GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&counters), sizeof(counters));
+		return static_cast<double>(counters.PrivateUsage) / (1024.0 * 1024.0);
+	};
+
+	CGISLibraryApp gis;
+	auto cm = gis.GetCatalogManager();
+	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+
+	std::size_t start = 0;
+	while (start <= list.size())
+	{
+		const auto end = list.find(';', start);
+		const std::string item = list.substr(start, end == std::string::npos ? std::string::npos : end - start);
+		start = end == std::string::npos ? list.size() + 1 : end + 1;
+		if (item.empty())
+		{
+			continue;
+		}
+		const std::filesystem::path cell(item);
+		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
+		const std::string name = cell.stem().string();
+
+		const double memoryBefore = privateMegabytes();
+		const auto t0 = Clock::now();
+		ASSERT_TRUE(gis.AddLayer(cell.wstring())) << item;
+		const double opened = ms(t0, Clock::now());
+		const double memoryOpen = privateMegabytes();
+
+		gis.SetViewMBR(view);
+		const MBR fitted = gis.GetScaler()->GetMap();
+		const double cx = (fitted.xmin + fitted.xmax) / 2;
+		const double cy = (fitted.ymin + fitted.ymax) / 2;
+		const double hw = (fitted.xmax - fitted.xmin) / 2;
+		const double hh = (fitted.ymax - fitted.ymin) / 2;
+
+		std::string drawn;
+		for (const int zoom : { 1, 4, 16, 64 })
+		{
+			gis.SetMap(MBR(cx - hw / zoom, cy - hh / zoom, cx + hw / zoom, cy + hh / zoom));
+			MemoryCanvas canvas(kWidth, kHeight);
+			ASSERT_TRUE(canvas.valid());
+			std::vector<double> times;
+			double first = 0;
+			for (int i = 0; i <= frames; ++i)
+			{
+				canvas.Clear();
+				const auto a = Clock::now();
+				gis.Draw(canvas.dc());
+				::GdiFlush();
+				(i == 0 ? first : times.emplace_back()) = ms(a, Clock::now());
+			}
+			std::sort(times.begin(), times.end());
+			drawn += std::format("  x{} 1:{} first {:.0f} median {:.1f} ms", zoom,
+				static_cast<long long>(gis.GetScaler()->GetCurrentScale()), first, times[times.size() / 2]);
+			EXPECT_TRUE(canvas.SavePng(OutputDirectory() / std::format("bench-{}-x{}.png", name, zoom)));
+		}
+
+		const auto t1 = Clock::now();
+		gis.DeleteLayer(0);
+		const double closed = ms(t1, Clock::now());
+
+		std::cout << std::format("[ bench    ] {}  open {:.0f} ms (+{:.0f} MB), close {:.0f} ms (left {:+.0f} MB)\n[ bench    ]  draw{}",
+			name, opened, memoryOpen - memoryBefore, closed, privateMegabytes() - memoryBefore, drawn) << std::endl;
+	}
+}
+
 // System Database work item SDB-5: an exchange set opened without installing it loads only the
 // cells S-98 E-1.3 selects for the view, through the same selector as the System Database.
 TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)

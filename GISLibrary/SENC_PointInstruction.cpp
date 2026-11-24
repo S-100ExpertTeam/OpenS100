@@ -533,7 +533,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //	}
 //}
 
-void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<GISLibrary::PointF>& points)
+void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::vector<GISLibrary::PointF>& points)
 {
 	auto geom = fr->GetGeometry();	
 

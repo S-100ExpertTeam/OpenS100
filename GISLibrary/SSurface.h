@@ -3,6 +3,7 @@
 
 #include "SGeometry.h"
 #include "SAbstractCurve.h"
+#include "SVertex.h"
 
 class Scaler;
 class GeoPoint;
@@ -24,7 +25,7 @@ public:
 	int	m_numPoints = 0;
 	int* m_pParts = nullptr; // start index of part
 
-	GeoPoint* m_pPoints = nullptr;
+	SVertex* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
 
 

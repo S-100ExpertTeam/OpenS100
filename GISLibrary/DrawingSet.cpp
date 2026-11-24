@@ -11,7 +11,7 @@ DrawingSet::~DrawingSet()
 
 }
 
-std::list<SENC_Instruction*>* DrawingSet::GetAugmentedRayList(int _index) 
+InstructionList* DrawingSet::GetAugmentedRayList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -21,7 +21,7 @@ std::list<SENC_Instruction*>* DrawingSet::GetAugmentedRayList(int _index)
 	return &augmentedRayList[_index]; 
 }
 
-std::list<SENC_Instruction*>* DrawingSet::GetAugmentedPathList(int _index) 
+InstructionList* DrawingSet::GetAugmentedPathList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -31,7 +31,7 @@ std::list<SENC_Instruction*>* DrawingSet::GetAugmentedPathList(int _index)
 	return &augmentedPathList[_index];
 }
 
-std::list<SENC_Instruction*>* DrawingSet::GetPointList(int _index) 
+InstructionList* DrawingSet::GetPointList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -41,7 +41,7 @@ std::list<SENC_Instruction*>* DrawingSet::GetPointList(int _index)
 	return &pointList[_index];
 }
 
-std::list<SENC_Instruction*>* DrawingSet::GetLineList(int _index) 
+InstructionList* DrawingSet::GetLineList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -51,7 +51,7 @@ std::list<SENC_Instruction*>* DrawingSet::GetLineList(int _index)
 	return &lineList[_index];
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetAreaList(int _index) 
+InstructionList* DrawingSet::GetAreaList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -61,7 +61,7 @@ std::list<SENC_Instruction*>* DrawingSet::GetAreaList(int _index)
 	return &areaList[_index];
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetTextList(int _index) 
+InstructionList* DrawingSet::GetTextList(int _index) 
 { 
 	if (_index >= 100)
 	{
@@ -71,32 +71,32 @@ std::list<SENC_Instruction*>* DrawingSet::GetTextList(int _index)
 	return &textList[_index];
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetAugmentedRayList() 
+InstructionList* DrawingSet::GetAugmentedRayList() 
 { 
 	return &augmentedRayList[0]; 
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetAugmentedPathList() 
+InstructionList* DrawingSet::GetAugmentedPathList() 
 { 
 	return &augmentedPathList[0]; 
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetPointList() 
+InstructionList* DrawingSet::GetPointList() 
 { 
 	return &pointList[0]; 
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetLineList() 
+InstructionList* DrawingSet::GetLineList() 
 {
 	return &lineList[0]; 
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetAreaList() 
+InstructionList* DrawingSet::GetAreaList() 
 {
 	return &areaList[0]; 
 };
 
-std::list<SENC_Instruction*>* DrawingSet::GetTextList()
+InstructionList* DrawingSet::GetTextList()
 { 
 	return &textList[0]; 
 };

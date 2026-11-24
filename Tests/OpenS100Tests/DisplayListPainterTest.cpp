@@ -253,6 +253,16 @@ namespace
 	};
 }
 
+namespace
+{
+	// Draws every geometry whole while it lives, whatever the zoom.
+	struct WholeGeometry
+	{
+		WholeGeometry() { s100::render::DisplayListPainter::gatherVertices = false; }
+		~WholeGeometry() { s100::render::DisplayListPainter::gatherVertices = true; }
+	};
+}
+
 // A sample cell with lights: its areas, lines, symbols, texts and augmented rays and paths (sector limits and arcs) drawn on the
 // recording renderer. No Direct2D and no window: this is what runs on every platform.
 TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
@@ -277,6 +287,10 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	Scaler scaler;
 	scaler.SetScreen(0, 0, 1600, 1000);
 	scaler.SetMap(layer.m_mbr);
+
+	// The calls are recorded with every geometry drawn whole: what is drawn with the vertices
+	// gathered depends on the zoom (GathersTheVerticesOfLongCurvesWhenZoomedOut).
+	const WholeGeometry whole;
 
 	RecordingRenderer renderer;
 	int lookups = 0;
@@ -379,6 +393,66 @@ namespace
 	};
 }
 
+// Zoomed out, a curve or a surface of many vertices is drawn from a second kept path with fewer
+// of them; the path is kept for the zoom and made again only when the zoom has doubled or halved.
+TEST(DisplayListPainter, GathersTheVerticesOfLongCurvesWhenZoomedOut)
+{
+	const auto root = testpaths::repoRoot();
+	const auto cellPath = root / "SampleData" / "10100AA_X01NE.000";
+	ASSERT_TRUE(std::filesystem::exists(cellPath)) << cellPath;
+
+	FeatureCatalogue fc;
+	ASSERT_TRUE(fc.Read((root / "ProgramData" / "FC" / "S-101_FC.xml").string()));
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((root / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	S100Layer layer(&fc, &pc);
+	auto* cell = new S101Cell(&fc);   // the layer owns its dataset
+	layer.m_spatialObject = cell;
+	cell->SetLayer(&layer);
+	ASSERT_TRUE(cell->Open(cellPath.wstring()));
+	layer.BuildPortrayalCatalogue();
+	ASSERT_TRUE(cell->pcManager && cell->pcManager->displayListSENC);
+
+	const auto paint = [&](RecordingRenderer& renderer, Scaler& scaler) {
+		s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring&) { return s100::render::ColorF{}; });
+		for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
+		{
+			instruction->Accept(painter);
+		}
+	};
+
+	// The cell fitted to the view, every geometry whole.
+	Scaler fitted;
+	fitted.SetScreen(0, 0, 1600, 1000);
+	fitted.SetMap(layer.m_mbr);
+	RecordingRenderer renderer;
+	{
+		const WholeGeometry whole;
+		paint(renderer, fitted);
+	}
+	const int whole = renderer.retained;
+	ASSERT_GT(whole, 0);
+
+	// The cell a sixty-fourth of that size: long curves get a path of fewer vertices.
+	MBR wide = layer.m_mbr;
+	const double halfWidth = (wide.xmax - wide.xmin) * 32;
+	const double halfHeight = (wide.ymax - wide.ymin) * 32;
+	const double cx = (wide.xmin + wide.xmax) / 2;
+	const double cy = (wide.ymin + wide.ymax) / 2;
+	Scaler zoomedOut;
+	zoomedOut.SetScreen(0, 0, 1600, 1000);
+	zoomedOut.SetMap(MBR(cx - halfWidth, cy - halfHeight, cx + halfWidth, cy + halfHeight));
+	paint(renderer, zoomedOut);
+	const int gathered = renderer.retained - whole;
+	EXPECT_GT(gathered, 0);
+	EXPECT_LT(gathered, whole);   // a short curve has no second path
+
+	// The same view again: nothing is built.
+	paint(renderer, zoomedOut);
+	EXPECT_EQ(renderer.retained, whole + gathered);
+}
+
 // A frame of the sample cell as a display draws it: the instructions the view shows, sorted by
 // drawing priority and kind, the shared curves suppressed, one priority after another.
 TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
@@ -436,6 +510,8 @@ TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
 	EXPECT_LT(collectedWithoutLights, collected);
 
 	s100::render::SuppressSharedCurves(priorities, set);
+
+	const WholeGeometry whole;   // as in SampleCellIsPaintedAsRecorded
 
 	RecordingRenderer renderer;
 	s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring& token) {

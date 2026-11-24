@@ -38,6 +38,23 @@ namespace GISLibrary
 		// A transparent surface the size of the view. False when there is none to draw on.
 		bool Begin(const Scaler& scaler);
 
+		// A refresh of the view draws many frames, one a layer or a group of layers, each laid over
+		// the ones before on the same device context. While a scene is open the frames ended on
+		// its device context are kept as one drawing, and that drawing is rasterised and blended
+		// once, when the scene closes: the picture is the same, and the surface is cleared, drawn
+		// and blended once a refresh instead of once a layer. Scenes nest; the outermost counts.
+		class Scene
+		{
+		public:
+			Scene(SkiaViewFrame& frame, HDC target);
+			~Scene();
+			Scene(const Scene&) = delete;
+			Scene& operator=(const Scene&) = delete;
+
+		private:
+			SkiaViewFrame& frame;
+		};
+
 		// One drawing priority of a drawing set, with the colours and symbols of a catalogue.
 		void Paint(int priority, DrawingSet& drawingSet, PortrayalCatalogue* catalogue, Scaler& scaler, bool texts);
 
@@ -45,13 +62,17 @@ namespace GISLibrary
 		// Null outside a frame.
 		s100::render::IRenderer* Renderer(PortrayalCatalogue* catalogue);
 
-		// Blends what was painted onto the device context, at the place of the view.
+		// Blends what was painted onto the device context, at the place of the view. In a scene
+		// on that device context this is put off until the scene closes.
 		void End(HDC target);
 
 		// Forgets what is kept for the catalogues (when one is unloaded or its files change).
 		void ForgetCatalogues();
 
 	private:
+		// Rasterises what is recorded and blends it onto a device context.
+		void Show(HDC target);
+
 		struct State;
 		std::unique_ptr<State> state;
 	};

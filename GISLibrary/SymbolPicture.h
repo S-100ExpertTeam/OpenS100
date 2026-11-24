@@ -89,6 +89,11 @@ namespace s100::render
 	void DrawSymbolPicture(IRenderer& renderer, const SymbolPicture& picture, PointF at, float rotationDegrees, float scale,
 		const ColorLookup& color, float strokeScale = 1.0f);
 
+	// The picture a display draws for a name: the question mark of the catalogue (QUESMRK1) for
+	// a name it does not have, and nothing for an information symbol (INFORM01) when those are
+	// turned off. Nothing when there is nothing to draw.
+	const SymbolPicture* SymbolToDraw(SymbolLibrary& symbols, const std::string& name);
+
 	// Draws the symbol of a name as a display does: the question mark of the catalogue
 	// (QUESMRK1) for a name it does not have, and no information symbol (INFORM01) when those
 	// are turned off. False when nothing was drawn.

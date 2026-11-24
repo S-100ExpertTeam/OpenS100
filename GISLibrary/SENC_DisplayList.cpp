@@ -75,7 +75,7 @@ SENC_DisplayList::~SENC_DisplayList()
 	alertInstructions.clear();
 }
 
-void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::list<SENC_Instruction*> &itList)
+void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::vector<SENC_Instruction*> &itList)
 {
 	int curViewingGroupLimit = 0;
 
@@ -96,8 +96,14 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 	itList.clear();
 
 	SENC_Instruction *instruction = nullptr;
-	auto startIndex = displayInstructions.lower_bound(GetKey(priority, type));
-	auto lastIndex = displayInstructions.upper_bound(GetKey(priority, type));
+	const auto [startIndex, lastIndex] = displayInstructions.equal_range(GetKey(priority, type));
+	if (startIndex == lastIndex)
+	{
+		return;
+	}
+
+	// What the view shows does not change from one instruction to the next.
+	const MBR& map = scaler->GetMap();
 
 	for (auto i = startIndex;
 		i != lastIndex;
@@ -126,14 +132,14 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 			{
 				if ((instruction->scaleMinimum == 0 || currentScale <= (int)instruction->scaleMinimum) &&
 					(instruction->scaleMaximum == 0 || currentScale >= (int)instruction->scaleMaximum) &&
-					(MBR::CheckOverlap(scaler->GetMap(), geom->m_mbr)))
+					(MBR::CheckOverlap(map, geom->m_mbr)))
 				{
 					itList.push_back(instruction);
 				}
 			}
 			else
 			{
-				if (MBR::CheckOverlap(scaler->GetMap(), geom->m_mbr))
+				if (MBR::CheckOverlap(map, geom->m_mbr))
 				{
 					itList.push_back(instruction);
 				}

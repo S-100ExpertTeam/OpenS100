@@ -36,6 +36,8 @@
 #include "../LuaScriptingReference/composite_curve.h"
 
 
+#include <string_view>
+#include <unordered_map>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -58,68 +60,66 @@ static FeatureCatalogue *feature_catalog;
 static std::vector<std::string> s_feature_ids; // Process in input schema order.  Not strictly necessary but can aid in debugging.
 static std::vector<std::string> s_information_ids;
 
-static std::map<std::string, GF::FeatureType*> s_feature_nodes;
-static std::map<std::string, GF::InformationType*> s_information_nodes;
-static std::map<std::string, R_PointRecord*> s_spatial_point_nodes;
-static std::map<std::string, R_MultiPointRecord*> s_spatial_mpoint_nodes;
-static std::map<std::string, R_CurveRecord*> s_spatial_curve_nodes;
-static std::map<std::string, R_CompositeRecord*> s_spatial_ccurve_nodes;
-static std::map<std::string, R_SurfaceRecord*> s_spatial_surface_nodes;
-static std::map<std::string, std::set<std::string>*> s_spatial_features;
+static std::unordered_map<std::string, GF::FeatureType*> s_feature_nodes;
+static std::unordered_map<std::string, GF::InformationType*> s_information_nodes;
+static std::unordered_map<std::string, R_PointRecord*> s_spatial_point_nodes;
+static std::unordered_map<std::string, R_MultiPointRecord*> s_spatial_mpoint_nodes;
+static std::unordered_map<std::string, R_CurveRecord*> s_spatial_curve_nodes;
+static std::unordered_map<std::string, R_CompositeRecord*> s_spatial_ccurve_nodes;
+static std::unordered_map<std::string, R_SurfaceRecord*> s_spatial_surface_nodes;
+// The features that use a spatial, in the order of their identifiers.
+static std::unordered_map<std::string, std::set<std::string>> s_spatial_features;
 
 static spatial_association get_spatial_association(PTAS* ptas);
 static spatial_association get_spatial_association(CUCO* cuco);
 static spatial_association get_spatial_association(F_SPAS* spatial);
 static spatial_association get_spatial_association(RIAS* rias);
 
-static void get_referenced_spatials(std::string spatial_id, std::vector<std::string> *spatials)
+// The kind of spatial an identifier names: what is before its first bar ("Curve|12" is a Curve).
+static std::string_view spatial_kind(const std::string& spatial_id)
 {
-	std::vector<std::string> ret;
+	return std::string_view(spatial_id).substr(0, spatial_id.find('|'));
+}
 
-	int findOffset = 0;
-	int splitOffset = 0;
-	std::string token = "|";
+// A record by its identifier, or nothing: looking one up does not add it to the map.
+template <typename Record>
+static Record* find_record(const std::unordered_map<std::string, Record*>& records, const std::string& id)
+{
+	const auto found = records.find(id);
+	return found == records.end() ? nullptr : found->second;
+}
 
-	while ((splitOffset = (int)spatial_id.find(token, findOffset)) != std::string::npos)
+static void get_referenced_spatials(const std::string& spatial_id, std::vector<std::string> *spatials)
+{
+	const std::string_view kind = spatial_kind(spatial_id);
+
+	if (kind == "Point")
 	{
-		ret.push_back(spatial_id.substr(findOffset, splitOffset - findOffset));
-		findOffset = splitOffset + (int)token.length();
-	}
-
-	ret.push_back(spatial_id.substr(findOffset, spatial_id.length() - findOffset));
-
-	std::string spatial_type;
-
-	if (ret[0] == "Point")
-	{
-		auto spatial = s_spatial_point_nodes[spatial_id];
+		auto spatial = find_record(s_spatial_point_nodes, spatial_id);
 
 		if (spatial) {
 
-			spatial_type = ret[0];
 			spatials->push_back(spatial_id);
 
 		}
 	}
-	else if (ret[0] == "MultiPoint")
+	else if (kind == "MultiPoint")
 	{
-		auto spatial = s_spatial_mpoint_nodes[spatial_id];
+		auto spatial = find_record(s_spatial_mpoint_nodes, spatial_id);
 
 		if (spatial) {
 
-			spatial_type = ret[0];
 			spatials->push_back(spatial_id);
 
 		}
 	}
-	else if (ret[0] == "Curve")
+	else if (kind == "Curve")
 	{
-		auto spatial = s_spatial_curve_nodes[spatial_id];
+		auto spatial = find_record(s_spatial_curve_nodes, spatial_id);
 		
 		if ((spatial) &&
 			(spatial->m_ptas)) {
 
-			spatial_type = ret[0];
 			spatials->push_back(spatial_id);
 
 			for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
@@ -142,12 +142,11 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 			}
 		}
 	}
-	else if (ret[0] == "CompositeCurve")
+	else if (kind == "CompositeCurve")
 	{
-		auto spatial = s_spatial_ccurve_nodes[spatial_id];
+		auto spatial = find_record(s_spatial_ccurve_nodes, spatial_id);
 
 		if (spatial) {
-			spatial_type = ret[0];
 			spatials->push_back(spatial_id);
 
 			composite_curve composite_curve;
@@ -165,13 +164,12 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 			}
 		}
 	}
-	else if (ret[0] == "Surface")
+	else if (kind == "Surface")
 	{
-		auto spatial = s_spatial_surface_nodes[spatial_id];
+		auto spatial = find_record(s_spatial_surface_nodes, spatial_id);
 
 		if (spatial) {
 
-			spatial_type = ret[0];
 			spatials->push_back(spatial_id);
 
 			surface surface;
@@ -215,16 +213,8 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 
 void hd_delete()
 {
-	if (!s_spatial_features.empty())
-	{
-		for (auto data : s_spatial_features)
-		{
-			data.second->clear();
-			delete  data.second;
-		}
-		s_spatial_features.clear();
-	}
-		
+	s_spatial_features.clear();
+
 	s_feature_nodes.clear();
 	s_information_nodes.clear();
 	s_spatial_point_nodes.clear();
@@ -238,14 +228,23 @@ void hd_delete()
 
 void hd_init(S101Cell *c)
 {
+	// Everything of the dataset portrayed before goes: its records are not this one's.
 	s_feature_ids.clear();
+	s_information_ids.clear();
 	s_feature_nodes.clear();
 	s_information_nodes.clear();
+	s_spatial_point_nodes.clear();
+	s_spatial_mpoint_nodes.clear();
+	s_spatial_curve_nodes.clear();
+	s_spatial_ccurve_nodes.clear();
+	s_spatial_surface_nodes.clear();
 	s_spatial_features.clear();
 
 	cell = c;
 
-	auto features = cell->GetVecFeature();
+	const auto& features = cell->GetVecFeature();
+	s_feature_ids.reserve(features.size());
+	s_feature_nodes.reserve(features.size());
 	for (auto i = features.begin(); i != features.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -254,7 +253,7 @@ void hd_init(S101Cell *c)
 		s_feature_nodes[sid] = (*i);
 	}
 
-	auto informations = cell->GetVecInformation();
+	const auto& informations = cell->GetVecInformation();
 	for (auto i = informations.begin(); i != informations.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -263,7 +262,8 @@ void hd_init(S101Cell *c)
 		s_information_nodes[sid] = (*i);
 	}
 
-	auto points = cell->GetVecPoint();
+	const auto& points = cell->GetVecPoint();
+	s_spatial_point_nodes.reserve(points.size());
 	for (auto i = points.begin(); i != points.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -271,7 +271,7 @@ void hd_init(S101Cell *c)
 		s_spatial_point_nodes[sid] = (*i);
 	}
 
-	auto multiPoints = cell->GetVecMultiPoint();
+	const auto& multiPoints = cell->GetVecMultiPoint();
 	for (auto i = multiPoints.begin(); i != multiPoints.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -279,7 +279,8 @@ void hd_init(S101Cell *c)
 		s_spatial_mpoint_nodes[sid] = (*i);
 	}
 
-	auto curves = cell->GetVecCurve();
+	const auto& curves = cell->GetVecCurve();
+	s_spatial_curve_nodes.reserve(curves.size());
 	for (auto i = curves.begin(); i != curves.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -287,7 +288,7 @@ void hd_init(S101Cell *c)
 		s_spatial_curve_nodes[sid] = (*i);
 	}
 
-	auto compositeCurves = cell->GetVecComposite();
+	const auto& compositeCurves = cell->GetVecComposite();
 	for (auto i = compositeCurves.begin(); i != compositeCurves.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -295,7 +296,7 @@ void hd_init(S101Cell *c)
 		s_spatial_ccurve_nodes[sid] = (*i);
 	}
 
-	auto surfaces = cell->GetVecSurface();
+	const auto& surfaces = cell->GetVecSurface();
 	for (auto i = surfaces.begin(); i != surfaces.end(); i++)
 	{
 		int id = (*i)->GetRCID();
@@ -304,25 +305,19 @@ void hd_init(S101Cell *c)
 	}
 
 	// Determine which features are referenced by each spatial
-	for (auto feature_id : s_feature_ids)
+	std::vector<std::string> ref_spatials;
+	for (const auto& feature_id : s_feature_ids)
 	{
-		std::vector<std::string> ref_spatials;
+		ref_spatials.clear();
 
-		auto spatials = hd_get_feature_spatial_associations(feature_id);
-		for (auto spatial : spatials)
+		for (const auto& spatial : hd_get_feature_spatial_associations(feature_id))
 		{
 			get_referenced_spatials(spatial.spatial_id, &ref_spatials);
 		}
 
-		for (auto spatial : ref_spatials)
+		for (const auto& spatial : ref_spatials)
 		{
-			if (!s_spatial_features.count(spatial))
-			{
-				s_spatial_features[spatial] = new std::set<std::string>();
-			}
-
-			auto spatial_features = s_spatial_features[spatial];
-			spatial_features->insert(feature_id); 
+			s_spatial_features[spatial].insert(feature_id);
 		}
 	}
 }
@@ -379,23 +374,16 @@ void hd_init(S100SpatialObject* c)
 		s_information_nodes[id] = information;
 	}
 
-	for (auto feature_id : s_feature_ids)
+	for (const auto& feature_id : s_feature_ids)
 	{
-		auto spatials = hd_get_feature_spatial_associations(feature_id);
-		for (auto spatial : spatials)
+		for (const auto& spatial : hd_get_feature_spatial_associations(feature_id))
 		{
 			if (spatial.spatial_id.empty() || spatial.spatial_id == "None")
 			{
 				continue;
 			}
 
-			if (!s_spatial_features.count(spatial.spatial_id))
-			{
-				s_spatial_features[spatial.spatial_id] = new std::set<std::string>();
-			}
-
-			auto spatial_features = s_spatial_features[spatial.spatial_id];
-			spatial_features->insert(feature_id);
+			s_spatial_features[spatial.spatial_id].insert(feature_id);
 		}
 	}
 
@@ -1130,13 +1118,12 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 
 std::vector<std::string> hd_get_spatial_associated_feature_ids(std::string spatial_id)
 {
-	std::vector<std::string> feature_ids;
-
-	if (s_spatial_features.count(spatial_id))
-		for (auto feature_id : *s_spatial_features[spatial_id])
-			feature_ids.push_back(feature_id);
-
-	return feature_ids;
+	const auto found = s_spatial_features.find(spatial_id);
+	if (found == s_spatial_features.end())
+	{
+		return {};
+	}
+	return std::vector<std::string>(found->second.begin(), found->second.end());
 }
 
 std::vector<std::string> hd_get_spatial_ids()
@@ -1148,19 +1135,7 @@ std::vector<std::string> hd_get_spatial_ids()
 
 spatial_type hd_get_spatial_type(std::string spatial_id)
 {
-	std::vector<std::string> ret;
-
-	int findOffset = 0;
-	int splitOffset = 0;
-	std::string token = "|";
-
-	while ((splitOffset = (int)spatial_id.find(token, findOffset)) != std::string::npos)
-	{
-		ret.push_back(spatial_id.substr(findOffset, splitOffset - findOffset));
-		findOffset = splitOffset + (int)token.length();
-	}
-	ret.push_back(spatial_id.substr(findOffset, spatial_id.length() - findOffset));
-	std::string spatial_type = ret[0];
+	const std::string_view spatial_type = spatial_kind(spatial_id);
 
 	if (spatial_type == "Point")
 		return spatial_type::point;

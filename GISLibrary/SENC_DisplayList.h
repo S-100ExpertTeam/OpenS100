@@ -39,7 +39,7 @@ public:
 	** 8 : Augmented Path
 	** 9 : Augmented Area
 	*/
-	void GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::list<SENC_Instruction*>& itList);
+	void GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::vector<SENC_Instruction*>& itList);
 
 
 	void AddInstruction(SENC_Instruction* value);

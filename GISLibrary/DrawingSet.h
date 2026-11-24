@@ -1,9 +1,14 @@
 #pragma once
 
-#include <list>
+#include <vector>
 
 class PortrayalCatalogue;
 class SENC_Instruction;
+
+// The instructions of one kind and one drawing priority, in the order they are drawn. A
+// vector: emptied for the next frame it keeps its storage, where a list would free and
+// allocate a node an instruction every frame.
+using InstructionList = std::vector<SENC_Instruction*>;
 
 class DrawingSet
 {
@@ -12,27 +17,27 @@ public:
 	virtual ~DrawingSet();
 
 private:
-	std::list<SENC_Instruction*> augmentedRayList[100];
-	std::list<SENC_Instruction*> augmentedPathList[100];
-	std::list<SENC_Instruction*> pointList[100];
-	std::list<SENC_Instruction*> lineList[100];
-	std::list<SENC_Instruction*> areaList[100];
-	std::list<SENC_Instruction*> textList[100];
+	InstructionList augmentedRayList[100];
+	InstructionList augmentedPathList[100];
+	InstructionList pointList[100];
+	InstructionList lineList[100];
+	InstructionList areaList[100];
+	InstructionList textList[100];
 
 public:
-	std::list<SENC_Instruction*>* GetAugmentedRayList(int _index);
-	std::list<SENC_Instruction*>* GetAugmentedPathList(int _index);
-	std::list<SENC_Instruction*>* GetPointList(int _index);
-	std::list<SENC_Instruction*>* GetLineList(int _index);
-	std::list<SENC_Instruction*>* GetAreaList(int _index);
-	std::list<SENC_Instruction*>* GetTextList(int _index);
+	InstructionList* GetAugmentedRayList(int _index);
+	InstructionList* GetAugmentedPathList(int _index);
+	InstructionList* GetPointList(int _index);
+	InstructionList* GetLineList(int _index);
+	InstructionList* GetAreaList(int _index);
+	InstructionList* GetTextList(int _index);
 
-	std::list<SENC_Instruction*>* GetAugmentedRayList();
-	std::list<SENC_Instruction*>* GetAugmentedPathList();
-	std::list<SENC_Instruction*>* GetPointList();
-	std::list<SENC_Instruction*>* GetLineList();
-	std::list<SENC_Instruction*>* GetAreaList();
-	std::list<SENC_Instruction*>* GetTextList();
+	InstructionList* GetAugmentedRayList();
+	InstructionList* GetAugmentedPathList();
+	InstructionList* GetPointList();
+	InstructionList* GetLineList();
+	InstructionList* GetAreaList();
+	InstructionList* GetTextList();
 
 public:
 	void Init();

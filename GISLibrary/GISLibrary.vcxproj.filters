@@ -1682,6 +1682,9 @@
     <ClInclude Include="SCurve.h">
       <Filter>S100\SGeometry</Filter>
     </ClInclude>
+    <ClInclude Include="SVertex.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
     <ClInclude Include="SGeometricFuc.h">
       <Filter>S100\SGeometry</Filter>
     </ClInclude>

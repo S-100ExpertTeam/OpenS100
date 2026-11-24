@@ -158,7 +158,7 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //	}
 //}
 //
-void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<GISLibrary::PointF> &points)
+void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::vector<GISLibrary::PointF> &points)
 {
 	auto geom = fr->GetGeometry();
 

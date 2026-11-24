@@ -14,6 +14,8 @@
 #include "SSurface.h"
 
 #include <list>
+#include <unordered_set>
+#include <vector>
 
 namespace
 {
@@ -22,7 +24,7 @@ namespace
 	struct Kind
 	{
 		int type;
-		std::list<SENC_Instruction*>* (DrawingSet::*list)(int);
+		InstructionList* (DrawingSet::*list)(int);
 	};
 
 	const Kind kinds[] = {
@@ -99,7 +101,7 @@ namespace s100::render
 	void CollectInstructions(SENC_DisplayList& displayList, int scale, Scaler& scaler, const FeatureFilter& shown,
 		DrawingSet& drawingSet, std::set<int>& priorities)
 	{
-		std::list<SENC_Instruction*> found;
+		std::vector<SENC_Instruction*> found;
 		for (int priority = 0; priority < priorityCount; priority++)
 		{
 			bool any = false;
@@ -130,7 +132,8 @@ namespace s100::render
 
 	void SuppressSharedCurves(const std::set<int>& priorities, DrawingSet& drawingSet)
 	{
-		std::set<int> drawn;   // the record identifiers of the curves that have an instruction
+		std::unordered_set<int> drawn;   // the record identifiers of the curves that have an instruction
+		drawn.reserve(4096);
 
 		// From the highest priority down.
 		for (auto priority = priorities.rbegin(); priority != priorities.rend(); priority++)
