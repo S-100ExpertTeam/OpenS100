@@ -43,10 +43,10 @@ namespace
 	{
 		char* value = nullptr;
 		size_t length = 0;
-		bool skia = false;
+		bool skia = true;
 		if (_dupenv_s(&value, &length, "S100_RENDER_BACKEND") == 0 && value)
 		{
-			skia = _stricmp(value, "skia") == 0;
+			skia = _stricmp(value, "d2d") != 0;
 			free(value);
 		}
 		return skia;

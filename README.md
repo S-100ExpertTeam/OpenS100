@@ -79,13 +79,16 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 | `opens100::dataset` | `dataset` | Dataset model and readers: S-101 ISO 8211 cells (`S101Cell`), GML (`S10XGML`) and HDF5 (`S100H5`) datasets. No window or renderer | portrayalcatalogue, HDF5, pugixml, polyclipping, Boost.Geometry |
 | `opens100::luascripting` | `lua-scripting` | Lua session of S-100 Part 9a portrayal (Lua 5.1 on LuaJIT), host-call table, drawing instruction results | featurecatalog, LuaJIT |
 | `opens100::portrayal` | `portrayal` | Portrayal run over a dataset: the drawing instruction model (S-100 Part 9), the Lua host for S-101 rules, the XSLT engine. Leaves instructions for a renderer to visit, or as JSON text that is the same on every platform (`DisplayListJson.h`); draws nothing | dataset, luascripting, libxslt, libxml2 |
-| `opens100::render-skia` | `render-skia` | Skia backend of the renderer (under review against the Direct2D viewer): draws the instructions on a Skia canvas the application supplies, texts in font files it hands over; a CPU surface with PNG output is included | portrayal, Skia |
+| `opens100::render-skia` | `render-skia` | Skia backend of the renderer (what the viewer draws with): draws the instructions on a Skia canvas the application supplies, texts in font files it hands over; a CPU surface with PNG output is included | portrayal, Skia |
 | `opens100::coverage` | `coverage` | S-100 Part 10c HDF5 coverages, depth lines, water level adjustment | HDF5 |
 | `opens100::sdb` | `system-database` | Local store of installed datasets and catalogues, S-98 dataset selection, S-100 Part 15 data protection | SQLite, OpenSSL, zlib, pugixml |
 
-The viewer of the Visual Studio solution draws with Direct2D. The portable render backend
-(`render-skia`) draws every kind of instruction on Windows and Linux; its pictures are being
-compared with the viewer's before the viewer moves to it.
+The viewer of the Visual Studio solution draws charts with Skia, the same backend
+(`render-skia`) that draws them on Linux: S-100 vector datasets, grids (S-102, S-104, S-111) and
+the overlay of an exchange set. Direct2D is still in the solution while the last pieces move
+(selection highlight, editing handles) and can be switched back to for comparison by setting the
+environment variable `S100_RENDER_BACKEND=d2d`. Building the solution installs Skia through
+vcpkg the first time (several minutes, and a download of LLVM).
 
 `ports/` also carries a copy of vcpkg's `skia` port that compiles Skia with clang-cl on Windows
 x64 ([ports/skia](ports/skia/README.md)): Skia built by MSVC draws on the CPU about six times

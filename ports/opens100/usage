@@ -30,7 +30,7 @@ leaves drawing instructions; a renderer of your own visits them:
     #include <GISLibrary/S100Layer.h>
     #include <GISLibrary/SENC_InstructionVisitor.h>
 
-Drawing the instructions with Skia (feature "render-skia", under review against the Direct2D viewer)
+Drawing the instructions with Skia (feature "render-skia")
 is opens100::render-skia. The canvas is yours, and so are the font files; a surface in memory
 with PNG output is included:
 

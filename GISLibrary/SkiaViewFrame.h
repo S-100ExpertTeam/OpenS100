@@ -24,8 +24,9 @@ class Scaler;
 
 namespace GISLibrary
 {
-	// Which backend the viewer draws S-100 instructions with: Direct2D, or Skia when the
-	// environment variable S100_RENDER_BACKEND says "skia". An application may set it.
+	// Which backend the viewer draws with: Skia, or Direct2D when the environment variable
+	// S100_RENDER_BACKEND says "d2d" (kept until Direct2D is removed, to compare the two).
+	// An application may set it.
 	bool DrawsWithSkia();
 	void DrawWithSkia(bool on);
 
