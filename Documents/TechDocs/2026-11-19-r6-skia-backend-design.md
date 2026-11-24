@@ -360,4 +360,40 @@ Skia가 KOR TDS 808개 셀을 화면 없이 그리고(결정 3의 조건 첫째)
 2. 글자의 진하기(8.4) — 회색조 + 최대 대비로 충분한가, LCD 부화소를 켤 것인가.
 3. 선 스타일의 굵기(8.5) — 1픽셀 그대로인가, 카탈로그의 펜 굵기를 따를 것인가.
 
-그리고 9번 결정(Windows의 Skia 빌드).
+그리고 9번 결정(Windows의 Skia 빌드) — 8.8절에서 길을 확인했다.
+
+### 8.8 Windows의 Skia를 clang-cl로 빌드 (2026-11-24, 실험)
+
+**결과: 다섯 줄로 된다. clang-cl로 빌드한 Skia는 Windows에서 D2D보다 빠르다.**
+
+- Skia의 GN 빌드는 `clang_win="<LLVM 폴더>"` 인자 하나로 Windows에서 clang-cl과 lld-link를 쓴다(`gn/BUILDCONFIG.gn`, `gn/toolchain/BUILD.gn`). vcpkg의 Skia 포트는 이 인자를 주지 않는다.
+- 실험: vcpkg의 `ports/skia`를 저장소 밖에 복사하고 `portfile.cmake`의 `win_sdk` 줄 뒤에 다음을 더해 오버레이 포트로 썼다(`-DVCPKG_OVERLAY_PORTS=`). 다른 것은 바꾸지 않았다.
+
+  ```cmake
+  vcpkg_find_acquire_program(CLANG)
+  get_filename_component(CLANG_WIN "${CLANG}" DIRECTORY)
+  get_filename_component(CLANG_WIN "${CLANG_WIN}" DIRECTORY)
+  string(APPEND OPTIONS " clang_win=\"${CLANG_WIN}\"")
+  ```
+
+  `vcpkg_find_acquire_program(CLANG)`은 vcpkg가 LLVM(이 PC에서는 21.1.8)을 제 도구 폴더로 가져오게 한다 — 사용자가 LLVM이나 Visual Studio의 Clang 구성 요소를 설치할 필요가 없다. Windows SDK와 MSVC의 헤더·라이브러리는 그대로 쓴다.
+- 빌드는 처음에 성공했다. 패키지(MSVC, `/WX`)와 소비자 예제는 고치지 않고 이 `skia.dll`에 링크됐다. 매니페스트 전체 5.8분(MSVC의 Skia로 7.2분이었다), `skia.dll` 7.2 MB(MSVC 5.6 MB).
+
+| 백엔드 (808개 셀, 8.6절과 같은 방법) | 첫 프레임의 합 | 다음 프레임의 합 | 중앙값 | 90% | 최대 |
+|---|---|---|---|---|---|
+| Skia, CPU, Windows, **clang-cl 빌드** | 24.0 s | 22.5 s | 23 ms | 50 ms | 340 ms |
+| Skia, CPU, Windows, MSVC 빌드 | 136.8 s | 134.0 s | 152 ms | 281 ms | 1673 ms |
+| Skia, CPU, Linux 컨테이너, GCC 빌드 | 25.2 s | 24.1 s | 25 ms | 54 ms | 350 ms |
+| Direct2D, 소프트웨어 렌더 | 41.9 s | 32.2 s | 35 ms | 65 ms | 412 ms |
+| Direct2D, 디스플레이 어댑터(뷰어의 기본) | 213.9 s | 49.8 s | 44 ms | 87 ms | 661 ms |
+
+- MSVC 빌드의 0.17배, D2D 소프트웨어의 0.70배, 뷰어 기본(어댑터)의 0.45배 시간이다.
+- **그림**: MSVC 빌드의 그림 808장과 대조해 16/255 넘게 다른 픽셀이 한 장에도 없다. 바이트 단위로 같은 것은 4장이다(Windows 대 Linux에서 본 것과 같은, 채널당 작은 차이). Skia가 못 그린 것 0개.
+
+**남은 선택(9번 결정)**: 이 다섯 줄을 어디에 둘 것인가.
+
+1. 이 저장소에 Skia 오버레이 포트(`ports/skia`)를 둔다 — 뷰어와 이 저장소의 빌드는 바로 빨라진다. vcpkg의 포트가 바뀔 때마다 따라가야 한다(패치 14개와 보조 파일을 복사해 들고 있게 된다).
+2. microsoft/vcpkg의 Skia 포트에 이 선택지를 제안한다(기능이나 트리플렛 변수) — 받아들여지면 `opens100` 포트의 소비자도 빠른 Skia를 받는다. 외부에 내는 일이라 사용자의 확인이 필요하고 시간이 걸린다.
+3. 둘 다: 1을 먼저 하고, 2가 받아들여지면 1을 지운다.
+
+vcpkg 레지스트리의 `opens100` 포트는 소비자가 받는 Skia를 고를 수 없으므로, 2가 되기 전에는 포트의 사용 안내에 "Windows에서 CPU 래스터는 vcpkg의 기본 Skia로는 느리다"를 적어야 한다. 미확인: 디버그 구성의 실행, x86·arm64, 정적 링크(`x64-windows-static`), CI의 러너에서 `vcpkg_find_acquire_program(CLANG)`이 도는지.
