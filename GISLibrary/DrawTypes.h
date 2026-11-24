@@ -1,6 +1,6 @@
 #pragma once
-// Plain value types of the drawing-instruction model (SENC_*), so that the model does not name
-// Direct2D types. The Direct2D renderer converts at its boundary (D2DConvert.h).
+// Plain value types of the drawing-instruction model (SENC_*) and of the renderer interface, so
+// that neither names the types of a graphics library.
 namespace GISLibrary
 {
 	// Straight (not premultiplied) RGBA, each component 0..1. Same layout as D2D1_COLOR_F.

@@ -5,15 +5,12 @@
 // colour tokens. What is left for a backend is the primitive: stroke this path with this colour,
 // put this symbol here, measure and draw this line of text.
 // A backend implements IRenderer and knows nothing of S-100; the painter knows nothing of the
-// backend. Direct2D is the first backend (D2DRenderer); tests record the calls.
+// backend. Skia is the backend (RenderSkia/SkiaRenderer); tests record the calls.
 //
 // Angles and transforms are handed over as what they mean (turn by so many degrees, an arc
 // from this angle to that), not as matrices and end points worked out here: every backend has
 // its own trigonometry, and the last bit of a sine decides whether a picture is the same byte
-// for byte as before. Direct2D's rotation matrix, for one, cannot be reproduced outside it.
-//
-// The interface grows with the painter: each kind of instruction that moves from
-// D2DInstructionPainter to DisplayListPainter brings the primitives it needs.
+// for byte as before.
 #include "DrawTypes.h"
 
 #include <cstdint>

@@ -26,8 +26,7 @@ namespace s100::render
 	//
 	// A line or an area is drawn in the coordinates of the dataset under the transform of the
 	// view, so the path of a curve or a surface is built once and kept by the backend. That
-	// transform is left set after a line or an area: the code that masks depths under S-102
-	// data (DepthSuppression) counts on it.
+	// transform is left set after a line or an area; every other kind sets its own.
 	class DisplayListPainter : public SENC_InstructionVisitor, private SENC_LineStyleVisitor
 	{
 	public:
