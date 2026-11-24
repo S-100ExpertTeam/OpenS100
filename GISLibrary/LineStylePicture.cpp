@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "LineStylePicture.h"
 
-#include "SymbolPicture.h"
-
 #include "../GeoMetryLibrary/ENCCommon.h"
 #include "../PortrayalCatalogue/ExternalFile.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
@@ -134,7 +132,7 @@ namespace s100::render
 	}
 
 	void DrawLineStyle(IRenderer& renderer, const LineStylePicture& lineStyle, const std::vector<PointF>& points,
-		const ColorF* shortStretches, SymbolLibrary& symbols, const ColorLookup& color)
+		const ColorF* shortStretches, const ColorLookup& color)
 	{
 		const float symbolScale = ENCCommon::DISPLAY_SYMBOL_SCALE;
 
@@ -209,8 +207,9 @@ namespace s100::render
 				renderer.StrokePath(dashes, ink, stroke);
 			}
 
-			// The symbols, each whole, where its place is still on the stretch. A symbol sets a
-			// transform of its own, so its place and its turn are worked out for the surface.
+			// The symbols, each whole, where its place is still on the stretch. A symbol is
+			// placed in device pixels whatever the transform, so its place and its turn are
+			// worked out for the surface.
 			if (!lineStyle.symbols.empty())
 			{
 				const float ux = dx / length;
@@ -225,8 +224,8 @@ namespace s100::render
 							continue;
 						}
 						const float along = start + symbol.position;
-						DrawSymbol(renderer, symbols, symbol.reference, { from.x + ux * along, from.y + uy * along },
-							symbol.rotation + degrees, symbolScale, color);
+						renderer.DrawSymbol(symbol.reference, { from.x + ux * along, from.y + uy * along },
+							symbol.rotation + degrees, symbolScale);
 					}
 				}
 			}
@@ -234,7 +233,7 @@ namespace s100::render
 	}
 
 	bool DrawLineStyle(IRenderer& renderer, const LineStyleLibrary& lineStyles, const std::string& name,
-		const std::vector<PointF>& points, const ColorF* shortStretches, SymbolLibrary& symbols, const ColorLookup& color)
+		const std::vector<PointF>& points, const ColorF* shortStretches, const ColorLookup& color)
 	{
 		const LineStylePicture* lineStyle = lineStyles.Find(name);
 		if (!lineStyle)
@@ -245,7 +244,7 @@ namespace s100::render
 				return false;
 			}
 		}
-		DrawLineStyle(renderer, *lineStyle, points, shortStretches, symbols, color);
+		DrawLineStyle(renderer, *lineStyle, points, shortStretches, color);
 		return true;
 	}
 }

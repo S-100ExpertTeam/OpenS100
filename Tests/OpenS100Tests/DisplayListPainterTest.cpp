@@ -808,53 +808,53 @@ TEST(LineStylePicture, IsLaidAlongALine)
 	// 250 pixels to the right: two intervals and a half. The second dash of the half is past the
 	// end; the symbol of the half is at 250, the very end.
 	RecordingRenderer renderer;
-	s100::render::DrawLineStyle(renderer, style, { { 100.0f, 200.0f }, { 350.0f, 200.0f } }, nullptr, symbols, color);
+	s100::render::DrawLineStyle(renderer, style, { { 100.0f, 200.0f }, { 350.0f, 200.0f } }, nullptr, color);
 	EXPECT_NE(renderer.text.find("transform rotate 0 about 100 200\n"), std::string::npos) << renderer.text;
 	EXPECT_NE(renderer.text.find("stroke width 1 color 5 0 0 1 dashes"
 		" | from 110 200 line 140 200 open | from 160 200 line 190 200 open"
 		" | from 210 200 line 240 200 open | from 260 200 line 290 200 open"
 		" | from 310 200 line 340 200 open\n"), std::string::npos) << renderer.text;
-	EXPECT_NE(renderer.text.find("translate 150 200\n"), std::string::npos) << renderer.text;
-	EXPECT_NE(renderer.text.find("translate 250 200\n"), std::string::npos) << renderer.text;
-	EXPECT_NE(renderer.text.find("translate 350 200\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("symbol QUESMRK1 at 150 200 rotation 0 scale 5\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("symbol QUESMRK1 at 250 200 rotation 0 scale 5\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("symbol QUESMRK1 at 350 200 rotation 0 scale 5\n"), std::string::npos) << renderer.text;
 
 	// A stretch of exactly two intervals is drawn (the viewer left such a stretch out).
 	RecordingRenderer exact;
-	s100::render::DrawLineStyle(exact, style, { { 0.0f, 0.0f }, { 200.0f, 0.0f } }, nullptr, symbols, color);
+	s100::render::DrawLineStyle(exact, style, { { 0.0f, 0.0f }, { 200.0f, 0.0f } }, nullptr, color);
 	EXPECT_NE(exact.text.find(" | from 160 0 line 190 0 open\n"), std::string::npos) << exact.text;
 
 	// Down the screen: the strip is turned, the dashes are still along x from the first point;
 	// the symbol is placed on the surface and turned with the line. A dash is cut at the end.
 	RecordingRenderer down;
-	s100::render::DrawLineStyle(down, style, { { 10.0f, 10.0f }, { 10.0f, 80.0f } }, nullptr, symbols, color);
+	s100::render::DrawLineStyle(down, style, { { 10.0f, 10.0f }, { 10.0f, 80.0f } }, nullptr, color);
 	EXPECT_NE(down.text.find("transform rotate 90.003 about 10 10\n"), std::string::npos) << down.text;
 	EXPECT_NE(down.text.find(" | from 20 10 line 50 10 open | from 70 10 line 80 10 open\n"), std::string::npos) << down.text;
-	EXPECT_NE(down.text.find("rotate 90.003 about 0 0 translate 10 60\n"), std::string::npos) << down.text;
+	EXPECT_NE(down.text.find("symbol QUESMRK1 at 10 60 rotation 90.003 scale 5\n"), std::string::npos) << down.text;
 
 	// A short stretch with a colour for it: a thin dashed line, in device pixels.
 	const s100::render::ColorF red{ 1.0f, 0.0f, 0.0f, 1.0f };
 	RecordingRenderer shortLine;
-	s100::render::DrawLineStyle(shortLine, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, &red, symbols, color);
+	s100::render::DrawLineStyle(shortLine, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, &red, color);
 	EXPECT_EQ(shortLine.text, "transform\nstroke width 1 color 1 0 0 1 dashes 2 2 | from 0 0 line 12 0 open\n");
 	// With no colour for it, the strip.
 	RecordingRenderer shortStrip;
-	s100::render::DrawLineStyle(shortStrip, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, nullptr, symbols, color);
+	s100::render::DrawLineStyle(shortStrip, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, nullptr, color);
 	EXPECT_NE(shortStrip.text.find(" | from 10 0 line 12 0 open\n"), std::string::npos) << shortStrip.text;
 
 	// A composite line style: its lines along the whole stretch, each at its offset.
 	s100::render::LineStylePicture composite;
 	composite.lines = { { -3.0f, 2.0f, "CHGRF", 1.0f }, { 5.0f, 1.0f, "CHGRF", 0.5f } };
 	RecordingRenderer sideBySide;
-	s100::render::DrawLineStyle(sideBySide, composite, { { 0.0f, 0.0f }, { 50.0f, 0.0f } }, nullptr, symbols, color);
+	s100::render::DrawLineStyle(sideBySide, composite, { { 0.0f, 0.0f }, { 50.0f, 0.0f } }, nullptr, color);
 	EXPECT_NE(sideBySide.text.find("stroke width 2 color 5 0 0 1 dashes | from 0 -3 line 50 -3 open\n"), std::string::npos) << sideBySide.text;
 	EXPECT_NE(sideBySide.text.find("stroke width 1 color 5 0 0 0.5 dashes | from 0 5 line 50 5 open\n"), std::string::npos) << sideBySide.text;
 
 	// A name the catalogue does not have is drawn as its question mark.
 	s100::render::LineStyleLibrary lineStyles(pc);
 	RecordingRenderer unknown;
-	EXPECT_TRUE(s100::render::DrawLineStyle(unknown, lineStyles, "NO_SUCH_STYLE", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, symbols, color));
+	EXPECT_TRUE(s100::render::DrawLineStyle(unknown, lineStyles, "NO_SUCH_STYLE", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, color));
 	RecordingRenderer questionMark;
-	EXPECT_TRUE(s100::render::DrawLineStyle(questionMark, lineStyles, "QUESMRK1", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, symbols, color));
+	EXPECT_TRUE(s100::render::DrawLineStyle(questionMark, lineStyles, "QUESMRK1", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, color));
 	EXPECT_FALSE(unknown.text.empty());
 	EXPECT_EQ(unknown.text, questionMark.text);
 }

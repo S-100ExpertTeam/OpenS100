@@ -15,6 +15,8 @@
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
 #include <GeoMetryLibrary/Scaler.h>
 #include <charconv>
+#include <chrono>
+#include <cstdlib>
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -317,7 +319,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [--png <directory>] [--font <file>]... [dataset ...]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [--png <directory>] [--font <file>]... [--frames <count>] [dataset ...]\n";
 		return 2;
 	}
 
@@ -410,9 +412,12 @@ int main(int argc, char** argv)
 		// --png <directory>: a picture of each dataset there (a package with a render backend).
 		// --font <file>: a font to write the texts of the picture in; the first is the display
 		// font, the later ones are searched for the characters it lacks. With none, no text.
+		// --frames <count>: with --png, the picture is drawn that many times more and the time
+		// of every frame is printed.
 		const char* jsonDirectory = nullptr;
 		const char* pngDirectory = nullptr;
 		std::vector<std::string> fontFiles;
+		int moreFrames = 0;
 		int firstDataset = 3;
 		while (firstDataset + 1 < argc)
 		{
@@ -428,6 +433,10 @@ int main(int argc, char** argv)
 			else if (option == "--font")
 			{
 				fontFiles.push_back(argv[firstDataset + 1]);
+			}
+			else if (option == "--frames")
+			{
+				moreFrames = std::atoi(argv[firstDataset + 1]);
 			}
 			else
 			{
@@ -565,22 +574,48 @@ int main(int argc, char** argv)
 					return 1;
 				}
 				const s100::render::ColorLookup color = [&palette](const std::wstring& token) { return palette.Color(token); };
-				s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, &areaFills, &lineStyles, color, &fonts });
-				s100::render::DisplayListPainter picture(skia, scaler, color);
-				for (const int priority : priorities)
-				{
-					s100::render::PaintPriority(priority, frame, picture, true);
-				}
+
+				// A frame as a display draws one, from nothing: what the view shows is collected
+				// again, the renderer and its patterns are made again. What the painter keeps
+				// with the dataset (the paths of curves and areas, the sizes of texts) stays, so
+				// the first frame is the dear one.
+				s100::render::SkiaRenderer::Omitted omitted;
+				const auto drawFrame = [&]() {
+					const auto start = std::chrono::steady_clock::now();
+					image.Clear(s100::render::ColorF{ 1.0f, 1.0f, 1.0f, 1.0f });
+					DrawingSet shown;
+					std::set<int> shownPriorities;
+					s100::render::CollectInstructions(displayList, scaler.GetCurrentScale(), scaler, nullptr, shown, shownPriorities);
+					s100::render::SuppressSharedCurves(shownPriorities, shown);
+					s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, &areaFills, &lineStyles, color, &fonts });
+					s100::render::DisplayListPainter picture(skia, scaler, color);
+					for (const int priority : shownPriorities)
+					{
+						s100::render::PaintPriority(priority, shown, picture, true);
+					}
+					omitted = skia.NotDrawn();
+					return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+				};
+				const double first = drawFrame();
+
 				const auto png = std::filesystem::path(pngDirectory) / (cellPath.stem().string() + ".png");
 				if (!image.WritePng(png))
 				{
 					std::cerr << "cannot write " << png.string() << "\n";
 					return 1;
 				}
-				const auto& omitted = skia.NotDrawn();
 				std::cout << "picture:       " << png.string() << " (not drawn yet: " << omitted.symbols << " symbols, "
 					<< omitted.texts << " texts, " << omitted.lineStyles << " line styles, " << omitted.patternFills
 					<< " pattern fills)\n";
+				if (moreFrames > 0)
+				{
+					std::cout << "frames:        first " << static_cast<long long>(first + 0.5) << " ms, next";
+					for (int i = 0; i < moreFrames; i++)
+					{
+						std::cout << " " << static_cast<long long>(drawFrame() + 0.5);
+					}
+					std::cout << " ms\n";
+				}
 			}
 #endif
 		}

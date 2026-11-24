@@ -38,6 +38,14 @@ namespace s100::render
 		return *surface->getCanvas();
 	}
 
+	void SkiaImage::Clear(const GISLibrary::ColorF& color)
+	{
+		if (surface)
+		{
+			surface->getCanvas()->clear(SkColor4f{ color.r, color.g, color.b, color.a });
+		}
+	}
+
 	bool SkiaImage::WritePng(const std::filesystem::path& path) const
 	{
 		SkPixmap pixels;

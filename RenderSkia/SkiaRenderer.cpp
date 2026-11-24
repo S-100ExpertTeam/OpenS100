@@ -276,7 +276,7 @@ namespace s100::render
 		// under transforms of its own; the one in force comes back afterwards.
 		const SkMatrix before = matrix;
 		if (!resources.lineStyles || !resources.symbols || !resources.color
-			|| !DrawLineStyle(*this, *resources.lineStyles, reference, points, shortStretches, *resources.symbols, resources.color))
+			|| !DrawLineStyle(*this, *resources.lineStyles, reference, points, shortStretches, resources.color))
 		{
 			omitted.lineStyles++;
 		}

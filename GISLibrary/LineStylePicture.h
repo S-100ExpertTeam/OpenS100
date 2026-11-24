@@ -27,8 +27,6 @@ class PortrayalCatalogue;
 
 namespace s100::render
 {
-	class SymbolLibrary;
-
 	struct LineStylePicture
 	{
 		std::string name;         // the file name without its extension
@@ -90,13 +88,13 @@ namespace s100::render
 	inline constexpr float kShortStretch = 20.0f;
 
 	// Draws a line style along a polyline given in device pixels. With a colour, a stretch too
-	// short for the strip is a thin dashed line in it. Sets the transform of the renderer and
-	// leaves it set.
+	// short for the strip is a thin dashed line in it. The symbols are asked of the renderer
+	// (IRenderer::DrawSymbol). Sets the transform of the renderer and leaves it set.
 	void DrawLineStyle(IRenderer& renderer, const LineStylePicture& lineStyle, const std::vector<PointF>& points,
-		const ColorF* shortStretches, SymbolLibrary& symbols, const ColorLookup& color);
+		const ColorF* shortStretches, const ColorLookup& color);
 
 	// Draws the line style of a name as a display does: the question mark of the catalogue
 	// (QUESMRK1) for a name it does not have. False when nothing was drawn.
 	bool DrawLineStyle(IRenderer& renderer, const LineStyleLibrary& lineStyles, const std::string& name,
-		const std::vector<PointF>& points, const ColorF* shortStretches, SymbolLibrary& symbols, const ColorLookup& color);
+		const std::vector<PointF>& points, const ColorF* shortStretches, const ColorLookup& color);
 }

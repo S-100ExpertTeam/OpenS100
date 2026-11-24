@@ -27,6 +27,9 @@ namespace s100::render
 		bool Valid() const;
 		SkCanvas& Canvas();
 
+		// Every pixel to one colour: the start of another frame.
+		void Clear(const GISLibrary::ColorF& color);
+
 		bool WritePng(const std::filesystem::path& path) const;
 
 	private:
