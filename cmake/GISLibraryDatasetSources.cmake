@@ -35,7 +35,7 @@ set(OPENS100_GISLIBRARY_DISPLAY_SOURCES
     CoverageDataset D2D1Resources D2DGeometryCache D2DInstructionPainter
     D2DRenderer
     DepthSuppression ExchangeCatalogue GISLibrary GdiGeometryRenderer Inventory InventoryItem
-    LayerManager LayerOpen PortrayalRenderCache S100EditRender S100ExchangeCatalogue
+    LayerManager LayerOpen PortrayalRenderCache S100EditRender S100ExchangeCatalogue SkiaViewFrame
     S100LayerPortrayal S100Utilities SHPFile)
 
 # Refers to the display code above: layers copied for editing, a product's portrayal catalogue

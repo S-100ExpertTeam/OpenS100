@@ -5,7 +5,11 @@
 #include "include/core/SkFontMetrics.h"
 #include "include/core/SkFontMgr.h"
 #include "include/core/SkFontTypes.h"
+#include "include/core/SkFontStyle.h"
 #include "include/ports/SkFontMgr_empty.h"
+#if defined(_WIN32)
+#include "include/ports/SkTypeface_win.h"
+#endif
 
 #include <algorithm>
 #include <fstream>
@@ -88,6 +92,23 @@ namespace s100::render
 		}
 		faces->faces.push_back(std::move(face));
 		return true;
+	}
+
+	bool SkiaFonts::AddSystem(const std::string& family)
+	{
+#if defined(_WIN32)
+		static const sk_sp<SkFontMgr> manager = SkFontMgr_New_DirectWrite();
+		sk_sp<SkTypeface> face = manager ? manager->matchFamilyStyle(family.c_str(), SkFontStyle()) : nullptr;
+		if (!face)
+		{
+			return false;
+		}
+		faces->faces.push_back(std::move(face));
+		return true;
+#else
+		(void)family;
+		return false;
+#endif
 	}
 
 	size_t SkiaFonts::Size() const

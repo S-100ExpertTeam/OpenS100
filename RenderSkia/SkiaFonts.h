@@ -12,6 +12,7 @@
 #include <cstddef>
 #include <filesystem>
 #include <memory>
+#include <string>
 
 namespace s100::render
 {
@@ -26,6 +27,11 @@ namespace s100::render
 
 		// A TrueType or OpenType file. False when it cannot be read as a font.
 		bool Add(const std::filesystem::path& file);
+
+		// A font the system has, by its family name: for an application that shows what its
+		// user chose. The text then looks as that system draws the font. Where the package has
+		// no way to ask the system (anything but Windows today) this is false.
+		bool AddSystem(const std::string& family);
 
 		size_t Size() const;
 

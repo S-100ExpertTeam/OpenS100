@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "D2DConvert.h"
 #include "D2DInstructionPainter.h"
+#include "SkiaViewFrame.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "D2DView.h"
@@ -790,6 +791,20 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer)
 	// Line Suppression
 	s100::render::SuppressSharedCurves(layer->drawingPriority, layer->drawingSet);
 
+	if (GISLibrary::DrawsWithSkia())
+	{
+		auto& frame = GISLibrary::SkiaViewFrame::Shared();
+		if (frame.Begin(*scaler))
+		{
+			for (const int priority : layer->drawingPriority)
+			{
+				frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
+			}
+			frame.End(hDC);
+		}
+		return;
+	}
+
 	auto rt = D2->pRT;
 	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
 	rt->BindDC(hDC, &screen);
@@ -845,6 +860,24 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int
 		return;
 	}
 
+	if (GISLibrary::DrawsWithSkia())
+	{
+		auto& frame = GISLibrary::SkiaViewFrame::Shared();
+		if (frame.Begin(*scaler))
+		{
+			for (const int priority : layer->drawingPriority)
+			{
+				if (priority < minPriority || priority > maxPriority)
+				{
+					continue;
+				}
+				frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
+			}
+			frame.End(hDC);
+		}
+		return;
+	}
+
 	auto rt = D2->pRT;
 	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
 	rt->BindDC(hDC, &screen);
@@ -889,6 +922,26 @@ void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S1
 	}
 	if (priorities.empty())
 	{
+		return;
+	}
+
+	if (GISLibrary::DrawsWithSkia())
+	{
+		auto& frame = GISLibrary::SkiaViewFrame::Shared();
+		if (frame.Begin(*scaler))
+		{
+			for (const int priority : priorities)
+			{
+				for (S100Layer* layer : group)
+				{
+					if (layer->drawingPriority.contains(priority))
+					{
+						frame.Paint(priority, layer->drawingSet, layer->GetPC(), *scaler, ENCCommon::TEXTOUT);
+					}
+				}
+			}
+			frame.End(hDC);
+		}
 		return;
 	}
 

@@ -27,9 +27,44 @@
   =============================================================================
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    The viewer draws with Skia (Documents/TechDocs/2026-11-24-r7-viewer-on-skia-design.md): the
+    manifest install of every project asks for the "render-skia" feature of vcpkg.json. Every
+    project asks for the same, so that they agree on what vcpkg_installed holds.
+  -->
+  <PropertyGroup>
+    <VcpkgAdditionalInstallOptions>--x-feature=render-skia $(VcpkgAdditionalInstallOptions)</VcpkgAdditionalInstallOptions>
+  </PropertyGroup>
+  <!--
+    vcpkg installs again only when vcpkg.json or vcpkg-configuration.json is newer than its
+    stamp. The option above is in this file, so this file counts as well: a checkout that was
+    built before the option was here installs Skia on its next build.
+  -->
+  <ItemGroup>
+    <_ZVcpkgInstallManifestDependenciesInputs Include="$(MSBuildThisFileFullPath)" />
+  </ItemGroup>
+  <!--
+    What a file that includes Skia headers needs: the definitions Skia was built with (those of
+    the unofficial-skia CMake package; they differ between debug and release) and its include
+    root (Skia headers are included as "include/core/...").
+  -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>SK_CODEC_DECODES_BMP;SK_CODEC_DECODES_WBMP;SK_ENABLE_PRECOMPILE;SK_GANESH;SK_GAMMA_APPLY_TO_A8;SK_ENABLE_AVX512_OPTS;SK_TYPEFACE_FACTORY_DIRECTWRITE;SK_FONTMGR_DIRECTWRITE_AVAILABLE;SK_FONTMGR_GDI_AVAILABLE;SK_CODEC_DECODES_ICO;SK_CODEC_DECODES_PNG;SK_CODEC_DECODES_PNG_WITH_LIBPNG;SK_CODEC_ENCODES_PNG;SK_CODEC_ENCODES_PNG_WITH_LIBPNG;SK_TYPEFACE_FACTORY_FREETYPE;SK_FONTMGR_ANDROID_AVAILABLE;SK_FONTMGR_FREETYPE_DIRECTORY_AVAILABLE;SK_FONTMGR_FREETYPE_EMBEDDED_AVAILABLE;SK_FONTMGR_FREETYPE_EMPTY_AVAILABLE;SK_SUPPORT_XPS;SK_HAS_WUFFS_LIBRARY;SK_CODEC_DECODES_GIF;SK_XML;SK_ALLOW_STATIC_GLOBAL_INITIALIZERS=1;SK_ENABLE_DUMP_GPU;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'!='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>SK_CODEC_DECODES_BMP;SK_CODEC_DECODES_WBMP;SK_ENABLE_PRECOMPILE;SK_GANESH;SK_GAMMA_APPLY_TO_A8;SK_ENABLE_AVX512_OPTS;SK_TYPEFACE_FACTORY_DIRECTWRITE;SK_FONTMGR_DIRECTWRITE_AVAILABLE;SK_FONTMGR_GDI_AVAILABLE;SK_CODEC_DECODES_ICO;SK_CODEC_DECODES_PNG;SK_CODEC_DECODES_PNG_WITH_LIBPNG;SK_CODEC_ENCODES_PNG;SK_CODEC_ENCODES_PNG_WITH_LIBPNG;SK_TYPEFACE_FACTORY_FREETYPE;SK_FONTMGR_ANDROID_AVAILABLE;SK_FONTMGR_FREETYPE_DIRECTORY_AVAILABLE;SK_FONTMGR_FREETYPE_EMBEDDED_AVAILABLE;SK_FONTMGR_FREETYPE_EMPTY_AVAILABLE;SK_SUPPORT_XPS;SK_HAS_WUFFS_LIBRARY;SK_CODEC_DECODES_GIF;SK_XML;SK_DISABLE_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <!--
+        Skia's include root (its headers are included as "include/core/..."), as an external
+        directory: its headers are not held to the warnings of this code.
+      -->
+      <AdditionalOptions>/utf-8 /external:I "$(VcpkgManifestRoot)\vcpkg_installed\$(VcpkgTriplet)\$(VcpkgTriplet)\include\skia" /external:W0 %(AdditionalOptions)</AdditionalOptions>
       <!--
         /std:c++20 implies /permissive-. Every project conforms since Phase 1 step 4-1
         (Documents/TechDocs/2026-11-08-phase1-core-decoupling.md); keep it that way.
