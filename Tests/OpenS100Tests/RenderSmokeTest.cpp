@@ -34,6 +34,7 @@
 #include "CoverageDataset.h"
 #include "D2D1Resources.h"
 #include "D2DRenderer.h"
+#include "D2DView.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -73,7 +74,13 @@ namespace
 			m_dc = ::CreateCompatibleDC(nullptr);
 			m_bitmap = ::CreateDIBSection(m_dc, &info, DIB_RGB_COLORS, reinterpret_cast<void**>(&m_bits), nullptr, 0);
 			m_old = ::SelectObject(m_dc, m_bitmap);
-			const RECT all{ 0, 0, width, height };
+			Clear();
+		}
+		// White all over, as the view leaves its surface before a frame. A frame does not clear:
+		// drawn over the one before, antialiased edges and texts outside the data get heavier.
+		void Clear()
+		{
+			const RECT all{ 0, 0, m_width, m_height };
 			::FillRect(m_dc, &all, static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)));
 		}
 		~MemoryCanvas()
@@ -193,8 +200,20 @@ namespace
 
 		// Further frames of the same view: these must not get slower.
 		std::string frames;
-		for (int i = 0; i < 4; ++i)
+		// S100_RENDER_FRAMES: how many further frames (4 unless given).
+		int further = 4;
 		{
+			char* value = nullptr;
+			size_t length = 0;
+			if (_dupenv_s(&value, &length, "S100_RENDER_FRAMES") == 0 && value)
+			{
+				further = std::atoi(value);
+				free(value);
+			}
+		}
+		for (int i = 0; i < further; ++i)
+		{
+			canvas.Clear();
 			const auto a = Clock::now();
 			gis.Draw(canvas.dc());
 			::GdiFlush();

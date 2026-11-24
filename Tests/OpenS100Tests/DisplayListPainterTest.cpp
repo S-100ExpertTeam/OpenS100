@@ -279,7 +279,7 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_GT(lookups, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "03d8aa8f9386d8e4")
+	if (hash != "e1711f127ddd47d8")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.strokes.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
@@ -424,7 +424,7 @@ TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
 	EXPECT_GT(renderer.texts, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "73fcde194fa8c275")
+	if (hash != "09caae70ea586ed1")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.frame.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;

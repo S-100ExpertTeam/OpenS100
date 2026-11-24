@@ -757,6 +757,8 @@ namespace s100::render
 				stroke.dashes.assign(std::begin(dashes), std::end(dashes));
 			}
 
+			// The ray is in device pixels: whatever transform the lines before it left must go.
+			renderer.SetTransform({});
 			renderer.StrokePath(path, color(ls->GetPenColorToken()), stroke);
 		}
 	}
