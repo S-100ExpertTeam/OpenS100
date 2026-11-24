@@ -75,6 +75,8 @@ protected:
 	afx_msg void OnButtonDelete();
 public:
 	afx_msg void OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult);
+	// Moves the view to the area of the layer that was double-clicked.
+	afx_msg void OnDblclkListLm(NMHDR* pNMHDR, LRESULT* pResult);
 	virtual void OnCancel();
 
 private:

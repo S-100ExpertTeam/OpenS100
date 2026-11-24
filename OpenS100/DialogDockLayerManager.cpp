@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CDialogDockLayerManager, CDialog)
 	ON_WM_SIZING()
 	ON_WM_CONTEXTMENU()
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_LM, &CDialogDockLayerManager::OnItemchangedListLm)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST_LM, &CDialogDockLayerManager::OnDblclkListLm)
 END_MESSAGE_MAP()
 
 
@@ -725,6 +726,40 @@ void CDialogDockLayerManager::OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResul
 	{
 		ShowProperties(Resolve(pNMLV->iItem));
 	}
+}
+
+
+// A double click on a layer of the list shows the area of that layer.
+void CDialogDockLayerManager::OnDblclkListLm(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	const auto* clicked = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	*pResult = 0;
+
+	// Not on a row: nothing to show. (The row is asked of the list when the click fell beside
+	// the text of the first column.)
+	int row = clicked->iItem;
+	if (row < 0)
+	{
+		row = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
+	}
+	Layer* layer = Resolve(row);
+	if (!layer)
+	{
+		return;
+	}
+
+	auto layerMBR = layer->GetMBR();
+	if (layerMBR.IsEmpty())
+	{
+		layerMBR.Extent(0.001);   // a single point: a little room about it
+	}
+
+	theApp.gisLib->SetMap(layerMBR);
+	if (theApp.gisLib2)
+	{
+		theApp.gisLib2->SetMap(layerMBR);
+	}
+	theApp.MapRefresh();
 }
 
 
