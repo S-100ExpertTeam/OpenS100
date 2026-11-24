@@ -14,6 +14,7 @@
 #include "SymbolPicture.h"
 #include "PatternTile.h"
 #include "LineStylePicture.h"
+#include "DepthMaskStages.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -123,6 +124,22 @@ namespace
 			FillText(fill);
 			text += std::format(" | path {}\n", static_cast<const Kept&>(path).number);
 		}
+
+		void PushClip(const s100::render::Path& path) override
+		{
+			clips++;
+			text += "clip";
+			PathText(path);
+			text += "\n";
+		}
+
+		void PopClip() override
+		{
+			clips--;
+			text += "unclip\n";
+		}
+
+		int clips = 0;   // the clips open now
 
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override
@@ -445,6 +462,45 @@ TEST(DrawingOrder, SampleCellFrameIsPaintedInOrder)
 	EXPECT_EQ(silent.texts, 0);
 	EXPECT_EQ(silentStages.texts, 0);
 	EXPECT_EQ(silent.fills, renderer.fills);
+
+	// S-98 D-1: under the outline of S-102 data the depth features are drawn through a clip,
+	// the view less the outline; every clip pushed is popped and nothing else changes.
+	const auto count = [](const std::string& text, const std::string& word) {
+		size_t found = 0;
+		for (size_t at = text.find(word); at != std::string::npos; at = text.find(word, at + word.size()))
+		{
+			found++;
+		}
+		return found;
+	};
+	const MBR extent = layer.m_mbr;
+	const double midX = (extent.xmin + extent.xmax) / 2;
+	const double midY = (extent.ymin + extent.ymax) / 2;
+	const s100::render::WorldRings rings{ { { extent.xmin, extent.ymin }, { midX, extent.ymin }, { midX, midY }, { extent.xmin, midY } } };
+	RecordingRenderer masked;
+	s100::render::DisplayListPainter maskedPainter(masked, scaler, [](const std::wstring&) { return s100::render::ColorF{}; });
+	for (const int priority : priorities)
+	{
+		s100::render::DepthMaskStages mask(masked, scaler, rings);
+		s100::render::PaintPriority(priority, set, maskedPainter, true, &mask);
+		EXPECT_EQ(masked.clips, 0) << "a clip is left open after priority " << priority;
+	}
+	const size_t clips = count(masked.text, "clip | from");
+	EXPECT_GT(clips, 0u);   // the cell has depth areas
+	EXPECT_EQ(count(masked.text, "unclip"), clips);
+	EXPECT_EQ(masked.fills, renderer.fills);
+	EXPECT_EQ(masked.texts, renderer.texts);
+
+	// With no S-102 data there is no clip.
+	const s100::render::WorldRings none;
+	RecordingRenderer open;
+	s100::render::DisplayListPainter openPainter(open, scaler, [](const std::wstring&) { return s100::render::ColorF{}; });
+	for (const int priority : priorities)
+	{
+		s100::render::DepthMaskStages mask(open, scaler, none);
+		s100::render::PaintPriority(priority, set, openPainter, true, &mask);
+	}
+	EXPECT_EQ(count(open.text, "clip"), 0u);
 }
 
 // The colours of the tokens come from the colour profile of the catalogue, read with no backend.

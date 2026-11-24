@@ -5,6 +5,8 @@
 
 #include "SkiaViewFrame.h"
 
+#include "CoverageDataset.h"
+#include "DepthMaskStages.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "LineStylePicture.h"
@@ -13,6 +15,7 @@
 #include "SymbolPicture.h"
 
 #include "../GeoMetryLibrary/ENCCommon.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../RenderSkia/SkiaFonts.h"
 #include "../RenderSkia/SkiaRenderer.h"
@@ -24,6 +27,7 @@
 #include "include/core/SkSurface.h"
 #include "include/core/SkSurfaceProps.h"
 
+#include <cstdint>
 #include <cstdlib>
 #include <map>
 #include <string>
@@ -97,6 +101,35 @@ namespace GISLibrary
 		std::unique_ptr<s100::render::SkiaFonts> fonts;
 
 		std::map<PortrayalCatalogue*, std::unique_ptr<CatalogueResources>> catalogues;
+
+		// The outlines of the S-102 data that hides the S-101 depth features (S-98 D-1), in
+		// the coordinates of the datasets; made again when the outlines may have changed.
+		s100::render::WorldRings depthMask;
+		std::uint64_t depthMaskVersion = ~std::uint64_t{ 0 };
+
+		const s100::render::WorldRings& DepthMask()
+		{
+			const std::uint64_t version = CoverageDataset::SuppressionVersion();
+			if (version != depthMaskVersion)
+			{
+				depthMaskVersion = version;
+				depthMask.clear();
+				for (const auto& ring : CoverageDataset::SuppressionRings())
+				{
+					std::vector<s100::render::WorldPoint> points;
+					points.reserve(ring.size());
+					for (const auto& position : ring)
+					{
+						double x = position.lon;
+						double y = position.lat;
+						projection(x, y);
+						points.push_back({ x, y });
+					}
+					depthMask.push_back(std::move(points));
+				}
+			}
+			return depthMask;
+		}
 
 		// The renderers of the frame in hand, one a catalogue: a renderer keeps the pattern
 		// tiles it has made, which are of the palette of the frame.
@@ -240,7 +273,8 @@ namespace GISLibrary
 		}
 
 		s100::render::DisplayListPainter painter(*renderer, scaler, color);
-		s100::render::PaintPriority(priority, drawingSet, painter, texts);
+		s100::render::DepthMaskStages stages(*renderer, scaler, state->DepthMask());
+		s100::render::PaintPriority(priority, drawingSet, painter, texts, &stages);
 	}
 
 	void SkiaViewFrame::End(HDC target)

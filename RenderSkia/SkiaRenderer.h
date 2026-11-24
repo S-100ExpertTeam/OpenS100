@@ -62,6 +62,8 @@ namespace s100::render
 		void StrokePath(const RetainedPath& path, const ColorF& color, const Stroke& stroke) override;
 		void FillPath(const Path& path, const Fill& fill) override;
 		void FillPath(const RetainedPath& path, const Fill& fill) override;
+		void PushClip(const Path& path) override;
+		void PopClip() override;
 		void StrokeLineStyle(const std::string& reference, const std::vector<PointF>& points,
 			const ColorF* shortStretches) override;
 		void DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale) override;

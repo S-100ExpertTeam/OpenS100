@@ -269,6 +269,18 @@ namespace s100::render
 		}
 	}
 
+	void SkiaRenderer::PushClip(const Path& path)
+	{
+		// The canvas keeps its matrix; the path goes to device pixels as every path does.
+		canvas.save();
+		canvas.clipPath(Build(path, false).makeTransform(matrix), true);
+	}
+
+	void SkiaRenderer::PopClip()
+	{
+		canvas.restore();
+	}
+
 	void SkiaRenderer::StrokeLineStyle(const std::string& reference, const std::vector<PointF>& points,
 		const ColorF* shortStretches)
 	{

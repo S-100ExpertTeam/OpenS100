@@ -154,6 +154,18 @@ namespace
 			text += " | path " + std::to_string(static_cast<const Kept&>(path).number) + "\n";
 		}
 
+		void PushClip(const s100::render::Path& path) override
+		{
+			text += "clip";
+			PathText(path);
+			text += "\n";
+		}
+
+		void PopClip() override
+		{
+			text += "unclip\n";
+		}
+
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override
 		{

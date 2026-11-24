@@ -621,6 +621,7 @@
     <ClCompile Include="DisplayListJson.cpp" />
     <ClCompile Include="DisplayListPainter.cpp" />
     <ClCompile Include="ColorPalette.cpp" />
+    <ClCompile Include="DepthMaskStages.cpp" />
     <ClCompile Include="DrawingOrder.cpp" />
     <ClCompile Include="LineStylePicture.cpp" />
     <ClCompile Include="PatternTile.cpp" />
@@ -1028,6 +1029,7 @@
     <ClInclude Include="DisplayListJson.h" />
     <ClInclude Include="DisplayListPainter.h" />
     <ClInclude Include="ColorPalette.h" />
+    <ClInclude Include="DepthMaskStages.h" />
     <ClInclude Include="DrawingOrder.h" />
     <ClInclude Include="LineStylePicture.h" />
     <ClInclude Include="PatternTile.h" />

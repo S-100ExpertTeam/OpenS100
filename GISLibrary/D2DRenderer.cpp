@@ -330,6 +330,41 @@ namespace GISLibrary
 		StrokeGeometry(retained->geometry, color, stroke);
 	}
 
+	void D2DRenderer::PushClip(const s100::render::Path& path)
+	{
+		// A layer masked by the path; Direct2D carries the mask through the transform in force.
+		bool pushed = false;
+		if (Ready())
+		{
+			if (ID2D1PathGeometry* geometry = Build(path))
+			{
+				auto rt = d2->RenderTarget();
+				ID2D1Layer* layer = nullptr;
+				if (SUCCEEDED(rt->CreateLayer(&layer)) && layer)
+				{
+					rt->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), geometry, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE), layer);
+					layer->Release();
+					pushed = true;
+				}
+				geometry->Release();
+			}
+		}
+		clips.push_back(pushed);
+	}
+
+	void D2DRenderer::PopClip()
+	{
+		if (clips.empty())
+		{
+			return;
+		}
+		if (clips.back())
+		{
+			d2->RenderTarget()->PopLayer();
+		}
+		clips.pop_back();
+	}
+
 	void D2DRenderer::StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 		const s100::render::ColorF* shortStretches)
 	{

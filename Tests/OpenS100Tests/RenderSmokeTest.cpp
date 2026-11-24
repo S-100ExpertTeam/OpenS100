@@ -502,6 +502,8 @@ namespace
 				inner.FillPath(path, fill);
 			}
 		}
+		void PushClip(const s100::render::Path& path) override { inner.PushClip(path); }
+		void PopClip() override { inner.PopClip(); }
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override
 		{

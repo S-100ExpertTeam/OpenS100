@@ -191,6 +191,12 @@ namespace s100::render
 		virtual void FillPath(const Path& path, const Fill& fill) = 0;
 		virtual void FillPath(const RetainedPath& path, const Fill& fill) = 0;
 
+		// From here to the PopClip that answers it, nothing is drawn outside the inside of a
+		// path (even-odd rule, in the coordinates of the transform in force now; a transform
+		// set later does not move it). Clips nest: the second narrows the first.
+		virtual void PushClip(const Path& path) = 0;
+		virtual void PopClip() = 0;
+
 		// A line style of the portrayal catalogue (a strip repeated along the line) along a
 		// polyline given in device pixels, whatever the transform. As with a symbol, the
 		// backend owns what the style looks like. With a colour, a stretch too short for the

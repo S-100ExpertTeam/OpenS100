@@ -31,6 +31,8 @@ namespace GISLibrary
 			const s100::render::Stroke& stroke) override;
 		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override;
 		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override;
+		void PushClip(const s100::render::Path& path) override;
+		void PopClip() override;
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override;
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override;
@@ -54,5 +56,7 @@ namespace GISLibrary
 		PortrayalCatalogue* pc;
 		// Whether the transform in force scales (a map drawn in the coordinates of its dataset).
 		bool scaled = false;
+		// Whether each clip pushed has a layer on the target to pop.
+		std::vector<bool> clips;
 	};
 }

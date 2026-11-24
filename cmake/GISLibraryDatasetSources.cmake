@@ -20,7 +20,7 @@
 # LineStylePicture a line style laid along a line. They are here until they get a target of
 # their own.
 set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
-    ColorPalette DisplayListJson DisplayListPainter DrawingOrder LineStylePicture PCOutputSchemaManager PatternTile ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
+    ColorPalette DepthMaskStages DisplayListJson DisplayListPainter DrawingOrder LineStylePicture PCOutputSchemaManager PatternTile ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
     S101LuaScriptingReference host_data host_functions
     SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch
