@@ -4,6 +4,7 @@
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "LayerManager.h"
+#include "DatasetOpening.h"
 #include "LayerOpen.h"
 #include "PortrayalRenderCache.h"
 #include "BinaryFile.h"
@@ -272,6 +273,8 @@ std::unique_ptr<Layer> LayerManager::CreateS100Layer(const std::wstring& _filepa
 	{
 		return nullptr;
 	}
+	// Not while the worker opens another (DatasetOpening.h).
+	const std::lock_guard<std::recursive_mutex> opening(GISLibrary::OpeningLock());
 	auto layer = std::make_unique<S100Layer>(productNumber, fc, pc);
 	if (GISLibrary::OpenLayer(*layer, _filepath, this) == false || !layer->m_spatialObject)
 	{
@@ -819,6 +822,7 @@ void LayerManager::S101RebuildPortrayal()
 
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
+	const std::lock_guard<std::recursive_mutex> opening(GISLibrary::OpeningLock());
 	auto pc = ((S100Layer*)l)->GetPC();
 
 	// Gridded coverages portrayed by their catalogue's rules (S-102).

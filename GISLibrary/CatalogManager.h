@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include <filesystem>
 #include <functional>
 #include <string_view>
@@ -85,6 +86,10 @@ public:
 	Resolution resolve(std::string_view product, std::string_view version);
 
 private:
+	// A dataset opened in the background asks for its catalogues from the worker thread while
+	// the thread that draws may be loading another: one caller at a time.
+	mutable std::recursive_mutex mutex_;
+
 	struct Registration
 	{
 		std::filesystem::path file;

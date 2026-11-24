@@ -47,6 +47,7 @@
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
+#include <atomic>
 #include <locale>        
 #include <codecvt>       
 #include <iomanip>
@@ -67,6 +68,7 @@
 
 #include "LegacyDatasetManager.h"
 #include "DatasetManagerUi.h"
+#include "../GISLibrary/DatasetOpening.h"
 #include "../GISLibrary/SystemDatabaseSession.h"
 #include "../GISLibrary/LayerContainer.h"
 #include "../GISLibrary/CoverageDataset.h"
@@ -77,6 +79,14 @@ using namespace LatLonUtility;
 class CMainFrame;
 
 IMPLEMENT_DYNCREATE(COpenS100View, CView)
+
+namespace
+{
+	// Posted by the worker thread that opens charts when one is ready; one message is on its
+	// way at most, however many charts finish before the view draws.
+	const UINT WM_CHARTS_READY = WM_APP + 101;
+	std::atomic<bool> chartsReadyPosted{ false };
+}
 
 BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
@@ -105,6 +115,7 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_WM_NCMOUSEHOVER()
 	ON_WM_MOUSELEAVE()
 	ON_WM_KEYDOWN()
+	ON_MESSAGE(WM_CHARTS_READY, &COpenS100View::OnChartsReady)
 END_MESSAGE_MAP()
 
 
@@ -149,6 +160,9 @@ COpenS100View::COpenS100View()
 
 COpenS100View::~COpenS100View()
 {
+	// Nothing is opened for a view that is gone.
+	GISLibrary::BackgroundOpening::Disable();
+
 	SaveLastPosScale();
 	theApp.SaveSettings();
 
@@ -554,10 +568,34 @@ void COpenS100View::OpenWorldMap()
 	MapRefresh();
 }
 
+LRESULT COpenS100View::OnChartsReady(WPARAM /*wParam*/, LPARAM /*lParam*/)
+{
+	chartsReadyPosted = false;
+	// While the chart is dragged the picture before is moved about; it is drawn anew, with
+	// the charts that came, when the drag ends.
+	if (!m_bMoveStart)
+	{
+		MapRefresh();
+	}
+	return 0;
+}
+
 int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
+	// The charts of the System Database and of exchange sets are opened by a worker thread, so
+	// the window goes on answering while they load; the view draws again when one is ready.
+	GISLibrary::BackgroundOpening::Enable([window = GetSafeHwnd()]() {
+		if (!chartsReadyPosted.exchange(true))
+		{
+			if (!::PostMessage(window, WM_CHARTS_READY, 0, 0))
+			{
+				chartsReadyPosted = false;
+			}
+		}
+	});
 
 	auto cm = theApp.gisLib->GetCatalogManager();
 

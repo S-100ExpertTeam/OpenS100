@@ -132,6 +132,8 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	// Charts the worker thread has opened are ready to be drawn (DatasetOpening.h).
+	afx_msg LRESULT OnChartsReady(WPARAM wParam, LPARAM lParam);
 
 public:
 	void MapRefresh();

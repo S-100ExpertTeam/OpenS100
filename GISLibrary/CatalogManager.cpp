@@ -28,11 +28,13 @@ CatalogManager::~CatalogManager()
 
 FeatureCatalogue* CatalogManager::addFC(std::string path)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	return addFC(s100::text::ToWide(path));
 }
 
 FeatureCatalogue* CatalogManager::addFC(std::wstring path)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto fc = new FeatureCatalogue();
 
 	if (fc->Read(path))
@@ -47,6 +49,7 @@ FeatureCatalogue* CatalogManager::addFC(std::wstring path)
 
 void CatalogManager::addFC(FeatureCatalogue* fc)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	if (fc) {
 		FCs.push_back(fc);
 	}
@@ -54,11 +57,13 @@ void CatalogManager::addFC(FeatureCatalogue* fc)
 
 PortrayalCatalogue* CatalogManager::addPC(std::string path)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	return addPC(s100::text::ToWide(path));
 }
 
 PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto pc = new PortrayalCatalogue(GISLibrary::PortrayalRender::NewResourceStore());
 
 	if (pc->Open(path)) {
@@ -74,6 +79,7 @@ PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 
 void CatalogManager::addPC(PortrayalCatalogue* pc)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	if (pc) {
 		PCs.push_back(pc);
 	}
@@ -81,6 +87,7 @@ void CatalogManager::addPC(PortrayalCatalogue* pc)
 
 FeatureCatalogue* CatalogManager::getFC(std::string productId)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	loadNewestRegisteredFC(productId);
 
 	std::vector<FeatureCatalogue*> fc;
@@ -107,6 +114,7 @@ FeatureCatalogue* CatalogManager::getFC(std::string productId)
 
 FeatureCatalogue* CatalogManager::getFC(std::string productId, Version version) const
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	for (auto i = FCs.begin(); i != FCs.end(); i++)
 	{
 		if (productId.compare((*i)->getProductId()) == 0 && version == (*i)->getVersion())
@@ -135,6 +143,7 @@ FeatureCatalogue* CatalogManager::getFC(std::string productId, Version version) 
 
 PortrayalCatalogue* CatalogManager::getPC(std::string productId, Version version) const
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	for (auto i = PCs.begin(); i != PCs.end(); i++)
 	{
 		if (productId.compare((*i)->getProduct()) == 0 && version == (*i)->getVersion())
@@ -163,6 +172,7 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId, Version version
 
 PortrayalCatalogue* CatalogManager::getPC(std::string productId)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	loadNewestRegisteredPC(productId);
 
 	PortrayalCatalogue* bpc = nullptr;
@@ -199,30 +209,35 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId)
 
 FeatureCatalogue* CatalogManager::getFC(int productId)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto product = "S-" + std::to_string(productId);
 	return getFC(product);
 }
 
 FeatureCatalogue* CatalogManager::getFC(int productId, Version version) const
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto product = "S-" + std::to_string(productId);
 	return getFC(product, version);
 }
 
 PortrayalCatalogue* CatalogManager::getPC(int productId)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto product = "S-" + std::to_string(productId);
 	return getPC(product);
 }
 
 PortrayalCatalogue* CatalogManager::getPC(int productId, Version version) const
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	auto product = "S-" + std::to_string(productId);
 	return getPC(product, version);
 }
 
 const std::set<std::string> CatalogManager::getFcProductList()
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	std::set<std::string> result;
 
 	for (auto i = FCs.begin(); i != FCs.end(); i++) {
@@ -235,6 +250,7 @@ const std::set<std::string> CatalogManager::getFcProductList()
 
 const std::set<std::string> CatalogManager::getPcProductList()
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	std::set<std::string> result;
 
 	for (auto i = PCs.begin(); i != PCs.end(); i++) {
@@ -258,6 +274,7 @@ std::size_t CatalogManager::indexOf(const std::vector<s100::sdb::CatalogueRecord
 
 void CatalogManager::registerFeatureCatalogue(const s100::sdb::CatalogueRecord& record, const std::filesystem::path& file)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	const std::size_t index = indexOf(registeredFCRecords, record);
 	if (index < registeredFCRecords.size())
 	{
@@ -275,6 +292,7 @@ void CatalogManager::registerFeatureCatalogue(const s100::sdb::CatalogueRecord& 
 
 void CatalogManager::registerPortrayalCatalogue(const s100::sdb::CatalogueRecord& record, const std::filesystem::path& file)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	const std::size_t index = indexOf(registeredPCRecords, record);
 	if (index < registeredPCRecords.size())
 	{
@@ -292,6 +310,7 @@ void CatalogManager::registerPortrayalCatalogue(const s100::sdb::CatalogueRecord
 
 void CatalogManager::registerInstalled(const s100::sdb::SystemDatabase& database, const s100::sdb::ResourceStore& store)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	const auto featureCatalogues = database.featureCatalogues().all();
 	const auto portrayalCatalogues = database.portrayalCatalogues().all();
 
@@ -329,6 +348,7 @@ void CatalogManager::registerInstalled(const s100::sdb::SystemDatabase& database
 
 void CatalogManager::clearRegistrations()
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	registeredFCRecords.clear();
 	registeredFCs.clear();
 	registeredPCRecords.clear();
@@ -337,6 +357,7 @@ void CatalogManager::clearRegistrations()
 
 FeatureCatalogue* CatalogManager::loadRegisteredFC(std::size_t index)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	Registration& registration = registeredFCs[index];
 	if (!registration.loaded && !registration.failed)
 	{
@@ -356,6 +377,7 @@ FeatureCatalogue* CatalogManager::loadRegisteredFC(std::size_t index)
 
 PortrayalCatalogue* CatalogManager::loadRegisteredPC(std::size_t index)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	Registration& registration = registeredPCs[index];
 	if (!registration.loaded && !registration.failed)
 	{
@@ -379,6 +401,7 @@ PortrayalCatalogue* CatalogManager::loadRegisteredPC(std::size_t index)
 
 void CatalogManager::loadNewestRegisteredFC(std::string_view product)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	const auto resolution = s100::sdb::resolveCatalogue(product, "", registeredFCRecords);
 	if (resolution.catalogue)
 	{
@@ -388,6 +411,7 @@ void CatalogManager::loadNewestRegisteredFC(std::string_view product)
 
 void CatalogManager::loadNewestRegisteredPC(std::string_view product)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	const auto resolution = s100::sdb::resolveCatalogue(product, "", registeredPCRecords);
 	if (resolution.catalogue)
 	{
@@ -397,6 +421,7 @@ void CatalogManager::loadNewestRegisteredPC(std::string_view product)
 
 CatalogManager::Resolution CatalogManager::resolve(std::string_view product, std::string_view version)
 {
+	const std::lock_guard<std::recursive_mutex> lock(mutex_);
 	Resolution resolution;
 	resolution.feature = s100::sdb::resolveCatalogue(product, version, registeredFCRecords);
 	if (resolution.feature.catalogue)

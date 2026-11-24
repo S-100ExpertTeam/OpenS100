@@ -2,6 +2,7 @@
 #include "DebugOutput.h"
 #include "../GeoMetryLibrary/TextCodec.h"
 #include "ProcessS101.h"
+#include "DatasetOpening.h"
 #include <stdexcept>
 #include "S100Layer.h"
 #include "S101Cell.h"
@@ -207,6 +208,8 @@ ProcessS101::~ProcessS101()
 
 int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 {
+	// One Lua state and one set of host data for the process: one dataset at a time.
+	const std::lock_guard<std::recursive_mutex> opening(GISLibrary::OpeningLock());
 	try {
 		auto fc = layer->GetFeatureCatalog();
 		auto pc = layer->GetPC();

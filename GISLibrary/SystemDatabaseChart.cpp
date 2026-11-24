@@ -2,6 +2,7 @@
 #include "SystemDatabaseChart.h"
 
 #include "CatalogManager.h"
+#include "DatasetOpening.h"
 #include "Layer.h"
 #include "LayerManager.h"
 #include "ViewSelection.h"
@@ -47,6 +48,7 @@ namespace GISLibrary
 
 		layers_ = std::make_unique<DatasetLayerSet>(*drawer_,
 			[this](s100::sdb::RecordId dataset) { return OpenDataset(dataset); }, std::move(cache));
+		layers_->setPlanner([this](s100::sdb::RecordId dataset) { return PlanDataset(dataset); });
 		LoadSelection();
 	}
 
@@ -178,6 +180,32 @@ namespace GISLibrary
 	void SystemDatabaseChart::CataloguesChanged()
 	{
 		layers_->forgetFailures();
+	}
+
+	DatasetLayerSet::Job SystemDatabaseChart::PlanDataset(s100::sdb::RecordId dataset)
+	{
+		const auto record = database_->datasets().find(dataset);
+		if (!record || record->status != s100::sdb::DatasetStatus::Active || !drawer_->catalogManager)
+		{
+			return {};
+		}
+		std::wstring path = store_->absolute(record->path).wstring();
+		if (!OpensInBackground(path))
+		{
+			return {};
+		}
+		// The catalogues as OpenDataset finds them, loaded here if they are not yet.
+		auto catalogues = drawer_->catalogManager->resolve(record->product, record->productEdition);
+		if (!catalogues.fc)
+		{
+			catalogues = drawer_->catalogManager->resolve(record->product, {});
+		}
+		if (!catalogues.fc)
+		{
+			return {};
+		}
+		return [drawer = drawer_.get(), path = std::move(path), number = productNumber(record->product), fc = catalogues.fc,
+			pc = catalogues.pc]() { return drawer->CreateS100Layer(path, number, fc, pc); };
 	}
 
 	std::unique_ptr<Layer> SystemDatabaseChart::OpenDataset(s100::sdb::RecordId dataset)

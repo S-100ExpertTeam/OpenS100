@@ -1116,6 +1116,9 @@
     <ClCompile Include="DatasetLayerSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DatasetOpening.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="DebugOutput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -2229,6 +2232,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DatasetLayerSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DatasetOpening.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DebugOutput.h">

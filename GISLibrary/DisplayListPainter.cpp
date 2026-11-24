@@ -802,11 +802,13 @@ namespace s100::render
 
 		auto p = (SPoint*)geom;
 
+		// (Not in SGeometry::viewPoints: a dataset being opened on another thread resizes it.)
+		POINT onDevice{};
 		scaler.WorldToDevice(
 			p->x,
 			p->y,
-			&SGeometry::viewPoints[0].x,
-			&SGeometry::viewPoints[0].y);
+			&onDevice.x,
+			&onDevice.y);
 
 		for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
 		{
@@ -819,7 +821,7 @@ namespace s100::render
 			SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
 			int PEN_WIDTH = (int)(ls->pen_width / 0.319);
 
-			PointF pBeginningPt = { (float)SGeometry::viewPoints[0].x, (float)SGeometry::viewPoints[0].y };
+			PointF pBeginningPt = { (float)onDevice.x, (float)onDevice.y };
 			PointF pEndPt;
 
 			// Point rotate
@@ -920,7 +922,8 @@ namespace s100::render
 		}
 
 		SPoint* p = (SPoint*)geom;
-		scaler.WorldToDevice(p->x, p->y, &SGeometry::viewPoints[0].x, &SGeometry::viewPoints[0].y);
+		POINT onDevice{};
+		scaler.WorldToDevice(p->x, p->y, &onDevice.x, &onDevice.y);
 
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
@@ -957,7 +960,7 @@ namespace s100::render
 			// The arcs are built from north up: turned to where north is at the point.
 			renderer.SetTransform({
 				TransformStep::Rotate(static_cast<float>(NorthAngle(p->x, p->y))),
-				TransformStep::Translate(SGeometry::viewPoints[0].x, SGeometry::viewPoints[0].y) });
+				TransformStep::Translate(onDevice.x, onDevice.y) });
 
 			Stroke stroke;
 			stroke.width = ls->pen_width / 0.32;

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <filesystem>
 #include "S100ExchangeCatalogue.h"
+#include "DatasetOpening.h"
 #include "IRenderer.h"
 #include "SkiaViewFrame.h"
 #include "GISLibrary.h"
@@ -167,6 +168,21 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
         [this](GISLibrary::DatasetLayerSet::DatasetId dataset) {
             return m_pLayerManager->CreateLayer(m_vecInventory[static_cast<std::size_t>(dataset)]->strFilePath);
         });
+    // A cell is opened by the worker (DatasetOpening.h); its catalogues are loaded here first.
+    m_layers->setPlanner([this](GISLibrary::DatasetLayerSet::DatasetId dataset) -> GISLibrary::DatasetLayerSet::Job {
+        std::wstring path = m_vecInventory[static_cast<std::size_t>(dataset)]->strFilePath;
+        if (!GISLibrary::OpensInBackground(path) || !m_pLayerManager->catalogManager)
+        {
+            return {};
+        }
+        const int product = m_pLayerManager->pathToProductNumber(path);
+        if (!m_pLayerManager->catalogManager->getFC(product))
+        {
+            return {};
+        }
+        (void)m_pLayerManager->catalogManager->getPC(product);
+        return [drawer = m_pLayerManager, path = std::move(path)]() { return drawer->CreateLayer(path); };
+    });
 
 	return true;
 }

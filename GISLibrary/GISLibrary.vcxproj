@@ -413,6 +413,7 @@
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="dataProduct.cpp" />
     <ClCompile Include="DatasetLayerSet.cpp" />
+    <ClCompile Include="DatasetOpening.cpp" />
     <ClCompile Include="DebugOutput.cpp" />
     <ClCompile Include="DatasetPermit.cpp" />
     <ClCompile Include="DataStatus.cpp" />
@@ -784,6 +785,7 @@
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="dataProduct.h" />
     <ClInclude Include="DatasetLayerSet.h" />
+    <ClInclude Include="DatasetOpening.h" />
     <ClInclude Include="DebugOutput.h" />
     <ClInclude Include="SENC_InstructionVisitor.h" />
     <ClInclude Include="RenderCacheSlot.h" />

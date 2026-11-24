@@ -71,6 +71,9 @@ namespace GISLibrary
 		};
 
 		[[nodiscard]] std::unique_ptr<Layer> OpenDataset(s100::sdb::RecordId dataset);
+		// The opening of a dataset as a job for the worker (DatasetOpening.h), with the database
+		// read and the catalogues found here; empty for a dataset that is opened by OpenDataset.
+		[[nodiscard]] DatasetLayerSet::Job PlanDataset(s100::sdb::RecordId dataset);
 		void UpdateExtent();
 		void LoadSelection();
 

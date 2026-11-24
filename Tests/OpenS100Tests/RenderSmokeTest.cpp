@@ -29,6 +29,7 @@
 #include <fstream>
 #include <psapi.h>
 
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <cstdlib>
@@ -44,6 +45,7 @@
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
 #include "CoverageDataset.h"
+#include "DatasetOpening.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -688,6 +690,104 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 	const std::size_t opened = layerSet->openCount();
 	drawAt(128.95, 35.02, 129.15, 35.14, "busan-again");
 	EXPECT_EQ(layerSet->openCount(), opened);
+}
+
+// With background opening on, a view does not wait for its cells: the first frame comes back at
+// once with none of them, the worker opens them, tells the application, and the next frame shows
+// them. A view that moves on before they are all there keeps the cells it had, underneath.
+TEST(RenderSmoke, ExchangeSetOpensItsCellsInTheBackground)
+{
+	const auto catalog = testpaths::korS101Catalog();
+	if (!std::filesystem::exists(catalog))
+	{
+		GTEST_SKIP() << "reference exchange set not available: " << catalog.string();
+	}
+
+	using Clock = std::chrono::steady_clock;
+	const auto ms = [](Clock::time_point a, Clock::time_point b) { return std::chrono::duration<double, std::milli>(b - a).count(); };
+
+	std::atomic<int> told{ 0 };
+	GISLibrary::BackgroundOpening::Enable([&told]() { told++; });
+	struct Off
+	{
+		~Off() { GISLibrary::BackgroundOpening::Disable(); }
+	} off;
+
+	{
+		CGISLibraryApp gis;
+		auto cm = gis.GetCatalogManager();
+		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+		ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+		ASSERT_TRUE(gis.AddLayer(catalog.wstring()));
+
+		S100ExchangeCatalogue* exchangeSet = nullptr;
+		for (Layer* layer : gis.GetLayerManager()->layers)
+		{
+			if (auto* candidate = dynamic_cast<S100ExchangeCatalogue*>(layer->m_spatialObject))
+			{
+				exchangeSet = candidate;
+			}
+		}
+		ASSERT_NE(exchangeSet, nullptr);
+		const auto* layerSet = exchangeSet->GetLayerSet();
+		ASSERT_NE(layerSet, nullptr);
+
+		const auto lookAt = [&](double west, double south, double east, double north) {
+			MBR area(west, south, east, north);
+			projection(area);
+			gis.SetMap(area);
+		};
+		const auto draw = [&](MemoryCanvas& canvas) {
+			const auto start = Clock::now();
+			gis.Draw(canvas.dc());
+			::GdiFlush();
+			return ms(start, Clock::now());
+		};
+
+		// Busan harbour: the frame does not wait for the cells.
+		lookAt(128.95, 35.02, 129.15, 35.14);
+		MemoryCanvas canvas(kWidth, kHeight);
+		const double first = draw(canvas);
+		EXPECT_EQ(layerSet->shownCount(), 0u) << "the cells are opened by the worker, not by the frame";
+		EXPECT_GT(layerSet->pendingCount(), 0u);
+
+		GISLibrary::BackgroundOpening::WaitUntilIdle();
+		EXPECT_GT(told.load(), 0) << "the application is told when a cell is ready";
+		EXPECT_EQ(layerSet->pendingCount(), 0u);
+
+		// The next frame takes all that came and shows it.
+		canvas.Clear();
+		const double second = draw(canvas);
+		const std::size_t busan = layerSet->shownCount();
+		EXPECT_GT(busan, 0u);
+		EXPECT_EQ(layerSet->openCount(), busan);
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		EXPECT_GT(nonWhite, static_cast<std::size_t>(kWidth) * kHeight / 10);
+		EXPECT_TRUE(canvas.SavePng(OutputDirectory() / "exchange-set-background.png"));
+
+		// The whole south coast: until its cells are there, the ones of Busan stay.
+		lookAt(126.0, 33.8, 130.0, 35.6);
+		canvas.Clear();
+		const double moved = draw(canvas);
+		EXPECT_GT(layerSet->pendingCount(), 0u);
+		EXPECT_EQ(layerSet->shownCount(), busan) << "the charts shown before stay until the new ones are ready";
+		canvas.Measure(nonWhite, colours);
+		EXPECT_GT(nonWhite, 0u);
+
+		GISLibrary::BackgroundOpening::WaitUntilIdle();
+		canvas.Clear();
+		draw(canvas);
+		EXPECT_EQ(layerSet->pendingCount(), 0u);
+		EXPECT_GT(layerSet->shownCount(), 0u);
+		EXPECT_GT(layerSet->cachedCount(), 0u) << "the cells of Busan left for the cache";
+
+		std::cout << std::format("[ background ] first frame {:.0f} ms with no cell, {:.0f} ms with {} cells, {:.0f} ms after moving on; told {} times",
+			first, second, busan, moved, told.load()) << std::endl;
+	}   // the library goes while background opening is still on: nothing is left running for it
 }
 
 // System Database work item SDB-7: datasets installed once are drawn after a restart by S-98 E-1.3
