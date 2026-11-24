@@ -1,6 +1,7 @@
 #include "SkiaRenderer.h"
 #include "SkiaText.h"
 
+#include "../GISLibrary/LineStylePicture.h"
 #include "../GISLibrary/PatternTile.h"
 #include "../GISLibrary/SymbolPicture.h"
 
@@ -268,9 +269,18 @@ namespace s100::render
 		}
 	}
 
-	void SkiaRenderer::StrokeLineStyle(const std::string&, const std::vector<PointF>&, const ColorF*)
+	void SkiaRenderer::StrokeLineStyle(const std::string& reference, const std::vector<PointF>& points,
+		const ColorF* shortStretches)
 	{
-		omitted.lineStyles++;
+		// The shared code lays the style along the line as paths and symbols, on this renderer,
+		// under transforms of its own; the one in force comes back afterwards.
+		const SkMatrix before = matrix;
+		if (!resources.lineStyles || !resources.symbols || !resources.color
+			|| !DrawLineStyle(*this, *resources.lineStyles, reference, points, shortStretches, *resources.symbols, resources.color))
+		{
+			omitted.lineStyles++;
+		}
+		matrix = before;
 	}
 
 	void SkiaRenderer::DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale)

@@ -451,8 +451,8 @@ namespace
 	class PathsOnly final : public s100::render::IRenderer
 	{
 	public:
-		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts, bool patterns)
-			: inner(inner), symbols(symbols), texts(texts), patterns(patterns)
+		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts, bool patterns, bool lineStyles)
+			: inner(inner), symbols(symbols), texts(texts), patterns(patterns), lineStyles(lineStyles)
 		{
 		}
 
@@ -483,7 +483,14 @@ namespace
 				inner.FillPath(path, fill);
 			}
 		}
-		void StrokeLineStyle(const std::string&, const std::vector<s100::render::PointF>&, const s100::render::ColorF*) override {}
+		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
+			const s100::render::ColorF* shortStretches) override
+		{
+			if (lineStyles)
+			{
+				inner.StrokeLineStyle(reference, points, shortStretches);
+			}
+		}
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
 		{
 			if (symbols)
@@ -509,12 +516,13 @@ namespace
 		bool symbols;   // the symbols too
 		bool texts;     // the texts too
 		bool patterns;  // the pattern fills too
+		bool lineStyles;  // the line styles too
 	};
 
 	// Draws `cell` fitted to the canvas as RenderCell does, but only its paths (PathsOnly), by
 	// the neutral frame (DrawingOrder) on the Direct2D renderer. The reference picture for a
 	// backend that draws paths only.
-	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts, bool patterns)
+	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts, bool patterns, bool lineStyles)
 	{
 		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
@@ -554,7 +562,7 @@ namespace
 			s100::render::SuppressSharedCurves(priorities, frame);
 
 			GISLibrary::D2DRenderer renderer(d2, pc);
-			PathsOnly paths(renderer, symbols, texts, patterns);
+			PathsOnly paths(renderer, symbols, texts, patterns, lineStyles);
 			s100::render::DisplayListPainter painter(paths, scaler,
 				[pc](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
 			for (const int priority : priorities)
@@ -574,7 +582,7 @@ namespace
 
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
 // With S100_RENDER_PRIMITIVES=paths only the stroked and colour-filled paths are drawn; with
-// "symbols", "texts" and "patterns" added after commas ("paths,symbols,texts") those too.
+// "symbols", "texts", "patterns" and "linestyles" added after commas ("paths,symbols,texts") those too.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
 	char* value = nullptr;
@@ -597,6 +605,7 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 	bool withSymbols = false;
 	bool withTexts = false;
 	bool withPatterns = false;
+	bool withLineStyles = false;
 	char* primitives = nullptr;
 	if (_dupenv_s(&primitives, &length, "S100_RENDER_PRIMITIVES") == 0 && primitives)
 	{
@@ -605,6 +614,7 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		withSymbols = asked.find(",symbols,") != std::string::npos;
 		withTexts = asked.find(",texts,") != std::string::npos;
 		withPatterns = asked.find(",patterns,") != std::string::npos;
+		withLineStyles = asked.find(",linestyles,") != std::string::npos;
 		free(primitives);
 	}
 
@@ -622,7 +632,7 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
 		if (pathsOnly)
 		{
-			RenderCellPaths(cell, withSymbols, withTexts, withPatterns);
+			RenderCellPaths(cell, withSymbols, withTexts, withPatterns, withLineStyles);
 			continue;
 		}
 		std::size_t nonWhite = 0;

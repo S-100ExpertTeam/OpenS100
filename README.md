@@ -79,13 +79,13 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 | `opens100::dataset` | `dataset` | Dataset model and readers: S-101 ISO 8211 cells (`S101Cell`), GML (`S10XGML`) and HDF5 (`S100H5`) datasets. No window or renderer | portrayalcatalogue, HDF5, pugixml, polyclipping, Boost.Geometry |
 | `opens100::luascripting` | `lua-scripting` | Lua session of S-100 Part 9a portrayal (Lua 5.1 on LuaJIT), host-call table, drawing instruction results | featurecatalog, LuaJIT |
 | `opens100::portrayal` | `portrayal` | Portrayal run over a dataset: the drawing instruction model (S-100 Part 9), the Lua host for S-101 rules, the XSLT engine. Leaves instructions for a renderer to visit, or as JSON text that is the same on every platform (`DisplayListJson.h`); draws nothing | dataset, luascripting, libxslt, libxml2 |
-| `opens100::render-skia` | `render-skia` | Skia backend of the renderer (in progress): draws the instructions on a Skia canvas the application supplies; a CPU surface with PNG output is included. Everything but line styles so far: stroked paths, colour and pattern fills, symbols, texts (in font files the application hands over) | portrayal, Skia |
+| `opens100::render-skia` | `render-skia` | Skia backend of the renderer (under review against the Direct2D viewer): draws the instructions on a Skia canvas the application supplies, texts in font files it hands over; a CPU surface with PNG output is included | portrayal, Skia |
 | `opens100::coverage` | `coverage` | S-100 Part 10c HDF5 coverages, depth lines, water level adjustment | HDF5 |
 | `opens100::sdb` | `system-database` | Local store of installed datasets and catalogues, S-98 dataset selection, S-100 Part 15 data protection | SQLite, OpenSSL, zlib, pugixml |
 
 The viewer of the Visual Studio solution draws with Direct2D. The portable render backend
-(`render-skia`) is being built; until it draws every kind of instruction, the package is complete
-up to the drawing instructions.
+(`render-skia`) draws every kind of instruction on Windows and Linux; its pictures are being
+compared with the viewer's before the viewer moves to it.
 
 ## What it supports
 

@@ -4,10 +4,11 @@
 // It draws on a canvas it is handed and knows nothing else of the surface: whether the pixels
 // are in memory or on a GPU, and where they go afterwards, is the application's business.
 //
-// What it draws so far: paths stroked (solid, dashed, arcs) and filled with a colour or a
-// pattern, the symbols of the catalogue (by the shared code of SymbolPicture, which draws them
-// as paths) and texts in the fonts it is handed. Line styles are counted and left out
-// (NotDrawn).
+// It draws paths, stroked (solid, dashed, arcs) and filled with a colour or a pattern, and texts
+// in the fonts it is handed. The symbols, pattern fills and line styles of the catalogue are
+// drawn by the shared code (SymbolPicture, PatternTile, LineStylePicture) as paths on this
+// renderer: the backend does not know what they are. What it was asked for and had no resource
+// to draw is counted (NotDrawn).
 #include "../GISLibrary/DisplayListPainter.h"
 #include "../GISLibrary/IRenderer.h"
 
@@ -24,6 +25,7 @@ class SkShader;
 namespace s100::render
 {
 	class AreaFillLibrary;
+	class LineStyleLibrary;
 	class SkiaFonts;
 	class SymbolLibrary;
 
@@ -35,6 +37,8 @@ namespace s100::render
 		SymbolLibrary* symbols = nullptr;
 		// The area fills of the catalogue, for the pattern fills that name one.
 		const AreaFillLibrary* areaFills = nullptr;
+		// The line styles of the catalogue.
+		const LineStyleLibrary* lineStyles = nullptr;
 		// The colours of the palette in use, for the symbols.
 		ColorLookup color;
 		// The fonts texts are written in; without them no text is drawn and every text

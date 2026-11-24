@@ -16,10 +16,11 @@
 # instructions as JSON text (DisplayListJson). DisplayListPainter is the S-100 side of drawing
 # them on an IRenderer, DrawingOrder says which of them a view shows and in what order and
 # ColorPalette gives the colours of their tokens; SymbolPicture is a symbol of the catalogue as
-# shapes and draws it on an IRenderer; PatternTile is the tile of a pattern fill. They are here
-# until they get a target of their own.
+# shapes and draws it on an IRenderer; PatternTile is the tile of a pattern fill and
+# LineStylePicture a line style laid along a line. They are here until they get a target of
+# their own.
 set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
-    ColorPalette DisplayListJson DisplayListPainter DrawingOrder PCOutputSchemaManager PatternTile ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
+    ColorPalette DisplayListJson DisplayListPainter DrawingOrder LineStylePicture PCOutputSchemaManager PatternTile ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
     S101LuaScriptingReference host_data host_functions
     SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch

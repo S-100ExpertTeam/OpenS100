@@ -13,6 +13,7 @@
 #include "ColorPalette.h"
 #include "SymbolPicture.h"
 #include "PatternTile.h"
+#include "LineStylePicture.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -736,4 +737,124 @@ TEST(PatternTile, ReadsTheAreaFillsOfTheS101Catalogue)
 	RecordingRenderer none;
 	EXPECT_FALSE(s100::render::DrawPatternTile(none, s100::render::TileOf(lattice, areaFills), symbols, color));
 	EXPECT_TRUE(none.text.empty());
+}
+
+// A line style file is read into dashes and symbols, in pixels along the line.
+TEST(LineStylePicture, ReadsTheLineStylesOfTheS101Catalogue)
+{
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+
+	s100::render::LineStyleLibrary lineStyles(pc);
+	EXPECT_EQ(lineStyles.Size(), pc.GetTreeLineStyles()->GetLineStyleFilesVector()->size());
+	EXPECT_GT(lineStyles.Size(), 50u);
+
+	// 32.3 mm at 6.25 pixels to the millimetre is 201.875: the interval is cut to whole pixels,
+	// the dashes and the places of the symbols are not.
+	const auto anchorage = lineStyles.Find("ACHARE51");
+	ASSERT_NE(anchorage, nullptr);
+	EXPECT_FLOAT_EQ(anchorage->length, 201.0f);
+	EXPECT_EQ(anchorage->colorToken, "CHMGD");
+	EXPECT_FLOAT_EQ(anchorage->opacity, 1.0f);
+	ASSERT_EQ(anchorage->dashes.size(), 3u);
+	EXPECT_FLOAT_EQ(anchorage->dashes[1].start, 113.75f);
+	EXPECT_FLOAT_EQ(anchorage->dashes[1].length, 37.5f);
+	ASSERT_EQ(anchorage->symbols.size(), 4u);
+	EXPECT_EQ(anchorage->symbols[1].reference, "EMACHAR1");
+	EXPECT_FLOAT_EQ(anchorage->symbols[1].position, 81.875f);
+	EXPECT_TRUE(anchorage->lines.empty());
+
+	// A composite line style: lines side by side.
+	const auto boundary = lineStyles.Find("SCLBDY51");
+	ASSERT_NE(boundary, nullptr);
+	ASSERT_EQ(boundary->lines.size(), 3u);
+	EXPECT_FLOAT_EQ(boundary->lines[0].offset, -3.125f);
+	EXPECT_FLOAT_EQ(boundary->lines[0].width, 3.0f);
+	EXPECT_EQ(boundary->lines[0].colorToken, "CHGRF");
+
+	// Every symbol a line style names is in the catalogue.
+	s100::render::SymbolLibrary symbols(pc);
+	for (auto file : *pc.GetTreeLineStyles()->GetLineStyleFilesVector())
+	{
+		const std::string name = std::filesystem::path(file->GetFileNameW()).stem().string();
+		const auto lineStyle = lineStyles.Find(name);
+		ASSERT_NE(lineStyle, nullptr) << name;
+		EXPECT_TRUE(lineStyle->length >= 1.0f || !lineStyle->lines.empty()) << name;
+		for (const auto& symbol : lineStyle->symbols)
+		{
+			EXPECT_NE(symbols.Find(symbol.reference), nullptr) << name << " " << symbol.reference;
+		}
+	}
+	EXPECT_EQ(lineStyles.Find("NO_SUCH_STYLE"), nullptr);
+}
+
+// A line style is laid along each stretch of a line from its first point: dashes cut where the
+// stretch ends, symbols whole where their place is still on it, a short stretch a thin dashed line.
+TEST(LineStylePicture, IsLaidAlongALine)
+{
+	PortrayalCatalogue pc;
+	ASSERT_TRUE(pc.Open((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+	s100::render::SymbolLibrary symbols(pc);
+	const auto color = [](const std::wstring& token) {
+		return s100::render::ColorF{ static_cast<float>(token.size()), 0.0f, 0.0f, 1.0f };
+	};
+
+	s100::render::LineStylePicture style;
+	style.length = 100.0f;
+	style.colorToken = "CHBLK";
+	style.dashes = { { 10.0f, 30.0f }, { 60.0f, 30.0f } };
+	style.symbols = { { "QUESMRK1", 50.0f, 0.0f } };
+
+	// 250 pixels to the right: two intervals and a half. The second dash of the half is past the
+	// end; the symbol of the half is at 250, the very end.
+	RecordingRenderer renderer;
+	s100::render::DrawLineStyle(renderer, style, { { 100.0f, 200.0f }, { 350.0f, 200.0f } }, nullptr, symbols, color);
+	EXPECT_NE(renderer.text.find("transform rotate 0 about 100 200\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("stroke width 1 color 5 0 0 1 dashes"
+		" | from 110 200 line 140 200 open | from 160 200 line 190 200 open"
+		" | from 210 200 line 240 200 open | from 260 200 line 290 200 open"
+		" | from 310 200 line 340 200 open\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("translate 150 200\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("translate 250 200\n"), std::string::npos) << renderer.text;
+	EXPECT_NE(renderer.text.find("translate 350 200\n"), std::string::npos) << renderer.text;
+
+	// A stretch of exactly two intervals is drawn (the viewer left such a stretch out).
+	RecordingRenderer exact;
+	s100::render::DrawLineStyle(exact, style, { { 0.0f, 0.0f }, { 200.0f, 0.0f } }, nullptr, symbols, color);
+	EXPECT_NE(exact.text.find(" | from 160 0 line 190 0 open\n"), std::string::npos) << exact.text;
+
+	// Down the screen: the strip is turned, the dashes are still along x from the first point;
+	// the symbol is placed on the surface and turned with the line. A dash is cut at the end.
+	RecordingRenderer down;
+	s100::render::DrawLineStyle(down, style, { { 10.0f, 10.0f }, { 10.0f, 80.0f } }, nullptr, symbols, color);
+	EXPECT_NE(down.text.find("transform rotate 90.003 about 10 10\n"), std::string::npos) << down.text;
+	EXPECT_NE(down.text.find(" | from 20 10 line 50 10 open | from 70 10 line 80 10 open\n"), std::string::npos) << down.text;
+	EXPECT_NE(down.text.find("rotate 90.003 about 0 0 translate 10 60\n"), std::string::npos) << down.text;
+
+	// A short stretch with a colour for it: a thin dashed line, in device pixels.
+	const s100::render::ColorF red{ 1.0f, 0.0f, 0.0f, 1.0f };
+	RecordingRenderer shortLine;
+	s100::render::DrawLineStyle(shortLine, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, &red, symbols, color);
+	EXPECT_EQ(shortLine.text, "transform\nstroke width 1 color 1 0 0 1 dashes 2 2 | from 0 0 line 12 0 open\n");
+	// With no colour for it, the strip.
+	RecordingRenderer shortStrip;
+	s100::render::DrawLineStyle(shortStrip, style, { { 0.0f, 0.0f }, { 12.0f, 0.0f } }, nullptr, symbols, color);
+	EXPECT_NE(shortStrip.text.find(" | from 10 0 line 12 0 open\n"), std::string::npos) << shortStrip.text;
+
+	// A composite line style: its lines along the whole stretch, each at its offset.
+	s100::render::LineStylePicture composite;
+	composite.lines = { { -3.0f, 2.0f, "CHGRF", 1.0f }, { 5.0f, 1.0f, "CHGRF", 0.5f } };
+	RecordingRenderer sideBySide;
+	s100::render::DrawLineStyle(sideBySide, composite, { { 0.0f, 0.0f }, { 50.0f, 0.0f } }, nullptr, symbols, color);
+	EXPECT_NE(sideBySide.text.find("stroke width 2 color 5 0 0 1 dashes | from 0 -3 line 50 -3 open\n"), std::string::npos) << sideBySide.text;
+	EXPECT_NE(sideBySide.text.find("stroke width 1 color 5 0 0 0.5 dashes | from 0 5 line 50 5 open\n"), std::string::npos) << sideBySide.text;
+
+	// A name the catalogue does not have is drawn as its question mark.
+	s100::render::LineStyleLibrary lineStyles(pc);
+	RecordingRenderer unknown;
+	EXPECT_TRUE(s100::render::DrawLineStyle(unknown, lineStyles, "NO_SUCH_STYLE", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, symbols, color));
+	RecordingRenderer questionMark;
+	EXPECT_TRUE(s100::render::DrawLineStyle(questionMark, lineStyles, "QUESMRK1", { { 0.0f, 0.0f }, { 300.0f, 0.0f } }, nullptr, symbols, color));
+	EXPECT_FALSE(unknown.text.empty());
+	EXPECT_EQ(unknown.text, questionMark.text);
 }
