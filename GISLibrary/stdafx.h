@@ -49,19 +49,6 @@
 #include "Common.h"
 
 #if defined(_WIN32) && !defined(GISLIBRARY_MODEL_ONLY)
-#include <gdiplus.h>
-// GDI+ names were previously pulled in unqualified through a PortrayalCatalogue header; keep
-// that for the legacy GDI drawing code in this project until it moves to the renderer.
-using namespace Gdiplus;
-
-#include <d2d1.h>
-#include <d2d1_1.h>
-#include <dwrite.h>
-#include <wincodec.h>
-#pragma comment(lib, "d2d1.lib")
-#pragma comment(lib, "dwrite.lib")
-#pragma comment(lib, "windowscodecs.lib")
-#pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib, "ole32.lib")
 #pragma comment(lib, "winmm.lib")
 

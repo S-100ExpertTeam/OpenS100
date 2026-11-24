@@ -2,14 +2,12 @@
 #include "DeviceTypes.h"
 
 #include "LayerManager.h"
-#include "D2D1Resources.h"
 #include "S101Creator.h"
 #include "CatalogManager.h"
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
-#include "../S100Engine/S100Render.h"
 
 using namespace GISLibrary;
 
@@ -23,13 +21,11 @@ private:
 	Scaler* m_pScaler = nullptr;
 	CatalogManager* m_pCatalogManager = nullptr;
 	LayerManager* m_pLayerManager = nullptr;
-	D2D1Resources* D2 = nullptr;
 
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
 	CatalogManager* GetCatalogManager();
-	D2D1Resources* GetD2D1Resources();
 
 	bool AddBackgroundLayer(const std::wstring& _filepath);
 	bool AddLayer(const std::wstring& _filepath);
@@ -38,8 +34,6 @@ public:
 	void S101RebuildPortrayal();
 	Layer* GetLayer(int index);
 
-	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
-	void DrawScaleBar();
 
 	std::wstring GetLayerName(int index);
 	bool IsOn(int index);
@@ -58,8 +52,6 @@ public:
 						
 	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = true);
 	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = true);
-	void WorldToDevice(D2D1_POINT_2F& p);
-	void DeviceToWorld(D2D1_POINT_2F& p);
 
 	// setting screen
 	void SetScreen(RECT *rect);

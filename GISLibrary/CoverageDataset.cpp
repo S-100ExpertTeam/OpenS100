@@ -2,9 +2,6 @@
 #include "PortrayalRenderCache.h"
 #include "CoverageDataset.h"
 
-#include "D2D1Resources.h"
-#include "D2DRenderer.h"
-#include "D2DView.h"
 #include "DisplayListPainter.h"
 #include "SkiaViewFrame.h"
 #include "SymbolPicture.h"
@@ -26,9 +23,6 @@
 #include "../PortrayalCatalogue/S100_ColorProfile.h"
 #include "../PortrayalCatalogue/S100_Item.h"
 #include "../PortrayalCatalogue/S100_Palette.h"
-#include "../S100Engine/S100ColorProfile.h"
-#include "../S100Engine/S100PCManager.h"
-#include "../S100Engine/SVGReader.h"
 
 #include <pugixml.hpp>
 
@@ -890,46 +884,20 @@ namespace GISLibrary
 		}
 	}
 
-	void CoverageDataset::DrawCoverage(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
+	void CoverageDataset::DrawCoverage(HDC& hDC, Scaler* scaler)
 	{
 		if (!raw_ || !scaler || fillsByFeature_.empty())
 		{
 			return;
 		}
-		if (DrawsWithSkia())
+		auto& frame = SkiaViewFrame::Shared();
+		if (frame.Begin(*scaler))
 		{
-			auto& frame = SkiaViewFrame::Shared();
-			if (frame.Begin(*scaler))
+			if (auto* renderer = frame.Renderer(pc_))
 			{
-				if (auto* renderer = frame.Renderer(pc_))
-				{
-					DrawCoverage(*renderer, *scaler);
-				}
-				frame.End(hDC);
+				DrawCoverage(*renderer, *scaler);
 			}
-			return;
-		}
-
-		auto* rt = d2 ? d2->RenderTarget() : nullptr;
-		if (!rt)
-		{
-			return;
-		}
-		const RECT screen = D2DView::ScreenRECT(*scaler);
-		if (FAILED(rt->BindDC(hDC, &screen)))
-		{
-			return;
-		}
-		rt->BeginDraw();
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
-		{
-			D2DRenderer renderer(d2, pc_);
-			DrawCoverage(renderer, *scaler);
-		}
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
-		if (rt->EndDraw() == static_cast<HRESULT>(D2DERR_RECREATE_TARGET))
-		{
-			ReleaseImages();
+			frame.End(hDC);
 		}
 	}
 

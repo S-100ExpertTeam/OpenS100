@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100EditRender.h"
 #include "GISLibrary.h"
-#include "D2D1Resources.h"
+#include "FeatureHighlight.h"
 #include "R_FeatureRecord.h"
 #include "SPAS.h"
 #include "S101Cell.h"
@@ -28,9 +28,9 @@ S100EditRender::~S100EditRender()
 
 }
 
-void S100EditRender::Set(S101Cell* _enc, Scaler* _scaler, R_FeatureRecord* _feature, GISLibrary::D2D1Resources* _renderResources)
+void S100EditRender::Set(S101Cell* _enc, Scaler* _scaler, R_FeatureRecord* _feature, s100::render::IRenderer* _renderer)
 {
-	this->renderResources = _renderResources;
+	this->renderer = _renderer;
 	this->enc = _enc;
 	this->scaler = _scaler;
 	this->feature = _feature;
@@ -84,263 +84,112 @@ void S100EditRender::ShowPoint()
 
 void S100EditRender::ShowPoint(SPoint* geom)
 {
-	if ((enc == nullptr) ||
-		(scaler == nullptr) ||
-		(geom == nullptr))
-		return;
-
-	auto d2 = renderResources;
-	if (d2 && d2->pRT)
+	if (!enc || !scaler || !geom || !renderer)
 	{
-		D2D1_RECT_F rect = { -5, -5, 5, 5 };
-
-		d2->pBrush->SetOpacity(1);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		auto mx = geom->x;
-		auto my = geom->y;
-		long sx = 0;
-		long sy = 0;
-
-		scaler->WorldToDevice(mx, my, &sx, &sy);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
-
-		d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-		d2->pRT->FillRectangle(rect, d2->pBrush);
-
-		if (pointIndex == 0 && partIndex == 0)
-		{
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 3, d2->SolidStrokeStyle());
-		}
-		else
-		{
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
-		}
+		return;
 	}
+	long sx = 0;
+	long sy = 0;
+	scaler->WorldToDevice(geom->x, geom->y, &sx, &sy);
+	GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(sx), static_cast<float>(sy), pointIndex == 0 && partIndex == 0);
 }
 
 void S100EditRender::ShowPoint(SMultiPoint* geom)
 {
-	if ((enc == nullptr) ||
-		(scaler == nullptr) ||
-		(geom == nullptr))
-		return;
-
-	auto d2 = renderResources;
-	if (d2 && d2->pRT)
+	if (!enc || !scaler || !geom || !renderer)
 	{
-		D2D1_RECT_F rect = { -5, -5, 5, 5 };
-
-		d2->pBrush->SetOpacity(1);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		auto numPoint = geom->GetNumPoints();
-		for (int i = 0; i < numPoint; i++)
-		{
-			auto mx = geom->GetX(i);
-			auto my = geom->GetY(i);
-			long sx = 0;
-			long sy = 0;
-
-			scaler->WorldToDevice(mx, my, &sx, &sy);
-
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			if (pointIndex == i && partIndex == 0)
-			{
-				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-				d2->pRT->DrawRectangle(rect, d2->pBrush, 3, d2->SolidStrokeStyle());
-			}
-			else
-			{
-				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-				d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
-			}
-		}
+		return;
+	}
+	for (int i = 0; i < geom->GetNumPoints(); i++)
+	{
+		long sx = 0;
+		long sy = 0;
+		scaler->WorldToDevice(geom->GetX(i), geom->GetY(i), &sx, &sy);
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(sx), static_cast<float>(sy), pointIndex == i && partIndex == 0);
 	}
 }
 
+// The vertices of a curve; the selected one is drawn last, over its neighbours.
 void S100EditRender::ShowPoint(SCurve* geom)
 {
-	if ((enc == nullptr) ||
-		(scaler == nullptr) ||
-		(geom == nullptr))
-		return;
-
-	auto d2 = renderResources;
-	if (d2 && d2->pRT)
+	if (!enc || !scaler || !geom || !renderer)
 	{
-		long selectedSX = 0;
-		long selectedSY = 0;
-
-		D2D1_RECT_F rect = { -5, -5, 5, 5 };
-
-		d2->pBrush->SetOpacity(1);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		auto numPoint = geom->GetNumPoints();
-		for (int i = 0; i < numPoint; i++)
+		return;
+	}
+	long selectedSX = 0;
+	long selectedSY = 0;
+	for (int i = 0; i < geom->GetNumPoints(); i++)
+	{
+		long sx = 0;
+		long sy = 0;
+		scaler->WorldToDevice(geom->GetX(i), geom->GetY(i), &sx, &sy);
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(sx), static_cast<float>(sy), false);
+		if (pointIndex == i && partIndex == 0)
 		{
-			auto mx = geom->GetX(i);
-			auto my = geom->GetY(i);
-			long sx = 0;
-			long sy = 0;
-
-			scaler->WorldToDevice(mx, my, &sx, &sy);
-
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			if (pointIndex == i && partIndex == 0)
-			{
-				selectedSX = sx;
-				selectedSY = sy;
-			}
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
+			selectedSX = sx;
+			selectedSY = sy;
 		}
-
-		if (pointIndex >= 0 && partIndex == 0)
-		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
-		}
+	}
+	if (pointIndex >= 0 && partIndex == 0)
+	{
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(selectedSX), static_cast<float>(selectedSY), true);
 	}
 }
 
 void S100EditRender::ShowPoint(SCompositeCurve* geom)
 {
-	if ((enc == nullptr) ||
-		(scaler == nullptr) ||
-		(geom == nullptr))
-		return;
-
-	auto d2 = renderResources;
-	if (d2 && d2->pRT)
+	if (!enc || !scaler || !geom || !renderer)
 	{
-		long selectedSX = 0;
-		long selectedSY = 0;
-
-		D2D1_RECT_F rect = { -5, -5, 5, 5 };
-
-		d2->pBrush->SetOpacity(1);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		auto numPoint = geom->GetPointCount();
-		for (int i = 0; i < numPoint; i++)
+		return;
+	}
+	long selectedSX = 0;
+	long selectedSY = 0;
+	for (int i = 0; i < geom->GetPointCount(); i++)
+	{
+		const auto mp = geom->GetXY(i);
+		long sx = 0;
+		long sy = 0;
+		scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(sx), static_cast<float>(sy), false);
+		if (pointIndex == i && partIndex == 0)
 		{
-			auto mp = geom->GetXY(i);
-			long sx = 0;
-			long sy = 0;
-
-			scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
-
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			if (pointIndex == i && partIndex == 0)
-			{
-				selectedSX = sx;
-				selectedSY = sy;
-			}
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
+			selectedSX = sx;
+			selectedSY = sy;
 		}
-
-		if (pointIndex >= 0 && partIndex == 0)
-		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
-		}
+	}
+	if (pointIndex >= 0 && partIndex == 0)
+	{
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(selectedSX), static_cast<float>(selectedSY), true);
 	}
 }
 
 void S100EditRender::ShowPoint(SSurface* geom)
 {
-	if ((enc == nullptr) ||
-		(scaler == nullptr) ||
-		(geom == nullptr))
-		return;
-
-	auto d2 = renderResources;
-	if (d2 && d2->pRT)
+	if (!enc || !scaler || !geom || !renderer)
 	{
-		long selectedSX = 0;
-		long selectedSY = 0;
-
-		D2D1_RECT_F rect = { -5, -5, 5, 5 };
-
-		d2->pBrush->SetOpacity(1);
-
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		auto numPart = geom->GetNumPart();
-
-		for (int i = 0; i < numPart; i++)
+		return;
+	}
+	long selectedSX = 0;
+	long selectedSY = 0;
+	for (int i = 0; i < geom->GetNumPart(); i++)
+	{
+		for (int j = 0; j < geom->GetNumPointPerPart(i); j++)
 		{
-			auto numPoint = geom->GetNumPointPerPart(i);
-			for (int j = 0; j < numPoint; j++)
+			const auto mp = geom->GetXY(i, j);
+			long sx = 0;
+			long sy = 0;
+			scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
+			GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(sx), static_cast<float>(sy), false);
+			if (pointIndex == j && partIndex == i)
 			{
-				auto mp = geom->GetXY(i, j);
-				long sx = 0;
-				long sy = 0;
-
-				scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
-
-				d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
-
-				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-				d2->pRT->FillRectangle(rect, d2->pBrush);
-
-				if (pointIndex == j && partIndex == i)
-				{
-					selectedSX = sx;
-					selectedSY = sy;
-				}
-				else
-				{
-					d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-					d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
-				}
+				selectedSX = sx;
+				selectedSY = sy;
 			}
 		}
-
-		if (pointIndex >= 0 && partIndex >= 0)
-		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2->pRT->FillRectangle(rect, d2->pBrush);
-
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
-		}
+	}
+	if (pointIndex >= 0 && partIndex >= 0)
+	{
+		GISLibrary::DrawVertexHandle(*renderer, static_cast<float>(selectedSX), static_cast<float>(selectedSY), true);
 	}
 }
 

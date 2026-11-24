@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <regex>
-#include <gdiplus.h>
 
 #include <random>
 

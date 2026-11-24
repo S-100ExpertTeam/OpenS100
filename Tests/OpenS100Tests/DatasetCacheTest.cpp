@@ -96,7 +96,7 @@ namespace
 			return order;
 		}
 
-		LayerManager drawer{ nullptr };
+		LayerManager drawer;
 		std::map<GISLibrary::DatasetLayerSet::DatasetId, int> opens;
 		GISLibrary::DatasetLayerSet::Opener opener = [this](GISLibrary::DatasetLayerSet::DatasetId dataset) -> std::unique_ptr<Layer> {
 			++opens[dataset];

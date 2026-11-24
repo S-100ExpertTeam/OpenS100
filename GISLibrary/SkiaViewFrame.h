@@ -2,10 +2,10 @@
 // The viewer's frames of S-100 drawing instructions on Skia
 // (Documents/TechDocs/2026-11-24-r7-viewer-on-skia-design.md, 5).
 //
-// While the viewer moves from Direct2D to Skia, what Skia draws is a layer: a transparent
-// surface the size of the view, painted by the shared painter on a SkiaRenderer and blended
-// onto the device context the rest of the frame is drawn on. So what is still drawn by
-// Direct2D and GDI (grids, the background map, overlays) keeps its place in the order.
+// What Skia draws is a layer: a transparent surface the size of the view, painted by the shared
+// painter on a SkiaRenderer and blended onto the device context the rest of the frame is drawn
+// on. So what is still drawn by GDI (the background map, some overlays) keeps its place in the
+// order.
 //
 // Windows only, like the device context it ends on; it goes when the whole frame is drawn on
 // one surface.
@@ -24,12 +24,6 @@ class Scaler;
 
 namespace GISLibrary
 {
-	// Which backend the viewer draws with: Skia, or Direct2D when the environment variable
-	// S100_RENDER_BACKEND says "d2d" (kept until Direct2D is removed, to compare the two).
-	// An application may set it.
-	bool DrawsWithSkia();
-	void DrawWithSkia(bool on);
-
 	class SkiaViewFrame final
 	{
 	public:

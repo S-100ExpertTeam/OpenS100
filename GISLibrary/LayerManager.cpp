@@ -1,11 +1,8 @@
 #include "stdafx.h"
-#include "D2DConvert.h"
-#include "D2DInstructionPainter.h"
 #include "SkiaViewFrame.h"
+#include "FeatureHighlight.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
-#include "D2DView.h"
-#include "../S100Engine/S100PCManager.h"
 #include "LayerManager.h"
 #include "LayerOpen.h"
 #include "PortrayalRenderCache.h"
@@ -39,7 +36,6 @@
 #include "SPoint.h"
 #include "SCommonFuction.h"
 #include "CoverageDataset.h"
-#include "DepthSuppression.h"
 #include "DrawingOrder.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
@@ -63,12 +59,11 @@
 #include "S100ExchangeCatalogue.h"
 #include "LayerContainer.h"
 
-LayerManager::LayerManager(D2D1Resources* d2d1)
+LayerManager::LayerManager()
 {
-	D2 = d2d1;
 }
 
-LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager, D2D1Resources* d2d1) : LayerManager(d2d1)
+LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager) : LayerManager()
 {
 	this->scaler = scaler;
 	this->catalogManager = catalogManager;
@@ -422,138 +417,27 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 		return;
 	}
 
-	Gdiplus::Graphics graphics(hDC);
-	graphics.SetSmoothingMode(SmoothingModeHighQuality);
-
-	Color internalColor(50, 255, 0, 0);
-	Color lineColor(255, 255, 0, 0);
-
-	SolidBrush internalBrush(internalColor);
-	Pen linePen(lineColor);
-
 	auto _mbr = layer->GetMBR();
-	long sxmin = 0;
-	long symax = 0;
 
 	// Internal coordinate system -> Screen coordinate system.
+	long sxmin = 0;
+	long symax = 0;
 	scaler->WorldToDevice(_mbr.xmin, _mbr.ymin, &sxmin, &symax);
-
 	long sxmax = 0;
 	long symin = 0;
 	scaler->WorldToDevice(_mbr.xmax, _mbr.ymax, &sxmax, &symin);
 
-	RectF position = {
-		(float)sxmin,
-		(float)symin,
-		(float)sxmax - sxmin,
-		(float)symax - symin
-	};
-
-	Gdiplus::Font F(L"Arial", 20, FontStyleRegular, UnitPixel);
-	SolidBrush B(Color(0, 0, 255));
-	StringFormat sf;
-
-	const std::wstring layername = L"LayerName : " + layer->GetLayerName() + L" \nLayerType : " + layer->GetLayerType() + L" \n";
-
-	sf.SetAlignment(StringAlignmentNear);
-	sf.SetLineAlignment(StringAlignmentNear);
-
-	graphics.DrawRectangle(&linePen, position.X, position.Y, position.Width, position.Height);
-	graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
-	graphics.DrawString(layername.c_str(), -1, &F, position, &sf, &B);
-}
-
-void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
-{
-	auto selectedLayer = GetLayer(nindex);
-
-	if (nullptr == selectedLayer)
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (!frame.Begin(*scaler))
 	{
 		return;
 	}
-
-	DrawInformationLayer(hDC, selectedLayer);
-}
-
-void LayerManager::DrawInformationLayerByKey(HDC& hDC, int key)
-{
-	auto selectedLayer = GetLayerByKey(key);
-
-	if (nullptr == selectedLayer)
+	if (auto* renderer = frame.Renderer(nullptr))
 	{
-		return;
+		GISLibrary::DrawInformationBox(*renderer, static_cast<float>(sxmin), static_cast<float>(symin), static_cast<float>(sxmax), static_cast<float>(symax),
+			"LayerName : " + pugi::as_utf8(layer->GetLayerName()), "LayerType : " + pugi::as_utf8(layer->GetLayerType()));
 	}
-
-	DrawInformationLayer(hDC, selectedLayer);
-}
-
-namespace
-{
-	// What Direct2D needs around the groups of a drawing priority: the transform of the view
-	// under the areas and lines, and the mask of S-98 D-1 over the S-101 depth features that lie
-	// under S-102 data.
-	class D2DStages final : public s100::render::DrawingStages
-	{
-	public:
-		D2DStages(D2D1Resources* d2, Scaler* scaler) : d2(d2), scaler(scaler)
-		{
-		}
-
-		void BeginAreasAndLines() override
-		{
-			d2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
-			runs.emplace(d2->pRT, d2->Factory(), *scaler, true);
-		}
-
-		void BeforeArea(SENC_Instruction& instruction) override
-		{
-			runs->Update(&instruction);
-			d2->pBrush->SetOpacity(1.0f);
-		}
-
-		void BeforeLine(SENC_Instruction& instruction) override
-		{
-			runs->Update(&instruction);
-		}
-
-		void EndAreasAndLines() override
-		{
-			runs.reset();   // pops a run still open before the transform changes
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-		}
-
-		void BeginTexts(bool any) override
-		{
-			d2->pBrush->SetOpacity(1.0f);
-			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			if (any)
-			{
-				runs.emplace(d2->pRT, d2->Factory(), *scaler, false);
-			}
-		}
-
-		void BeforeText(SENC_Instruction& instruction) override
-		{
-			runs->Update(&instruction);
-		}
-
-		void EndTexts() override
-		{
-			runs.reset();
-		}
-
-	private:
-		D2D1Resources* d2;
-		Scaler* scaler;
-		std::optional<GISLibrary::DepthSuppression::Runs> runs;
-	};
-}
-
-void LayerManager::AddSymbolDrawing(int drawingPrioriy, DrawingSet& drawingSet, PortrayalCatalogue* pc)
-{
-	GISLibrary::D2DInstructionPainter painter(D2, scaler, pc);
-	D2DStages stages(D2, scaler);
-	s100::render::PaintPriority(drawingPrioriy, drawingSet, painter, ENCCommon::TEXTOUT, &stages);
+	frame.End(hDC);
 }
 
 // The instructions of the layer the view shows, into its drawing set.
@@ -637,7 +521,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 					{
 						drawGroup();
 						// A grid without a renderer of its own shows where it lies.
-						if (!static_cast<S100Layer*>(layer)->DrawGrid(D2, hdc, scaler))
+						if (!static_cast<S100Layer*>(layer)->DrawGrid(hdc, scaler))
 						{
 							DrawInformationLayer(hdc, layer);
 						}
@@ -691,7 +575,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
-						static_cast<S100Layer*>(layer)->DrawGrid(D2, hdc, scaler);
+						static_cast<S100Layer*>(layer)->DrawGrid(hdc, scaler);
 					}
 				}
 			}
@@ -791,38 +675,15 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer)
 	// Line Suppression
 	s100::render::SuppressSharedCurves(layer->drawingPriority, layer->drawingSet);
 
-	if (GISLibrary::DrawsWithSkia())
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (frame.Begin(*scaler))
 	{
-		auto& frame = GISLibrary::SkiaViewFrame::Shared();
-		if (frame.Begin(*scaler))
+		for (const int priority : layer->drawingPriority)
 		{
-			for (const int priority : layer->drawingPriority)
-			{
-				frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
-			}
-			frame.End(hDC);
+			frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
 		}
-		return;
+		frame.End(hDC);
 	}
-
-	auto rt = D2->pRT;
-	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
-	rt->BindDC(hDC, &screen);
-	rt->BeginDraw();
-	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-	GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
-	GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
-
-	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
-	{
-		AddSymbolDrawing(*dp, layer->drawingSet, pc);
-	}
-
-	GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
-
-	rt->EndDraw();
 }
 
 void LayerManager::SetDrawingInstruction(S100Layer* layer)
@@ -860,45 +721,19 @@ void LayerManager::DrawS100Layer(HDC& hDC, int /*offset*/, S100Layer* layer, int
 		return;
 	}
 
-	if (GISLibrary::DrawsWithSkia())
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (frame.Begin(*scaler))
 	{
-		auto& frame = GISLibrary::SkiaViewFrame::Shared();
-		if (frame.Begin(*scaler))
+		for (const int priority : layer->drawingPriority)
 		{
-			for (const int priority : layer->drawingPriority)
+			if (priority < minPriority || priority > maxPriority)
 			{
-				if (priority < minPriority || priority > maxPriority)
-				{
-					continue;
-				}
-				frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
+				continue;
 			}
-			frame.End(hDC);
+			frame.Paint(priority, layer->drawingSet, pc, *scaler, ENCCommon::TEXTOUT);
 		}
-		return;
+		frame.End(hDC);
 	}
-
-	auto rt = D2->pRT;
-	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
-	rt->BindDC(hDC, &screen);
-	rt->BeginDraw();
-	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-	GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
-	GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
-
-	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
-	{
-		if (*dp >= minPriority && *dp <= maxPriority)
-		{
-			AddSymbolDrawing(*dp, layer->drawingSet, pc);
-		}
-	}
-
-	GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
-
-	rt->EndDraw();
 }
 
 void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S100Layer*>& group)
@@ -925,56 +760,21 @@ void LayerManager::DrawS100Layers(HDC& hDC, int /*offset*/, const std::vector<S1
 		return;
 	}
 
-	if (GISLibrary::DrawsWithSkia())
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (frame.Begin(*scaler))
 	{
-		auto& frame = GISLibrary::SkiaViewFrame::Shared();
-		if (frame.Begin(*scaler))
+		for (const int priority : priorities)
 		{
-			for (const int priority : priorities)
+			for (S100Layer* layer : group)
 			{
-				for (S100Layer* layer : group)
+				if (layer->drawingPriority.contains(priority))
 				{
-					if (layer->drawingPriority.contains(priority))
-					{
-						frame.Paint(priority, layer->drawingSet, layer->GetPC(), *scaler, ENCCommon::TEXTOUT);
-					}
+					frame.Paint(priority, layer->drawingSet, layer->GetPC(), *scaler, ENCCommon::TEXTOUT);
 				}
 			}
-			frame.End(hDC);
 		}
-		return;
+		frame.End(hDC);
 	}
-
-	auto rt = D2->pRT;
-	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
-	rt->BindDC(hDC, &screen);
-	rt->BeginDraw();
-	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-	for (auto pc : catalogues)
-	{
-		GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
-		GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
-	}
-
-	for (const int priority : priorities)
-	{
-		for (S100Layer* layer : group)
-		{
-			if (layer->drawingPriority.contains(priority))
-			{
-				AddSymbolDrawing(priority, layer->drawingSet, layer->GetPC());
-			}
-		}
-	}
-
-	for (auto pc : catalogues)
-	{
-		GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
-	}
-
-	rt->EndDraw();
 }
 
 void LayerManager::S101RebuildPortrayal()
@@ -1318,7 +1118,7 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 
 	for (auto pc : catalogManager->PCs)
 	{
-		PortrayalRender::ChangePalette(pc, paletteName, D2);
+		PortrayalRender::ChangePalette(pc, paletteName);
 	}
 }
 
@@ -1341,7 +1141,7 @@ void LayerManager::ChangeLayerPalettes(const std::wstring& paletteName)
 			auto pc = s100layer->GetPC();
 			if (nullptr != pc)
 			{
-				PortrayalRender::ChangePalette(pc, paletteName, D2);
+				PortrayalRender::ChangePalette(pc, paletteName);
 			}
 		}
 	}
@@ -1352,10 +1152,6 @@ Scaler* LayerManager::GetScaler()
 	return scaler;
 }
 /*
-D2D1Resources* LayerManager::GetD2D1Resources()
-{
-	return D2;
-}
 */
 int LayerManager::LayerCount()
 {

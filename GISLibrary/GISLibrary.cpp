@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "PortrayalRenderCache.h"
-#include "../S100Engine/S100PCManager.h"
 #include "GISLibrary.h"
 #include "Product.h"
 #include "SGeometry.h"
@@ -23,13 +22,9 @@ CGISLibraryApp::CGISLibraryApp()
 	std::string str = "..\\TEMP"; // read path
 	_mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
 
-	D2 = new GISLibrary::D2D1Resources();
-	D2->CreateDeviceIndependentResources();
-	D2->CreateDeviceDependentResources();
-
 	m_pScaler = new Scaler();
 	m_pCatalogManager = new CatalogManager();
-	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager, D2);
+	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager);
 }
 
 CGISLibraryApp::~CGISLibraryApp()
@@ -47,14 +42,6 @@ CGISLibraryApp::~CGISLibraryApp()
 	if (m_pLayerManager) {
 		delete m_pLayerManager;
 		m_pLayerManager = nullptr;
-	}
-
-	if (D2)
-	{
-		D2->DeleteDeviceDependentResources();
-		D2->DeleteDeviceIndependentResources();
-		delete D2;
-		D2 = nullptr;
 	}
 
 	if (SGeometry::viewPoints) {
@@ -76,11 +63,6 @@ LayerManager* CGISLibraryApp::GetLayerManager()
 CatalogManager* CGISLibraryApp::GetCatalogManager()
 {
 	return m_pCatalogManager;
-}
-
-D2D1Resources* CGISLibraryApp::GetD2D1Resources()
-{
-	return D2;
 }
 
 bool CGISLibraryApp::AddLayer(const std::wstring& _filepath)
@@ -127,37 +109,6 @@ Layer* CGISLibraryApp::GetLayer(int index)
 	return m_pLayerManager->GetLayer(index);
 }
 
-void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
-{
-	auto pc = m_pCatalogManager->getPC(productNumber);
-	
-	if (pc && D2)
-	{
-		auto pcManager = GISLibrary::PortrayalRender::Caches(pc);
-		if (pcManager)
-		{
-			auto rt = D2->RenderTarget();
-			auto brush = D2->SolidColorBrush();
-			auto stroke = D2->SolidStrokeStyle();
-
-			D2D1::Matrix3x2F oldTransform;
-			rt->GetTransform(&oldTransform);
-
-			pcManager->Draw(
-				pugi::as_utf8(symbolName),
-				rt,
-				brush,
-				stroke,
-				D2D1::Point2F((FLOAT)screenX, (FLOAT)screenY),
-				(FLOAT)rotation,
-				scale,
-				pc->GetCurrentPaletteName());
-
-			rt->SetTransform(oldTransform);
-		}
-	}
-}
-
 void CGISLibraryApp::SetMapProjection(MapProjection value)
 {
 	if (value == ::GetMapProjection())
@@ -189,57 +140,6 @@ void CGISLibraryApp::SetMapProjection(MapProjection value)
 		projection(longitude, latitude);
 		m_pScaler->SetMap(longitude, latitude, longitude, latitude);
 		m_pScaler->SetScale(scale);
-	}
-}
-
-void CGISLibraryApp::DrawScaleBar()
-{
-	auto scaler = m_pLayerManager->GetScaler();
-	auto scale = scaler->GetCurrentScale();
-	auto screenHeight = scaler->GetScreenHeight();
-
-	int sx1 = 10;
-	int sy1 = screenHeight - 10;
-
-	// Starting point of scale bar (bottom)
-	double x1 = 0;
-	double y1 = 0;
-
-	scaler->DeviceToWorld(sx1, sy1, &x1, &y1);
-	inverseProjection(x1, y1);
-
-	// The end point of the scale bar (top).
-	double x2 = 0;
-	double y2 = 0;
-
-	// scaledistance
-	double scalebarDistance = 1852;
-
-	if (scale >= 80000)
-	{
-		scalebarDistance *= 10;
-	}
-
-	LatLonUtility::CalcRhumbLinePosByGeographicLib(x1, y1, 0, scalebarDistance, &x2, &y2);
-
-	projection(x2, y2);
-
-	// The end point of the scale bar (top).
-	long sx2 = 0;
-	long sy2 = 0;
-
-	scaler->WorldToDevice(x2, y2, &sx2, &sy2);
-
-	double originalSymbolHeight = 20; // scalebar symbol height
-	double symbolScale = (sy1 - sy2) / originalSymbolHeight;
-
-	if (scale < 80000)
-	{
-		DrawS100Symbol(101, L"SCALEB10", sx1, sy1, 0, (float)symbolScale);
-	}
-	else
-	{
-		DrawS100Symbol(101, L"SCALEB11", sx1, sy1, 0, (float)symbolScale);
 	}
 }
 
@@ -286,26 +186,6 @@ void CGISLibraryApp::DeviceToWorld(long sx, long sy, double* mx, double* my, boo
 void CGISLibraryApp::WorldToDevice(double mx, double my, long* sx, long* sy, bool rotate)
 {
 	m_pScaler->WorldToDevice(mx, my, sx, sy, rotate);
-}
-
-void CGISLibraryApp::WorldToDevice(D2D1_POINT_2F& p)
-{
-	long sx = 0;
-	long sy = 0;
-	m_pScaler->WorldToDevice(p.x, p.y, &sx, &sy);
-
-	p.x = (float)sx;
-	p.y = (float)sy;
-}
-
-void CGISLibraryApp::DeviceToWorld(D2D1_POINT_2F& p)
-{
-	double mx = 0;
-	double my = 0;
-	m_pScaler->DeviceToWorld((long)p.x, (long)p.y, &mx, &my);
-
-	p.x = (float)mx;
-	p.y = (float)my;
 }
 
 /*
@@ -422,55 +302,6 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 	return m_pScaler->PtInMap(_x, _y);
 }
 
-void CGISLibraryApp::ChangeDisplayFont()
-{	
-	if (!D2)
-		return;
-
-	SafeRelease(&D2->pDWriteTextFormat);
-	SafeRelease(&D2->pDWriteTextFormatArea);
-
-	// Create a DirectWrite text format object.
-	HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
-		ENCCommon::getDisplayFontNameW().c_str(),
-		NULL,
-		DWRITE_FONT_WEIGHT_NORMAL,
-		DWRITE_FONT_STYLE_NORMAL,
-		DWRITE_FONT_STRETCH_NORMAL,
-		(float)ENCCommon::DISPLAY_FONT_SIZE,
-		L"", //locale
-		&D2->pDWriteTextFormat
-	);
-
-	D2->pDWriteTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
-
-	if (!D2->pDWriteTextFormat)
-	{
-		// Failed to create IDWriteTextFormat! (%02X) (was a debug trace)
-	}
-
-	// Create a DirectWrite text format object.
-	hr = D2->pDWriteFactory->CreateTextFormat(
-		ENCCommon::getDisplayFontNameW().c_str(),
-		NULL,
-		DWRITE_FONT_WEIGHT_BOLD,
-		DWRITE_FONT_STYLE_NORMAL,
-		DWRITE_FONT_STRETCH_NORMAL,
-		(float)ENCCommon::DISPLAY_FONT_SIZE,
-		L"", //locale
-		&D2->pDWriteTextFormatArea
-	);
-
-	D2->pDWriteTextFormatArea->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2->pDWriteTextFormatArea->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-	D2->pDWriteTextFormatArea->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
-
-	if (!D2->pDWriteTextFormatArea)
-	{
-		// Failed to create IDWriteTextFormat (for Area)! (%02X) (was a debug trace)
-	}
-}
-
 std::wstring CGISLibraryApp::GetColorTable()
 {
 	if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Day)
@@ -491,3 +322,8 @@ std::wstring CGISLibraryApp::GetColorTable()
 	}
 }
 
+
+// The display font is read from ENCCommon when a frame is drawn; nothing is kept here.
+void CGISLibraryApp::ChangeDisplayFont()
+{
+}

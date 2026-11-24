@@ -20,7 +20,6 @@ public:
 
 	static ScaleBand scaleBand[15];
 
-	D2D1::ColorF GetColorNum(int num);
 
 	static int GetScaleBand(int scale);
 	static std::vector<int> algorithm_ScaleBand(S100::DataCoverage dataCoverage);

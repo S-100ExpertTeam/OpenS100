@@ -14,7 +14,19 @@
 
 #include <windows.h>
 #include <objidl.h>
-#include <gdiplus.h>
+// Skia's headers use std::min and std::max; the Windows headers before them define macros of those names.
+#pragma push_macro("min")
+#pragma push_macro("max")
+#undef min
+#undef max
+#include "include/core/SkColorSpace.h"
+#include "include/core/SkImageInfo.h"
+#include "include/core/SkPixmap.h"
+#include "include/core/SkStream.h"
+#include "include/encode/SkPngEncoder.h"
+#pragma pop_macro("max")
+#pragma pop_macro("min")
+#include <fstream>
 #include <psapi.h>
 
 #include <chrono>
@@ -32,9 +44,6 @@
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
 #include "CoverageDataset.h"
-#include "D2D1Resources.h"
-#include "D2DRenderer.h"
-#include "D2DView.h"
 #include "DisplayListPainter.h"
 #include "DrawingOrder.h"
 #include "DrawingSet.h"
@@ -47,17 +56,6 @@
 
 namespace
 {
-	struct GdiplusSession
-	{
-		ULONG_PTR token = 0;
-		GdiplusSession()
-		{
-			Gdiplus::GdiplusStartupInput input;
-			Gdiplus::GdiplusStartup(&token, &input, nullptr);
-		}
-		~GdiplusSession() { Gdiplus::GdiplusShutdown(token); }
-	};
-
 	// 32-bit top-down DIB selected into a memory DC.
 	class MemoryCanvas
 	{
@@ -128,10 +126,19 @@ namespace
 		bool SavePng(const std::filesystem::path& path) const
 		{
 			::GdiFlush();
-			Gdiplus::Bitmap image(m_width, m_height, m_width * 4, PixelFormat32bppRGB, reinterpret_cast<BYTE*>(m_bits));
-			// image/png encoder
-			const CLSID png{ 0x557CF406, 0x1A04, 0x11D3, { 0x9A, 0x73, 0x00, 0x00, 0xF8, 0x1E, 0xF3, 0x2E } };
-			return image.Save(path.wstring().c_str(), &png, nullptr) == Gdiplus::Ok;
+			// The fourth byte of a pixel is whatever GDI left there: the picture is opaque.
+			const SkPixmap pixels(SkImageInfo::Make(m_width, m_height, kBGRA_8888_SkColorType, kOpaque_SkAlphaType), m_bits,
+				static_cast<size_t>(m_width) * 4);
+			SkDynamicMemoryWStream encoded;
+			if (!SkPngEncoder::Encode(&encoded, pixels, SkPngEncoder::Options()))
+			{
+				return false;
+			}
+			std::vector<char> bytes(encoded.bytesWritten());
+			encoded.copyTo(bytes.data());
+			std::ofstream out(path, std::ios::binary | std::ios::trunc);
+			out.write(bytes.data(), static_cast<std::streamsize>(bytes.size()));
+			return out.good();
 		}
 
 	private:
@@ -173,7 +180,6 @@ namespace
 			return std::chrono::duration_cast<std::chrono::milliseconds>(b - a).count();
 		};
 
-		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
 
 		const auto t0 = Clock::now();
@@ -181,7 +187,6 @@ namespace
 		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 		ASSERT_NE(pc, nullptr);
-		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 		const auto t1 = Clock::now();
 
 		const RECT view{ 0, 0, kWidth, kHeight };
@@ -260,7 +265,6 @@ TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
 		GTEST_SKIP() << "reference cell not available: " << cell.string();
 	}
 
-	GdiplusSession gdiplus;
 	const RECT view{ 0, 0, kWidth, kHeight };
 	const auto open = [&](CGISLibraryApp& gis, bool nightBeforeOpening)
 	{
@@ -268,7 +272,6 @@ TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
 		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 		ASSERT_NE(pc, nullptr);
-		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 		gis.SetScreen(view);
 		if (nightBeforeOpening)
 		{
@@ -313,13 +316,11 @@ TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
 		~Restore() { SetMapProjection(MapProjection::Mercator); }
 	} restore;
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto cm = gis.GetCatalogManager();
 	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
@@ -417,10 +418,8 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 		}
 		ASSERT_GT(installed, 0u);
 
-		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 		const RECT view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
@@ -462,157 +461,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 	}
 }
 
-namespace
-{
-	// Lets through what every backend draws alike from the first day: paths stroked and paths
-	// filled with a colour. Symbols, line styles, pattern fills and texts are dropped, so that
-	// the picture can be compared with that of a backend that does not draw them yet.
-	class PathsOnly final : public s100::render::IRenderer
-	{
-	public:
-		PathsOnly(s100::render::IRenderer& inner, bool symbols, bool texts, bool patterns, bool lineStyles)
-			: inner(inner), symbols(symbols), texts(texts), patterns(patterns), lineStyles(lineStyles)
-		{
-		}
-
-		const void* Backend() const override { return inner.Backend(); }
-		void SetTransform(const s100::render::Transform& transform) override { inner.SetTransform(transform); }
-		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
-			const s100::render::Stroke& stroke) override
-		{
-			inner.StrokePath(path, color, stroke);
-		}
-		std::unique_ptr<s100::render::RetainedPath> Retain(const s100::render::Path& path) override { return inner.Retain(path); }
-		void StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,
-			const s100::render::Stroke& stroke) override
-		{
-			inner.StrokePath(path, color, stroke);
-		}
-		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override
-		{
-			if (patterns || fill.kind == s100::render::Fill::Kind::Color)
-			{
-				inner.FillPath(path, fill);
-			}
-		}
-		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override
-		{
-			if (patterns || fill.kind == s100::render::Fill::Kind::Color)
-			{
-				inner.FillPath(path, fill);
-			}
-		}
-		std::unique_ptr<s100::render::RetainedImage> RetainImage(const std::uint8_t* pixels, int width, int height) override
-		{
-			return inner.RetainImage(pixels, width, height);
-		}
-		void DrawImage(const s100::render::RetainedImage& image, const s100::render::ImageRect& source,
-			const s100::render::ImageRect& target) override
-		{
-			inner.DrawImage(image, source, target);
-		}
-		void PushClip(const s100::render::Path& path) override { inner.PushClip(path); }
-		void PopClip() override { inner.PopClip(); }
-		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
-			const s100::render::ColorF* shortStretches) override
-		{
-			if (lineStyles)
-			{
-				inner.StrokeLineStyle(reference, points, shortStretches);
-			}
-		}
-		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
-		{
-			if (symbols)
-			{
-				inner.DrawSymbol(reference, at, rotationDegrees, scale);
-			}
-		}
-		s100::render::SizeF MeasureText(const std::string& text, const s100::render::TextFont& font) override
-		{
-			return texts ? inner.MeasureText(text, font) : s100::render::SizeF{};
-		}
-		void FillText(const std::string& text, s100::render::PointF topLeft, const s100::render::TextFont& font,
-			const s100::render::ColorF& color) override
-		{
-			if (texts)
-			{
-				inner.FillText(text, topLeft, font, color);
-			}
-		}
-
-	private:
-		s100::render::IRenderer& inner;
-		bool symbols;   // the symbols too
-		bool texts;     // the texts too
-		bool patterns;  // the pattern fills too
-		bool lineStyles;  // the line styles too
-	};
-
-	// Draws `cell` fitted to the canvas as RenderCell does, but only its paths (PathsOnly), by
-	// the neutral frame (DrawingOrder) on the Direct2D renderer. The reference picture for a
-	// backend that draws paths only.
-	void RenderCellPaths(const std::filesystem::path& cell, bool symbols, bool texts, bool patterns, bool lineStyles)
-	{
-		GdiplusSession gdiplus;
-		CGISLibraryApp gis;
-		auto cm = gis.GetCatalogManager();
-		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
-		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
-		ASSERT_NE(pc, nullptr);
-		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
-
-		const RECT view{ 0, 0, kWidth, kHeight };
-		gis.SetScreen(view);
-		ASSERT_TRUE(gis.AddLayer(cell.wstring())) << cell.string();
-		gis.SetViewMBR(view);
-
-		MemoryCanvas canvas(kWidth, kHeight);
-		ASSERT_TRUE(canvas.valid());
-
-		auto d2 = gis.GetD2D1Resources();
-		auto& scaler = *gis.GetScaler();
-		auto rt = d2->RenderTarget();
-		ASSERT_NE(rt, nullptr);
-		rt->BindDC(canvas.dc(), &view);
-		rt->BeginDraw();
-		// The brushes of the catalogue's patterns belong to a frame, as the viewer makes them.
-		GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(rt);
-		for (Layer* layer : gis.GetLayerManager()->layers)
-		{
-			auto s100Layer = dynamic_cast<S100Layer*>(layer);
-			auto dataset = s100Layer ? static_cast<S100SpatialObject*>(s100Layer->GetSpatialObject()) : nullptr;
-			if (!dataset || !dataset->pcManager || !dataset->pcManager->displayListSENC)
-			{
-				continue;
-			}
-			DrawingSet frame;
-			std::set<int> priorities;
-			s100::render::CollectInstructions(*dataset->pcManager->displayListSENC, scaler.GetCurrentScale(), scaler, nullptr, frame, priorities);
-			s100::render::SuppressSharedCurves(priorities, frame);
-
-			GISLibrary::D2DRenderer renderer(d2, pc);
-			PathsOnly paths(renderer, symbols, texts, patterns, lineStyles);
-			s100::render::DisplayListPainter painter(paths, scaler,
-				[pc](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
-			for (const int priority : priorities)
-			{
-				s100::render::PaintPriority(priority, frame, painter, true);
-			}
-		}
-		GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
-		rt->EndDraw();
-		::GdiFlush();
-
-		const auto png = OutputDirectory() / (cell.stem().string() + ".png");
-		EXPECT_TRUE(canvas.SavePng(png)) << png.string();
-	}
-}
-
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
-// With S100_RENDER_PRIMITIVES=paths only the stroked and colour-filled paths are drawn; with
-// "symbols", "texts", "patterns" and "linestyles" added after commas ("paths,symbols,texts") those too.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
 	char* value = nullptr;
@@ -623,30 +472,6 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 	}
 	const std::string list(value);
 	free(value);
-
-	char* software = nullptr;
-	if (_dupenv_s(&software, &length, "S100_RENDER_SOFTWARE") == 0 && software)
-	{
-		GISLibrary::D2D1Resources::softwareRenderTarget = std::string(software) == "1";
-		free(software);
-	}
-
-	bool pathsOnly = false;
-	bool withSymbols = false;
-	bool withTexts = false;
-	bool withPatterns = false;
-	bool withLineStyles = false;
-	char* primitives = nullptr;
-	if (_dupenv_s(&primitives, &length, "S100_RENDER_PRIMITIVES") == 0 && primitives)
-	{
-		const std::string asked = std::string(",") + primitives + ",";
-		pathsOnly = asked.find(",paths,") != std::string::npos;
-		withSymbols = asked.find(",symbols,") != std::string::npos;
-		withTexts = asked.find(",texts,") != std::string::npos;
-		withPatterns = asked.find(",patterns,") != std::string::npos;
-		withLineStyles = asked.find(",linestyles,") != std::string::npos;
-		free(primitives);
-	}
 
 	std::size_t start = 0;
 	while (start <= list.size())
@@ -660,11 +485,6 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		}
 		const std::filesystem::path cell(item);
 		ASSERT_TRUE(std::filesystem::exists(cell)) << item;
-		if (pathsOnly)
-		{
-			RenderCellPaths(cell, withSymbols, withTexts, withPatterns, withLineStyles);
-			continue;
-		}
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
 		RenderCell(cell, nonWhite, colours);
@@ -682,13 +502,11 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 		GTEST_SKIP() << "reference exchange set not available: " << catalog.string();
 	}
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto cm = gis.GetCatalogManager();
 	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
@@ -766,10 +584,8 @@ TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
 	}
 
 	// "Restart": a new library instance over the same System Database.
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 
@@ -842,10 +658,8 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS102Grid)
 		ASSERT_EQ(session.importer().importDataset(grid).outcome, s100::sdb::ImportOutcome::Added);
 	}
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 
@@ -891,7 +705,6 @@ TEST(RenderSmoke, DrawsS102GridAsLayer)
 	{
 		GTEST_SKIP() << "S-102 test grid not available: " << grid.string();
 	}
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
@@ -931,7 +744,6 @@ TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
 	using GISLibrary::CoverageDataset;
 	const CoverageDataset::DisplaySettings original = CoverageDataset::GetDisplaySettings();
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-111_FC.xml").string()), nullptr);
@@ -1099,11 +911,9 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS111)
 		}
 	};
 
-	GdiplusSession gdiplus;
 	const auto draw = [&](const std::filesystem::path& root, const char* name) {
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 		const RECT view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 		GISLibrary::SystemDatabaseSession session(root);
@@ -1171,7 +981,6 @@ TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
 	using GISLibrary::CoverageDataset;
 	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
@@ -1266,13 +1075,11 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 	using GISLibrary::CoverageDataset;
 	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* s101pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(s101pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(s101pc, gis.GetD2D1Resources());
 	// The S-102 without its portrayal catalogue: open, with its data outline, but not drawn, so what
 	// changes with ESC on is the S-101 depth portrayal alone.
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
@@ -1404,10 +1211,8 @@ TEST(RenderSmoke, CoverageChartAtScales)
 		ASSERT_EQ(importer.importDataset(s104).outcome, s100::sdb::ImportOutcome::Added);
 	}
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	GISLibrary::SystemDatabaseSession session(root);
@@ -1496,10 +1301,8 @@ namespace
 			ASSERT_EQ(imported.outcome, s100::sdb::ImportOutcome::Added) << imported.message;
 		}
 
-		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 		const RECT view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
@@ -1578,13 +1381,11 @@ TEST(RenderSmoke, AdjacentCellsOfOneGroupDoNotCoverEachOther)
 		GTEST_SKIP() << "reference cells not available under " << cells.string();
 	}
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(west.wstring()));
@@ -1663,11 +1464,9 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS124OverTheS101)
 	install(chartOnly, false);
 	install(withWarning, true);
 
-	GdiplusSession gdiplus;
 	const auto draw = [&](const std::filesystem::path& root, MemoryCanvas& canvas) {
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
 		const RECT view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 		GISLibrary::SystemDatabaseSession session(root);
@@ -1712,13 +1511,11 @@ TEST(RenderSmoke, S102PictureCoversItsDataOnMercator)
 	using GISLibrary::CoverageDataset;
 	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* s101pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(s101pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(s101pc, gis.GetD2D1Resources());
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
 	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
 	const RECT view{ 0, 0, kWidth, kHeight };
@@ -1768,13 +1565,11 @@ TEST(RenderSmoke, ChangingProjectionDoesNotGrowMemory)
 		~Restore() { SetMapProjection(MapProjection::Mercator); }
 	} restore;
 
-	GdiplusSession gdiplus;
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(cell.wstring()));

@@ -6,7 +6,9 @@
 
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
-#include "../GISLibrary/D2DGeometryCache.h"
+#include "../GISLibrary/SkiaViewFrame.h"
+#include "../GISLibrary/FeatureHighlight.h"
+#include "../RenderSkia/SkiaFonts.h"
 #include "../GISLibrary/PortrayalRenderCache.h"
 #include "MainFrm.h"
 #include "DialogViewNoGeometry.h"
@@ -22,7 +24,6 @@
 #include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S101Creator.h"
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/D2D1Resources.h"
 #include "../GISLibrary/SPoint.h"
 #include "../GISLibrary/SMultiPoint.h"
 #include "../GISLibrary/SCompositeCurve.h"
@@ -48,7 +49,6 @@
 
 #include <locale>        
 #include <codecvt>       
-#include <d2d1_1.h>
 #include <iomanip>
 #include <cmath>
 #include <fstream>
@@ -71,7 +71,6 @@
 #include "../GISLibrary/LayerContainer.h"
 #include "../GISLibrary/CoverageDataset.h"
 
-#pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
 
@@ -521,90 +520,13 @@ void COpenS100View::Setting()
 
 	if (m_systemFontList.size() == 0)
 	{
-		// <FONT LIST>
-		IDWriteFactory* pDWriteFactory = theApp.gisLib->GetD2D1Resources()->pDWriteFactory;
-		IDWriteFontCollection* pFontCollection = NULL;
-
-		// Get the system font collection.
-		HRESULT hr = pDWriteFactory->GetSystemFontCollection(&pFontCollection);
-		UINT32 familyCount = 0;
-		
-		// Get the number of font families in the collection.
-		if (SUCCEEDED(hr))
+		// The families the display can write in.
+		for (const std::string& family : s100::render::SkiaFonts::SystemFamilies())
 		{
-			familyCount = pFontCollection->GetFontFamilyCount();
+			m_systemFontList.push_back(CString(pugi::as_wide(family).c_str()));
 		}
-		
-		for (UINT32 i = 0; i < familyCount; ++i)
-		{
-			IDWriteFontFamily* pFontFamily = NULL;
-			// Get the font family.
-			if (SUCCEEDED(hr))
-			{
-				hr = pFontCollection->GetFontFamily(i, &pFontFamily);
-				IDWriteLocalizedStrings* pFamilyNames = NULL;
-
-				// Get a list of localized strings for the family name.
-				if (SUCCEEDED(hr))
-				{
-					hr = pFontFamily->GetFamilyNames(&pFamilyNames);
-					UINT32 index = 0;
-					BOOL exists = false;
-
-					wchar_t localeName[LOCALE_NAME_MAX_LENGTH];
-
-					if (SUCCEEDED(hr))
-					{
-						// Get the default locale for this user.
-						int defaultLocaleSuccess = GetUserDefaultLocaleName(localeName, LOCALE_NAME_MAX_LENGTH);
-
-						// If the default locale is returned, find that locale name, otherwise use "en-us".
-						if (defaultLocaleSuccess)
-						{
-							hr = pFamilyNames->FindLocaleName(localeName, &index, &exists);
-						}
-						
-						if (SUCCEEDED(hr) && !exists) // if the above find did not find a match, retry with US English
-						{
-							hr = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
-						}
-
-						UINT32 length = 0;
-
-						// Get the string length.
-						if (SUCCEEDED(hr))
-						{
-							hr = pFamilyNames->GetStringLength(index, &length);
-						}
-
-						// Allocate a string big enough to hold the name.
-						wchar_t* name = new wchar_t[length + 1];
-						if (name == NULL)
-						{
-							hr = E_OUTOFMEMORY;
-						}
-
-						// Get the family name.
-						if (SUCCEEDED(hr))
-						{
-							hr = pFamilyNames->GetString(index, name, length + 1);
-
-							m_systemFontList.push_back(name);
-						}
-
-						delete[] name;
-					}
-					
-					// If the specified locale doesn't exist, select the first on the list.
-					if (!exists)
-						index = 0;
-				}
-
-				SafeRelease(&pFamilyNames);
-			}
-		}
-		SafeRelease(&pFontCollection);
 	}
+
 	dlg.GetConfigPage1()->SetFontList(m_systemFontList);
 	dlg.DoModal();
 }
@@ -637,12 +559,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	// Portrayal catalogues are read when a dataset first needs one; the renderer builds its
-	// caches for each as it is read.
 	auto cm = theApp.gisLib->GetCatalogManager();
-	cm->onPortrayalLoaded = [](PortrayalCatalogue* pc) {
-		GISLibrary::PortrayalRender::Prepare(pc, theApp.gisLib->GetD2D1Resources());
-	};
 
 	// The System Database: no dataset or catalogue is read here. Its chart layer selects the
 	// datasets each view needs (S-98 E-1.3) and opens only those.
@@ -1322,165 +1239,31 @@ void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 	{
 		return;
 	}
-	
-	Graphics gPick(_hdc);
+
 	auto frPick = encPick->GetFeatureType(pugi::as_utf8(featurePick));
-	if (frPick && !frPick->IsNoGeometry())
+	if (!frPick || frPick->IsNoGeometry())
 	{
-		DrawS101PickReport(gPick, offsetX, offsetY);
+		return;
 	}
-}
 
-void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
-{
-	auto frPick = encPick->GetFeatureType(pugi::as_utf8(featurePick));
-
-	// Point
-	if (frPick->GetGeometry()->GetType() == SGeometryType::Point)
+	// A layer of its own over the map: the geometry in red, and the vertices of an S-101 feature.
+	auto scaler = theApp.gisLib->GetScaler();
+	auto& frame = GISLibrary::SkiaViewFrame::Shared();
+	if (!frame.Begin(*scaler))
 	{
-		auto pt = (SPoint*)frPick->GetGeometry();
-
-		long x = 0;
-		long y = 0;
-
-		theApp.gisLib->WorldToDevice(pt->x, pt->y, &x, &y);
-		x += offsetX;
-		y += offsetY;
-
-		Pen marker(Color(255, 0, 0), 4);
-		const INT ix = static_cast<INT>(x);
-		const INT iy = static_cast<INT>(y);
-		g.DrawLine(&marker, ix - 20, iy + 8, ix - 20, iy + 20);
-		g.DrawLine(&marker, ix - 20, iy + 20, ix - 8, iy + 20);
-
-		g.DrawLine(&marker, ix - 20, iy - 8, ix - 20, iy - 20);
-		g.DrawLine(&marker, ix - 20, iy - 20, ix - 8, iy - 20);
-
-		g.DrawLine(&marker, ix + 20, iy + 8, ix + 20, iy + 20);
-		g.DrawLine(&marker, ix + 20, iy + 20, ix + 8, iy + 20);
-
-		g.DrawLine(&marker, ix + 20, iy - 8, ix + 20, iy - 20);
-		g.DrawLine(&marker, ix + 20, iy - 20, ix + 8, iy - 20);
-
+		return;
 	}
-	else if (frPick->GetGeometry()->GetType() == SGeometryType::MultiPoint)
+	if (auto* renderer = frame.Renderer(nullptr))
 	{
-		auto multiPoint = (SMultiPoint*)frPick->GetGeometry();
-
-		for (int i = 0; i < multiPoint->GetNumPoints(); i++)
+		GISLibrary::DrawFeatureHighlight(*renderer, *scaler, frPick->GetGeometry(), static_cast<float>(offsetX), static_cast<float>(offsetY));
+		if (encPick->GetProductNumber() == 101)
 		{
-			long x = 0;
-			long y = 0;
-
-			theApp.gisLib->WorldToDevice(multiPoint->GetX(i), multiPoint->GetY(i), &x, &y);
-			x += offsetX;
-			y += offsetY;
-
-			Pen marker(Color(255, 0, 0), 4);
-			g.DrawEllipse(&marker, x - 20, y - 20, 40, 40);
+			s100EditRender.Set((S101Cell*)encPick, scaler, (R_FeatureRecord*)frPick, renderer);
+			s100EditRender.ShowPoint();
+			s100EditRender.renderer = nullptr;
 		}
 	}
-	// Line
-	else if (frPick->GetGeometry()->GetType() == SGeometryType::CompositeCurve)
-	{
-		SolidBrush brush(Color(255, 0, 0));
-
-		auto cc = (SCompositeCurve*)(frPick->GetGeometry());
-
-		auto curveCnt = cc->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
-		{
-			auto c = cc->GetCurve(i);
-			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->getNumPoint()];
-
-			int pickNumPoints = 0;
-
-			pickNumPoints = c->getNumPoint();
-
-			for (auto i = 0; i < pickNumPoints; i++)
-			{
-				pickPoints[i].X = (INT)c->GetX(i);
-				pickPoints[i].Y = (INT)c->GetY(i);
-				theApp.gisLib->WorldToDevice(c->GetX(i), c->GetY(i),
-					(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
-
-				pickPoints[i].X += offsetX;
-				pickPoints[i].Y += offsetY;
-			}
-
-			Pen linePen(&brush, 4);
-			g.DrawLines(&linePen, pickPoints, pickNumPoints);
-
-			delete[] pickPoints;
-		}
-	}
-	else if (frPick->GetGeometry()->GetType() == SGeometryType::Curve)
-	{
-		SolidBrush brush(Color(255, 0, 0));
-
-		auto c = (SCurve*)(frPick->GetGeometry());
-
-		Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
-
-		int pickNumPoints = 0;
-
-		pickNumPoints = c->GetNumPoints();
-
-		for (auto i = 0; i < pickNumPoints; i++)
-		{
-			pickPoints[i].X = (INT)c->m_pPoints[i].x;
-			pickPoints[i].Y = (INT)c->m_pPoints[i].y;
-			theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
-				(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
-
-			pickPoints[i].X += offsetX;
-			pickPoints[i].Y += offsetY;
-		}
-
-		Pen linePen(&brush, 4);
-		g.DrawLines(&linePen, pickPoints, pickNumPoints);
-
-		delete[] pickPoints;
-	}
-	// Area
-	else if (frPick->GetGeometry()->GetType() == SGeometryType::Surface)
-	{
-		auto surface = (SSurface*)frPick->GetGeometry();
-		auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, theApp.gisLib->GetD2D1Resources()->pD2Factory, theApp.gisLib->GetScaler());
-
-		D2D1_COLOR_F color{};
-		color.r = 255 / float(255.0);
-		color.g = 50 / float(255.0);
-		color.b = 50 / float(255.0);
-		color.a = float(0.7);
-
-		HDC hdc = g.GetHDC();
-		const auto screen = theApp.gisLib->GetScaler()->GetScreenRect();
-		CRect screenRect(screen.left, screen.top, screen.right, screen.bottom);
-		theApp.gisLib->GetD2D1Resources()->Begin(hdc, screenRect);
-		if (geometry)
-		{
-			theApp.gisLib->GetD2D1Resources()->pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
-			theApp.gisLib->GetD2D1Resources()->pBrush->SetColor(color);
-			theApp.gisLib->GetD2D1Resources()->pBrush->SetOpacity(float(0.7));
-			theApp.gisLib->GetD2D1Resources()->pRT->FillGeometry(geometry, theApp.gisLib->GetD2D1Resources()->pBrush);
-			SafeRelease(&geometry);
-		}
-		theApp.gisLib->GetD2D1Resources()->End();
-	}
-
-	auto hdc = g.GetHDC();
-	const auto screen2 = theApp.gisLib->GetScaler()->GetScreenRect();
-	CRect rect(screen2.left, screen2.top, screen2.right, screen2.bottom);
-	theApp.gisLib->GetD2D1Resources()->Begin(hdc, rect);
-	
-	if (encPick->GetProductNumber() == 101)
-	{
-		s100EditRender.Set((S101Cell*)encPick, theApp.gisLib->GetScaler(), (R_FeatureRecord*)frPick, theApp.gisLib->GetD2D1Resources());
-		s100EditRender.ShowPoint();
-	}
-	theApp.gisLib->GetD2D1Resources()->End();
-	g.ReleaseHDC(hdc);
+	frame.End(_hdc);
 }
 
 void COpenS100View::ClearPickReport()

@@ -79,13 +79,6 @@ COpenS100App theApp;
 
 BOOL COpenS100App::InitInstance()
 {
-	GdiplusStartupInput GdiplusStartupInput;
-	if (::GdiplusStartup(&gdiplusToken, &GdiplusStartupInput, NULL) != Ok)
-	{
-		AfxMessageBox(_T("Error : Failed to initialize GDI+ library!"));
-		return FALSE;
-	}
-
 
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize = sizeof(InitCtrls);

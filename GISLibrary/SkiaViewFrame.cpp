@@ -39,25 +39,6 @@ namespace
 	// Skia's native 32-bit pixels are what a Windows bitmap holds: blue first, premultiplied.
 	static_assert(kN32_SkColorType == kBGRA_8888_SkColorType, "the layer is blended as a BGRA bitmap");
 
-	bool SkiaFromEnvironment()
-	{
-		char* value = nullptr;
-		size_t length = 0;
-		bool skia = true;
-		if (_dupenv_s(&value, &length, "S100_RENDER_BACKEND") == 0 && value)
-		{
-			skia = _stricmp(value, "d2d") != 0;
-			free(value);
-		}
-		return skia;
-	}
-
-	bool& SkiaSwitch()
-	{
-		static bool skia = SkiaFromEnvironment();
-		return skia;
-	}
-
 	// What a catalogue's instructions are drawn with, read once.
 	struct CatalogueResources
 	{
@@ -74,16 +55,6 @@ namespace
 
 namespace GISLibrary
 {
-	bool DrawsWithSkia()
-	{
-		return SkiaSwitch();
-	}
-
-	void DrawWithSkia(bool on)
-	{
-		SkiaSwitch() = on;
-	}
-
 	struct SkiaViewFrame::State
 	{
 		// The pixels: a bitmap of the view's size that both GDI and Skia know.

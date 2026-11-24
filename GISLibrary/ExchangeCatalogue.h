@@ -18,7 +18,6 @@
 
 namespace GISLibrary
 {
-	class D2D1Resources;
 }
 
 namespace S100
@@ -49,6 +48,5 @@ namespace S100
 
         void GetContents(pugi::xml_node& node);
 
-        void DrawCoverage(GISLibrary::D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
     };
 }

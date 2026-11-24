@@ -35,7 +35,7 @@ public: // for draw
 public:
 	// Grid datasets (S-102 ...) are drawn by a renderer that receives the D2D resources explicitly.
 	// False for a grid that has no renderer (nothing is drawn).
-	bool DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler);
+	bool DrawGrid(HDC& hDC, Scaler* scaler);
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
 	FeatureCatalogue* GetFC();
@@ -47,7 +47,6 @@ public:
 	bool GetIndividualPC();
 	bool OpenFC(const std::wstring& path);
 	void DeleteCatalog();
-	void DrawInfo(HDC& hDC, Scaler* scaler);
 	S100SpatialObject* GetS100SpatialObject();
 
 	int GetProductNumber();

@@ -28,10 +28,7 @@
 #define _INC_MALLOC      // exclude standard memory alloc procedures
 #endif
 
-#include <gdiPlus.h>
 #include <afxcview.h>
-#pragma comment(lib, "gdiplus")
-using namespace Gdiplus;
 
 #include "Common.h"
 

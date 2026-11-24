@@ -23,7 +23,7 @@ bool GISLibrary::OpenLayer(Layer& layer, const std::wstring& _filepath, LayerMan
 			layer.m_spatialObject = new SHPFile();
 		}
 		else if (s100::text::IEquals(extension, L"XML")) {
-			layer.m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, lm->GetRenderResources(), lm);
+			layer.m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, lm);
 		}
 	}
 

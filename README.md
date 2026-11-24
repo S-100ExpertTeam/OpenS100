@@ -85,10 +85,9 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 
 The viewer of the Visual Studio solution draws charts with Skia, the same backend
 (`render-skia`) that draws them on Linux: S-100 vector datasets, grids (S-102, S-104, S-111) and
-the overlay of an exchange set. Direct2D is still in the solution while the last pieces move
-(selection highlight, editing handles) and can be switched back to for comparison by setting the
-environment variable `S100_RENDER_BACKEND=d2d`. Building the solution installs Skia through
-vcpkg the first time (several minutes, and a download of LLVM).
+the overlay of an exchange set, the highlight of a picked feature. Direct2D and GDI+ are gone
+from the solution; the background map and a few overlays are still GDI. Building the solution
+installs Skia through vcpkg the first time (several minutes, and a download of LLVM).
 
 `ports/` also carries a copy of vcpkg's `skia` port that compiles Skia with clang-cl on Windows
 x64 ([ports/skia](ports/skia/README.md)): Skia built by MSVC draws on the CPU about six times

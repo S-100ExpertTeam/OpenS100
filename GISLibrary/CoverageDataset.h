@@ -35,8 +35,6 @@ namespace s100::render
 
 namespace GISLibrary
 {
-	class D2D1Resources;
-
 	// An S-100 Part 10c gridded dataset (S-102, S-111, ...) portrayed by its portrayal catalogue: the
 	// catalogue's rules (Lua, or XSLT as S-111's) run over one feature per coverage instance
 	// (primitive Coverage, no attributes), and each CoverageFill they emit is drawn as one image of
@@ -69,7 +67,7 @@ namespace GISLibrary
 		// Draws every CoverageFill into the device context, in the current palette, and over it the
 		// S-98 Appendix D lines when EnhancedSafetyContour is on.
 		// A frame of its own on the device context, by the backend the viewer draws with.
-		void DrawCoverage(D2D1Resources* d2, HDC& hDC, Scaler* scaler);
+		void DrawCoverage(HDC& hDC, Scaler* scaler);
 		// The grids, their lines and symbols on a renderer, in device pixels.
 		void DrawCoverage(s100::render::IRenderer& renderer, Scaler& scaler);
 

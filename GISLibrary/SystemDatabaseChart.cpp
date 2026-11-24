@@ -34,7 +34,7 @@ namespace GISLibrary
 	SystemDatabaseChart::SystemDatabaseChart(LayerManager& parent, s100::sdb::SystemDatabase& database,
 		const s100::sdb::ResourceStore& store, DatasetLayerSet::CacheLimit cache)
 		: database_(&database), store_(&store),
-		  drawer_(std::make_unique<LayerManager>(parent.GetScaler(), parent.catalogManager, parent.GetRenderResources()))
+		  drawer_(std::make_unique<LayerManager>(parent.GetScaler(), parent.catalogManager))
 	{
 		m_FileType = S100_FileType::FILE_ETC;
 		SetFilePath(store.root().wstring());

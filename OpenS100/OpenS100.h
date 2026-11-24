@@ -26,7 +26,6 @@ public:
 	virtual ~COpenS100App();
 
 public:
-	ULONG_PTR gdiplusToken = NULL; // GDI
 
 	COpenS100View* pView = nullptr;
 

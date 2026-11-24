@@ -28,7 +28,7 @@ class S100ExchangeCatalogue :
 	public SpatialObject, public GISLibrary::LayerContainer
 {
 public:
-	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent);
+	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, LayerManager* parent);
 	virtual ~S100ExchangeCatalogue();
 
 public:
@@ -41,8 +41,6 @@ public:
 	LayerManager* m_pLayerManager;
 
 	LayerManager* m_pParentLayerManager;
-	// Renderer used by DrawEx/DrawFiles. Datasets no longer carry one; this class is render-side.
-	D2D1Resources* D2 = nullptr;
 
 
 public:

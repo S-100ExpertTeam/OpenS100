@@ -27,8 +27,8 @@ class CatalogManager;
 class LayerManager
 {
 public:
-	LayerManager(D2D1Resources* d2d1);
-	LayerManager(Scaler* scaler, CatalogManager* catalogManager, D2D1Resources* d2d1);
+	LayerManager();
+	LayerManager(Scaler* scaler, CatalogManager* catalogManager);
 	virtual ~LayerManager();
 
 public:
@@ -53,13 +53,6 @@ public:
 	// are drawn one at a time, each over the one before.
 	std::unordered_map<const Layer*, int> drawGroups;
 	bool m_isScreenFitEnabled = true;
-
-	// Renderer used by this layer manager. Datasets never hold it; UI-side objects that
-	// draw themselves (exchange-set coverage) receive it from here.
-	D2D1Resources* GetRenderResources() const { return D2; }
-
-protected:
-	D2D1Resources* D2 = nullptr;
 
 private:
 	// S-101 Filter 
@@ -115,8 +108,6 @@ public:
 	void CollectInstructions(S100Layer* layer);
 
 	void DrawInformationLayer(HDC& hDC, Layer* layer);
-	void DrawInformationLayer(HDC& hDC, int nIndex);
-	void DrawInformationLayerByKey(HDC& hDC, int key);
 
 	Layer* GetLayer(int index);
 	Layer* GetLayerByKey(int key);
@@ -149,7 +140,6 @@ public:
 	void ChangeLayerPalettes(const std::wstring& paletteName);
 
 	Scaler* GetScaler();
-	//D2D1Resources* GetD2D1Resources();
 
 	int LayerCount();
 

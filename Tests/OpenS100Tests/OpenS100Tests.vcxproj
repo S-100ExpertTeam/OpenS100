@@ -52,7 +52,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PreprocessorDefinitions>_CONSOLE;GTEST_LINKED_AS_SHARED_LIBRARY=1;H5_BUILT_AS_DYNAMIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)GISLibrary;$(SolutionDir)FeatureCatalog;$(SolutionDir)PortrayalCatalogue;$(SolutionDir)S100Engine;$(SolutionDir)GeoMetryLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)GISLibrary;$(SolutionDir)FeatureCatalog;$(SolutionDir)PortrayalCatalogue;$(SolutionDir)GeoMetryLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

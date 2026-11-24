@@ -164,8 +164,8 @@ endfunction()
 
 # Dependency order: latlon <- geometry, featurecatalog <- portrayalcatalogue; sdb stands alone.
 # The portrayal catalogue here is the catalogue data. Its symbol, line style, area fill and colour
-# profile files are read by a Portrayal::ResourceStore the application supplies; the Direct2D one
-# (S100Engine) stays in the Visual Studio solution.
+# profile files are listed in a Portrayal::ResourceStore the application supplies; the render code
+# reads their pictures when it first draws them.
 opens100_add_module(latlon LatLonUtility DEPENDS GeographicLib::GeographicLib)
 if(OPENS100_BUILD_GEOMETRY)
     opens100_add_module(geometry GeoMetryLibrary DEPENDS latlon)

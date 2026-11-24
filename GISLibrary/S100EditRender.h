@@ -2,7 +2,7 @@
 
 class S101Cell;
 class SPoint;
-namespace GISLibrary { class D2D1Resources; }
+namespace s100::render { class IRenderer; }
 
 class S100EditRender
 {
@@ -15,12 +15,13 @@ public:
 	S101Cell* enc = nullptr;
 	Scaler* scaler = nullptr;
 	R_FeatureRecord* feature = nullptr;
-	GISLibrary::D2D1Resources* renderResources = nullptr;
+	// What the handles are drawn on; set for the frame in hand only.
+	s100::render::IRenderer* renderer = nullptr;
 	int pointIndex = -1;
 	int partIndex = -1;
 
 public:
-	void Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature, GISLibrary::D2D1Resources* renderResources);
+	void Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature, s100::render::IRenderer* renderer);
 	void ShowPoint();
 	void ShowPoint(SPoint* geom);
 	void ShowPoint(SMultiPoint* geom);

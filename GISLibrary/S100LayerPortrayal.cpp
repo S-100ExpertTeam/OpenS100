@@ -131,7 +131,7 @@ bool GISLibrary::OpenLayer(S100Layer& layer, const std::wstring& _filepath, Laye
 	return false;
 }
 
-bool S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
+bool S100Layer::DrawGrid(HDC& hDC, Scaler* scaler)
 {
 	if (GetFileType() != S100_FileType::FILE_S_100_GRID_H5 || !m_spatialObject)
 	{
@@ -140,55 +140,10 @@ bool S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
 
 	if (auto coverage = dynamic_cast<GISLibrary::CoverageDataset*>(m_spatialObject))
 	{
-		coverage->DrawCoverage(d2, hDC, scaler);
+		coverage->DrawCoverage(hDC, scaler);
 		return true;
 	}
 
 	return false;
 }
 
-void S100Layer::DrawInfo(HDC &hDC, Scaler *scaler)
-{
-	if (Info == true)
-	{
-		Gdiplus::Graphics graphics(hDC);
-		graphics.SetSmoothingMode(SmoothingModeHighQuality);
-
-		Color internalColor(50, 255, 0, 0);
-		Color lineColor(255, 255, 0, 0);
-
-		SolidBrush internalBrush(internalColor); 
-		Pen linePen(lineColor); 
-
-		// MBR : Minimum bounding rectangle 
-		auto mbr = GetMBR();
-		long sxmin = 0;
-		long symax = 0;
-
-		scaler->WorldToDevice(mbr.xmin, mbr.ymin, &sxmin, &symax);
-
-		long sxmax = 0;
-		long symin = 0;
-		scaler->WorldToDevice(mbr.xmax, mbr.ymax, &sxmax, &symin);
-
-		RectF position = {
-			(float)sxmin,
-			(float)symin,
-			(float)sxmax - sxmin,
-			(float)symax - symin
-		};
-
-		Gdiplus::Font F(L"Arial", 20, FontStyleRegular, UnitPixel);
-		SolidBrush B(Color(0, 0, 255));
-		StringFormat sf;
-
-		const std::wstring chatName = L"Chart Name : " + m_spatialObject->GetFileName() + L" \n";
-
-		sf.SetAlignment(StringAlignmentNear);
-		sf.SetLineAlignment(StringAlignmentNear);
-
-		graphics.DrawRectangle(&linePen, position.X, position.Y, position.Width, position.Height);
-		graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
-		graphics.DrawString(chatName.c_str(), -1, &F, position, &sf, &B); 
-	}
-}

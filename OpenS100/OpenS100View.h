@@ -153,7 +153,6 @@ public:
 
 
 	void DrawPickReport(HDC& _hdc, int offsetX = 0, int offsetY = 0);
-	void DrawS101PickReport(Graphics& g, int offsetX = 0, int offsetY = 0);
 	void ClearPickReport();
 	void PickReport(CPoint _point);
 	void PickReport(CPoint _point, int layerIndex);

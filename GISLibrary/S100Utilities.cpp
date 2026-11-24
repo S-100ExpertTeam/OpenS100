@@ -29,35 +29,6 @@ ScaleBand S100Utilities::scaleBand[15] = {
 
 
 
-D2D1::ColorF S100Utilities::GetColorNum(int num)
-{
-	std::vector<D2D1::ColorF> colors;
-
-	colors.push_back(D2D1::ColorF::Red); 
-	colors.push_back(D2D1::ColorF::Lime);
-	colors.push_back(D2D1::ColorF::Blue);
-	colors.push_back(D2D1::ColorF::Yellow);
-	colors.push_back(D2D1::ColorF::Cyan);
-	colors.push_back(D2D1::ColorF::Magenta);
-	colors.push_back(D2D1::ColorF::OrangeRed);
-	colors.push_back(D2D1::ColorF::DeepPink);
-	colors.push_back(D2D1::ColorF::DodgerBlue);
-	colors.push_back(D2D1::ColorF::Chartreuse);
-	colors.push_back(D2D1::ColorF::SpringGreen);
-	colors.push_back(D2D1::ColorF::DarkOrange);
-	colors.push_back(D2D1::ColorF::DeepSkyBlue);
-	colors.push_back(D2D1::ColorF::HotPink);
-	colors.push_back(D2D1::ColorF::RoyalBlue);
-
-	if (num >= 0 && num < colors.size())
-		return colors[num];
-	else
-		return D2D1::ColorF::Black;
-}
-
-
-
-
 ScaleBand S100Utilities::GetLegacyScaleband(int scale) 
 {
 	switch (scale)

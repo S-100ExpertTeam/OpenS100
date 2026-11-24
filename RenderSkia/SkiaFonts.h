@@ -13,6 +13,7 @@
 #include <filesystem>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace s100::render
 {
@@ -32,6 +33,10 @@ namespace s100::render
 		// user chose. The text then looks as that system draws the font. Where the package has
 		// no way to ask the system (anything but Windows today) this is false.
 		bool AddSystem(const std::string& family);
+
+		// The families AddSystem can find, as the system names them for its user. Empty where
+		// the package has no way to ask the system.
+		static std::vector<std::string> SystemFamilies();
 
 		size_t Size() const;
 

@@ -4,9 +4,7 @@
 #include "../GeoMetryLibrary/TextCodec.h"
 #include <algorithm>
 #include <filesystem>
-#include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
-#include "D2DRenderer.h"
 #include "IRenderer.h"
 #include "SkiaViewFrame.h"
 #include "GISLibrary.h"
@@ -18,10 +16,9 @@
 #include "../LatLonUtility/LatLonUtility.h"
 #include "../LatLonUtility/cpp_util.h"
 
-S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent) : SpatialObject()
+S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, LayerManager* parent) : SpatialObject()
 {
-    D2 = d2d1;
-    m_pLayerManager = new LayerManager(scaler, cm, d2d1);
+    m_pLayerManager = new LayerManager(scaler, cm);
     m_pLayerManager->onIC = false;
     m_pLayerManager->m_isScreenFitEnabled = false;
     m_pParentLayerManager = parent;
@@ -232,8 +229,6 @@ void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*off
     const auto datasets = s100::sdb::DatasetSelector::datasetsOf(selection);
     m_layers->show(datasets);
     item = ItemsOf(selection);
-
-    D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 }
 
 namespace
@@ -266,37 +261,15 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
     m_pLayerManager->Draw(hDC, offset);
 
     // The overlay is a frame of its own, by the backend the viewer draws with.
-    if (GISLibrary::DrawsWithSkia())
+    auto& frame = GISLibrary::SkiaViewFrame::Shared();
+    if (frame.Begin(*scaler))
     {
-        auto& frame = GISLibrary::SkiaViewFrame::Shared();
-        if (frame.Begin(*scaler))
+        if (auto* renderer = frame.Renderer(nullptr))
         {
-            if (auto* renderer = frame.Renderer(nullptr))
-            {
-                DrawOverlay(*renderer, *scaler, items);
-            }
-            frame.End(hDC);
+            DrawOverlay(*renderer, *scaler, items);
         }
-        return;
+        frame.End(hDC);
     }
-
-    auto rt = D2 ? D2->pRT : nullptr;
-    if (!rt)
-    {
-        return;
-    }
-    const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
-    if (FAILED(rt->BindDC(hDC, &screen)))
-    {
-        return;
-    }
-    rt->BeginDraw();
-    {
-        GISLibrary::D2DRenderer renderer(D2, nullptr);
-        DrawOverlay(renderer, *scaler, items);
-    }
-    rt->SetTransform(D2D1::Matrix3x2F::Identity());
-    rt->EndDraw();
 }
 
 // The box of every S-101 dataset shown, with its file name and the scales of its data

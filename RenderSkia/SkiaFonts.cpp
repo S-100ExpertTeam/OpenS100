@@ -6,6 +6,7 @@
 #include "include/core/SkFontMgr.h"
 #include "include/core/SkFontTypes.h"
 #include "include/core/SkFontStyle.h"
+#include "include/core/SkString.h"
 #include "include/ports/SkFontMgr_empty.h"
 #if defined(_WIN32)
 #include "include/ports/SkTypeface_win.h"
@@ -109,6 +110,25 @@ namespace s100::render
 		(void)family;
 		return false;
 #endif
+	}
+
+	std::vector<std::string> SkiaFonts::SystemFamilies()
+	{
+		std::vector<std::string> families;
+#if defined(_WIN32)
+		const sk_sp<SkFontMgr> manager = SkFontMgr_New_DirectWrite();
+		const int count = manager ? manager->countFamilies() : 0;
+		for (int i = 0; i < count; i++)
+		{
+			SkString name;
+			manager->getFamilyName(i, &name);
+			if (!name.isEmpty())
+			{
+				families.emplace_back(name.c_str(), name.size());
+			}
+		}
+#endif
+		return families;
 	}
 
 	size_t SkiaFonts::Size() const
