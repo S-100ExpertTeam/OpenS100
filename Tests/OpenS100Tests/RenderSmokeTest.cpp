@@ -38,6 +38,7 @@
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <optional>
 #include <vector>
 
 #include "TestPaths.h"
@@ -52,6 +53,7 @@
 #include "PCOutputSchemaManager.h"
 #include "S100Layer.h"
 #include "SENC_DisplayList.h"
+#include "SkiaViewFrame.h"
 #include "S10XGML.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -1843,4 +1845,55 @@ TEST(RenderSmoke, DrawsCellOfAnotherEditionWithTheCataloguesThereAre)
 	RenderCell(cell, nonWhite, colours);
 	// On Mercator a cell about the pole is a strip along its northern limit.
 	EXPECT_GT(nonWhite, 5000u) << "the cell is not drawn";
+}
+
+// The frame keeps what it has read of a catalogue (the pictures of its symbols, its line styles
+// and area fills). A catalogue unloaded and another made where it was in memory is another
+// catalogue: its symbols are its own, not those kept for the one before.
+TEST(RenderSmoke, ACatalogueMadeWhereAnotherWasIsDrawnWithItsOwnSymbols)
+{
+	const auto catalogues = testpaths::repoRoot() / "ProgramData" / "PC";
+	const auto s101 = (catalogues / "S101_Portrayal" / "portrayal_catalogue.xml").wstring();
+	const auto s124 = (catalogues / "S124_Portrayal" / "portrayal_catalogue.xml").wstring();
+
+	constexpr int side = 200;
+	CGISLibraryApp gis;
+	gis.SetScreen(RECT{ 0, 0, side, side });
+
+	// A buoy of the S-101 catalogue, which the S-124 catalogue does not have.
+	const auto drawBuoy = [&](GISLibrary::SkiaViewFrame& frame, PortrayalCatalogue& catalogue, MemoryCanvas& canvas) {
+		ASSERT_TRUE(frame.Begin(*gis.GetScaler()));
+		s100::render::IRenderer* renderer = frame.Renderer(&catalogue);
+		ASSERT_NE(renderer, nullptr);
+		renderer->DrawSymbol("BOYLAT13", { side / 2.0f, side / 2.0f }, 0.0f, 8.0f);
+		frame.End(canvas.dc());
+		::GdiFlush();
+	};
+
+	// One place in memory for two catalogues, one after the other.
+	std::optional<PortrayalCatalogue> place;
+	GISLibrary::SkiaViewFrame frame;
+
+	place.emplace(GISLibrary::PortrayalRender::NewResourceStore());
+	ASSERT_TRUE(place->Open(s124));
+	MemoryCanvas unknown(side, side);
+	drawBuoy(frame, *place, unknown);
+
+	place.reset();
+	place.emplace(GISLibrary::PortrayalRender::NewResourceStore());
+	ASSERT_TRUE(place->Open(s101));
+	MemoryCanvas after(side, side);
+	drawBuoy(frame, *place, after);
+
+	// The same catalogue on a frame that has seen no other.
+	GISLibrary::SkiaViewFrame fresh;
+	MemoryCanvas alone(side, side);
+	drawBuoy(fresh, *place, alone);
+
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	alone.Measure(nonWhite, colours);
+	EXPECT_GT(nonWhite, 50u) << "the buoy is drawn";
+	EXPECT_GT(alone.DifferingPixels(unknown), 50u) << "the S-124 catalogue draws its question mark for the buoy";
+	EXPECT_EQ(after.DifferingPixels(alone), 0u) << "the symbols kept for the catalogue before were used";
 }

@@ -80,7 +80,8 @@ namespace GISLibrary
 		// The pixels of the last frame shown over a background colour, as a PNG file.
 		bool WritePng(const std::filesystem::path& path, const ColorF& background) const;
 
-		// Forgets what is kept for the catalogues (when one is unloaded or its files change).
+		// Forgets what is kept for the catalogues (when the files of one change). What is kept
+		// for a catalogue that is unloaded is forgotten by itself.
 		void ForgetCatalogues();
 
 	private:

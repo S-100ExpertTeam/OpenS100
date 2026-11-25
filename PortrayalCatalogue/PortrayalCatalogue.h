@@ -95,7 +95,15 @@ protected:
 	// a catalogue that is used as data only.
 	std::unique_ptr<Portrayal::ResourceStore> resources;
 
+	// Lives as long as what the catalogue holds does (see Lifetime).
+	std::shared_ptr<const int> life = std::make_shared<const int>(0);
+
 public:
+	// Expires when the catalogue is deleted or emptied (Delete). Whoever keeps something made
+	// from a catalogue keeps this with it, and not the address alone: another catalogue may be
+	// made at the address of one that was deleted.
+	std::weak_ptr<const void> Lifetime() const;
+
 	bool Read(std::wstring path);
 	bool Read(const std::string& path);
 	bool Open(std::wstring path);

@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8c 완료. 남은 것은 5절.
+- 상태: R8a~R8c 완료, 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -48,15 +48,26 @@ R7에서 Direct2D·GDI+가 빠진 뒤 이 소스들을 Windows에 묶는 것을 
 
 ### 4.2 미확인
 
+(4.1의 "바이트 동일은 확인하지 못했다"는 4.3에서 풀렸다.)
+
 - Release·Win32·ARM64 구성의 빌드(Release x64는 사용자의 뷰어가 실행 중이라 DLL이 잠겨 빌드하지 못했다), CI, macOS.
 - 뷰어 화면에서의 확인(지침 23). 뷰어 쪽 코드는 바뀌지 않았다(`OpenS100View`는 `SkiaViewFrame`의 `Begin`/`End(HDC)`를 전처럼 쓴다).
 - Linux 그림을 Windows 그림과 수치로 대조하지 않았다. Linux에서 격자(S-102/104/111)·교환 카탈로그·System Database 차트는 컴파일·링크만 했고 그려 보지 않았다.
 - `opens100_view`를 Linux에서 돌릴 때 `PortrayalAPI.lua:806: Object given is of type "nil" not of type "SpatialType"`가 두 번 찍힌다. Windows에서도 같은지 보지 않았다.
 - Windows CMake 빌드에서의 `view`·`view-skia`.
 
+### 4.3 흔들림의 원인과 수정 (2026-11-25)
+
+**원인.** `SkiaViewFrame`은 카탈로그에서 읽은 것(심벌 그림, 선 스타일, 면 채움, 심벌 이미지)을 `PortrayalCatalogue*` **주소**로 기억했다(`State::catalogues`). 프로세스의 프레임(`Shared()`)은 카탈로그보다 오래 산다. 카탈로그가 지워지고 **같은 주소에 다른 카탈로그가 만들어지면**(힙이 주소를 다시 내줄 때) 프레임은 앞 카탈로그의 것을 그대로 썼다. S-124 카탈로그가 있던 자리에 S-101 카탈로그가 들어서면 S-101의 수심 숫자·점 심벌·무늬는 S-124의 심벌 목록에 없으므로 빠진다. 주소가 다시 쓰이는지는 힙 사정이라 실행마다 달랐다. 테스트에서는 `CGISLibraryApp`을 테스트마다 새로 만들어서 드러났고, 뷰어에서는 카탈로그를 내리고 다시 올릴 때 같은 일이 생길 수 있었다. `9d3332ad`·`a5d7b03f`의 스레드와는 무관하다(주소로 기억하는 것은 R7부터).
+
+**수정.** `PortrayalCatalogue::Lifetime()`이 카탈로그와 함께 끝나는 표(`weak_ptr`)를 준다(`Delete`로 비울 때도 끝난다). `CatalogueResources`가 그것을 함께 갖고, 프레임은 렌더러를 만들 때 표가 끝난 카탈로그의 것을 먼저 버린다.
+
+**검증.** 새 테스트 `RenderSmoke.ACatalogueMadeWhereAnotherWasIsDrawnWithItsOwnSymbols`: 한 자리에 S-124 카탈로그, 이어서 S-101 카탈로그를 만들어 부표 심벌을 그린다. 수정 전 실패(795픽셀이 다름), 수정 후 통과. Windows Debug x64 전체 테스트를 세 번: 매번 231개 중 227개 통과·4개 건너뜀, **그림 62장이 세 번 모두 바이트 단위로 같다.** 수정 전 Debug 그림과는 5장이 다르다(`s102-covers-data-*` 2장, `sdb-chart-s101-s124`, `sdb-chart-124KR…TEST1/2`) — 수정 전 쪽이 심벌이 빠진 그림이다(`sdb-chart-s101-s124`는 눈으로 확인: 수심 숫자·무늬·심벌이 있다).
+
+R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 못했다(대조할 수정 전 그림이 흔들렸으므로). 다만 R8의 58장은 수정 전과 같았고 나머지는 위 원인으로 설명된다.
+
 ## 5. 남은 것
 
-- 4.1의 흔들림의 원인 — 이후의 모든 그림 검증이 이것에 걸린다.
 - 포트(`ports/opens100`)의 기능 `view`·`view-skia`, `opens100Config.cmake.in`, 소비자 예제에서 뷰 그리기, CI `port` 잡에 추가.
 - `GISLIBRARY_MODEL_ONLY`와 `stdafx.h`의 `<windows.h>`·ATL: 뷰 소스가 이제 그것 없이 빌드되므로 솔루션 쪽에서도 걷을 수 있다.
 - `DeviceTypes.h`의 `HDC`·`RECT`·`POINT`: `HDC`는 `SkiaViewFrame`과 `CGISLibraryApp::Draw(HDC&)`만 쓴다. `RECT`는 `SetScreen`·`SetViewMBR`의 인자다.

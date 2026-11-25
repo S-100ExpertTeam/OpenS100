@@ -60,6 +60,14 @@ void PortrayalCatalogue::Delete()
 	s100_lineStyles.clear();
 
 	resources.reset();
+
+	// What others made from the contents so far is no longer of this catalogue.
+	life = std::make_shared<const int>(0);
+}
+
+std::weak_ptr<const void> PortrayalCatalogue::Lifetime() const
+{
+	return life;
 }
 
 bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)

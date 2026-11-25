@@ -65,9 +65,13 @@ namespace
 	struct CatalogueResources
 	{
 		explicit CatalogueResources(PortrayalCatalogue& catalogue)
-			: symbols(catalogue), areaFills(catalogue), lineStyles(catalogue)
+			: life(catalogue.Lifetime()), symbols(catalogue), areaFills(catalogue), lineStyles(catalogue)
 		{
 		}
+
+		// Expired when the catalogue these were read from is gone. The address of a catalogue
+		// does not tell: another may have been made where one was deleted.
+		std::weak_ptr<const void> life;
 
 		s100::render::SymbolLibrary symbols;
 		s100::render::AreaFillLibrary areaFills;
@@ -528,6 +532,9 @@ namespace GISLibrary
 			with.fonts = state->fonts.get();
 			if (catalogue)
 			{
+				// What was kept for catalogues that are gone goes first, so a catalogue made at the
+				// address of one of them is read anew.
+				std::erase_if(state->catalogues, [](const auto& kept) { return kept.second->life.expired(); });
 				auto& resources = state->catalogues[catalogue];
 				if (!resources)
 				{
