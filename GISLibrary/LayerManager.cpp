@@ -1095,7 +1095,7 @@ void LayerManager::ReloadLayers()
 	ReMBR();
 }
 
-void LayerManager::SetViewMBR(RECT r)
+void LayerManager::SetViewMBR(ScreenRect r)
 {
 	scaler->SetMapFromScreen(r.left, r.top, r.right, r.bottom);
 }

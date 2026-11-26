@@ -67,7 +67,7 @@ public:
 	bool IsContainFilePathToLayer(const std::wstring& _filepath);
 
 
-	void SetViewMBR(RECT r);
+	void SetViewMBR(ScreenRect r);
 
 	bool AddBackgroundLayer(const std::wstring& _filepath);
 

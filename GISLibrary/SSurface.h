@@ -16,7 +16,7 @@ public:
 	SSurface();
 	SSurface(const SSurface& other);
 	SSurface(MBR* mbr);
-	SSurface(std::vector<POINT>& points, std::vector<int>& parts);
+	SSurface(std::vector<LongPoint>& points, std::vector<int>& parts);
 	virtual ~SSurface();
 	
 public:
@@ -70,7 +70,7 @@ public:
 	void AddCurve(SAbstractCurve* curve);
 	
 	void Init();
-	void Set(std::vector<POINT>& points, std::vector<int>& parts); // parts : start index of next part
+	void Set(std::vector<LongPoint>& points, std::vector<int>& parts); // parts : start index of next part
 	//void Set(std::vector<GeoPoint> points, std::vector<int> partSize);
 
 	GeoPoint GetXY(int ringIndex, int pointIndex);

@@ -6,9 +6,9 @@
 
 #include "../GeoMetryLibrary/Scaler.h"
 
-void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, const RECT* _viewPort, Scaler *pScaler)
+void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<LongPoint> &vp, SSurface *_surface, const ScreenRect* _viewPort, Scaler *pScaler)
 {
-	std::vector<POINT> m_pvPoints;
+	std::vector<LongPoint> m_pvPoints;
 
 	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
@@ -19,7 +19,7 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 	if (SGeometry::viewPoints == nullptr)
 	{
 		SGeometry::sizeOfPoint = (int)(_surface->getNumPoint() * 1.5);
-		SGeometry::viewPoints = new POINT[SGeometry::sizeOfPoint]();
+		SGeometry::viewPoints = new LongPoint[SGeometry::sizeOfPoint]();
 	}
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
@@ -117,7 +117,7 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 	return solution;
 }
 
-ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, const RECT* _viewPort)
+ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, const ScreenRect* _viewPort)
 {
 	ClipperLib::Path  polygon, view;
 	ClipperLib::Paths polygonPaths, viewPaths;
@@ -234,7 +234,7 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface* _surface, SSurface* _vie
 
 
 
-POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon)
+LongPoint SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon)
 {
 	double area = 0;
 	double centerX = 0.0;
@@ -266,16 +266,16 @@ POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon
 	centerX = centerX / (6.0 * area);
 	centerY = centerY / (6.0 * area);
 
-	POINT returnValue;
+	LongPoint returnValue;
 	returnValue.x = (long)centerX;
 	returnValue.y = (long)centerY;
 
 	return returnValue;
 }
 
-double SCommonFuction::GetDistance(POINT _p1, POINT _p2)
+double SCommonFuction::GetDistance(LongPoint _p1, LongPoint _p2)
 {
-	POINT p;
+	LongPoint p;
 
 	p.x = _p2.x - _p1.x;
 	p.y = _p2.y - _p1.y;
@@ -284,18 +284,18 @@ double SCommonFuction::GetDistance(POINT _p1, POINT _p2)
 }
 
 
-POINT SCommonFuction::GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset)
+LongPoint SCommonFuction::GetOffsetPointOnLine(LongPoint _p1, LongPoint _p2, double offset)
 {
 	double angle = GetAngle(_p1, _p2);  // The angle of the line in the positive direction of the x-axis.
 
-	POINT returnValue;
+	LongPoint returnValue;
 	returnValue.x = (long)(_p1.x + offset * cos(angle));
 	returnValue.y = (long)(_p1.y + offset * sin(angle));
 
 	return returnValue;
 }
 
-double SCommonFuction::GetDistanceOfCurve(POINT *_p, int _count)
+double SCommonFuction::GetDistanceOfCurve(LongPoint *_p, int _count)
 {
 	double returnValue = 0;
 
@@ -307,7 +307,7 @@ double SCommonFuction::GetDistanceOfCurve(POINT *_p, int _count)
 	return returnValue;
 }
 
-void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, const RECT* viewPort)
+void SCommonFuction::CutLineToIntersect(LongPoint &_s1, LongPoint &_e1, LongPoint _s2, LongPoint _e2, const ScreenRect* viewPort)
 {
 	// Store the values for fast access and easy
 
@@ -351,9 +351,9 @@ void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT
 	}
 }
 
-void SCommonFuction::GetViewLineInCurve(POINT *_p, int _count, const RECT* viewPort)
+void SCommonFuction::GetViewLineInCurve(LongPoint *_p, int _count, const ScreenRect* viewPort)
 {
-	POINT p1, p2;
+	LongPoint p1, p2;
 	p1.x =viewPort->left;
 	p1.y =viewPort->top;
 	p2.x =viewPort->right;
@@ -407,7 +407,7 @@ void SCommonFuction::GetViewLineInCurve(POINT *_p, int _count, const RECT* viewP
 	return;
 }
 
-POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, const RECT* viewPort)
+LongPoint* SCommonFuction::GetCenterPointOfCurve(LongPoint *_p, int _count, const ScreenRect* viewPort)
 {
 	if (_count < 2)
 	{
@@ -426,7 +426,7 @@ POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, const RECT* 
 	}
 
 	double accumulatedDistance = 0;								   // Accumulated distance.
-	POINT *returnValue = new POINT;
+	LongPoint *returnValue = new LongPoint;
 
 	for (int i = 0; i < (_count - 1); i++)						   // Measure the cumulative distance from the 0th point to the next point.
 	{
@@ -547,9 +547,9 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool /*applyOptio
 		return -1;
 }
 
-double SCommonFuction::GetAngle(POINT _p1, POINT _p2)
+double SCommonFuction::GetAngle(LongPoint _p1, LongPoint _p2)
 {
-	POINT p;
+	LongPoint p;
 	p.x = _p2.x - _p1.x;
 	p.y = _p2.y - _p1.y;
 

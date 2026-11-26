@@ -1741,7 +1741,7 @@ SCompositeCurve* S10XGML::CompositeCurveToSCompositeCurve(GM::CompositeCurve* co
 
 SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 {
-	std::vector<POINT> points;
+	std::vector<LongPoint> points;
 	std::vector<int> parts;
 
 	auto result = new SSurface();
@@ -1755,7 +1755,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 		
 		inverseProjection(x, y);
 
-		POINT pt = { (long)(x * 10000000), (long)(y * 10000000) };
+		LongPoint pt = { (long)(x * 10000000), (long)(y * 10000000) };
 
 		points.push_back(pt);
 	}
@@ -1781,7 +1781,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 
 				inverseProjection(x, y);
 
-				POINT pt = { (long)(x * 10000000), (long)(y * 10000000) };
+				LongPoint pt = { (long)(x * 10000000), (long)(y * 10000000) };
 
 				points.push_back(pt);
 			}
@@ -1809,7 +1809,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 
 	//		inverseProjection(x, y);
 
-	//		POINT pt = { x * 10000000, y * 10000000 };
+	//		LongPoint pt = { x * 10000000, y * 10000000 };
 
 	//		points.push_back(pt);
 	//	}

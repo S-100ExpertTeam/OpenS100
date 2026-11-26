@@ -4,7 +4,7 @@
 
 int SGeometry::sizeOfPoint = 10;
 // It also has a CPoint arrangement to minimize memory allocation and recovery.
-POINT* SGeometry::viewPoints = new POINT[SGeometry::sizeOfPoint]();
+LongPoint* SGeometry::viewPoints = new LongPoint[SGeometry::sizeOfPoint]();
 
 SGeometry::SGeometry()
 {
@@ -18,9 +18,9 @@ SGeometry::SGeometry(const SGeometry& other)
 
 	if (sizeOfPoint > 0)
 	{
-		viewPoints = new POINT[sizeOfPoint];
-		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
+		viewPoints = new LongPoint[sizeOfPoint];
+		memset(viewPoints, 0x00, sizeof(LongPoint) * sizeOfPoint);
+		memcpy(viewPoints, other.viewPoints, sizeof(LongPoint) * sizeOfPoint);
 	}
 
 	for (const auto& iter : other.additionalInformation)
@@ -59,9 +59,9 @@ SGeometry SGeometry::operator=(const SGeometry& other)
 
 	if (sizeOfPoint > 0)
 	{
-		viewPoints = new POINT[sizeOfPoint];
-		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
+		viewPoints = new LongPoint[sizeOfPoint];
+		memset(viewPoints, 0x00, sizeof(LongPoint) * sizeOfPoint);
+		memcpy(viewPoints, other.viewPoints, sizeof(LongPoint) * sizeOfPoint);
 	}
 
 	for (const auto& iter : other.additionalInformation)

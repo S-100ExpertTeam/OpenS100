@@ -393,6 +393,7 @@
     <ClInclude Include="GeoPolyline.h" />
     <ClInclude Include="MBR.h" />
     <ClInclude Include="Scaler.h" />
+    <ClInclude Include="ScreenTypes.h" />
     <ClInclude Include="StringTokenizer.h" />
     <ClInclude Include="TextCodec.h" />
     <ClInclude Include="stdafx.h" />

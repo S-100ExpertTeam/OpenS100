@@ -13,12 +13,12 @@ public:
 	** function   : Clip the given surface to fit the screen area and obtain the center of gravity point of the result.
 	** factor   :
 	SSurface *_surface  - AREA to find the center of gravity
-	const RECT* _viewPort - Screen area.
+	const ScreenRect* _viewPort - Screen area.
 	** return value :
 	NULL  - If the screen and the surface do not overlap at all (the center of gravity cannot exist).
 	!NULL - Surface containing center of gravity points (unconditionally, there is one part, and all points are center of gravity points).
 	*/
-	static void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, const RECT* _viewPort, Scaler *pScaler);
+	static void CalculateCenterOfGravityOfSurface(std::vector<LongPoint> &vp, SSurface *_surface, const ScreenRect* _viewPort, Scaler *pScaler);
 
 	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, const ClipperLib::Paths& itemPolygonPath);
 	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, SSurface* itemPolygonPath);
@@ -28,12 +28,12 @@ public:
 	** function   : Clips the given AREA to fit the screen area.
 	** factor   :
 	ENCArea* _polygon  - Area to clip.
-	const RECT* _viewPort - Screen area.
+	const ScreenRect* _viewPort - Screen area.
 	** return value :
 	NULL  - If the screen area and AREA do not overlap at all,
 	!NULL - As a result of clipping, it may be a multi-part.
 	*/
-	static ClipperLib::Paths ClipSurface(SSurface *_polygon, const RECT* _viewPort);
+	static ClipperLib::Paths ClipSurface(SSurface *_polygon, const ScreenRect* _viewPort);
 
 	/*
 	** function   : Clips the given AREA to fit the screen area.
@@ -49,81 +49,81 @@ public:
 	/*
 	** function   : Find the center of gravity of a given polygon.
 	** factor   :
-	POINT* _p     - The arrangement with the coordinates of polygon.
+	LongPoint* _p     - The arrangement with the coordinates of polygon.
 	int    _count - The number of polygon coordinates.
 	** return value : The center of gravity.
 	*/
-	static POINT CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon);
+	static LongPoint CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon);
 
 
 	/*
 	** function   : Find the distance between the two points.
 	** factor   :
-	POINT _p1 - The first point.
-	POINT _p2 - The second point.
+	LongPoint _p1 - The first point.
+	LongPoint _p2 - The second point.
 	** return value : The distance between the two points.
 	*/
-	static double GetDistance(POINT _p1, POINT _p2);
+	static double GetDistance(LongPoint _p1, LongPoint _p2);
 
 
 	/*
 	** function   : Find the length of the polyline.
 	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
+	LongPoint* _p     - Coordinate arrangement of the polyline.
 	int    _count - The number of polyline coordinates.
 	** return value : The length of the polyline.
 	*/
-	static double GetDistanceOfCurve(POINT *_p, int _count);
+	static double GetDistanceOfCurve(LongPoint *_p, int _count);
 
 	/*
 	** function   : Find the line shown on the screen among the polylines.
 	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
+	LongPoint* _p     - Coordinate arrangement of the polyline.
 	int    _count - The number of polyline coordinates.
 	** return value : Among the polylines, the line you see on the screen.
 	*/
-	static void GetViewLineInCurve(POINT *_p, int _count, const RECT* viewPort);
+	static void GetViewLineInCurve(LongPoint *_p, int _count, const ScreenRect* viewPort);
 
 	/*
 	** function   : Find the midpoint at the distance of the polyline.
 	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
+	LongPoint* _p     - Coordinate arrangement of the polyline.
 	int    _count -The number of polyline coordinates.
 	** return value : The midpoint of the polyline.
 	*/
-	static POINT* GetCenterPointOfCurve(POINT *_p, int _count, const RECT* viewPort);
+	static LongPoint* GetCenterPointOfCurve(LongPoint *_p, int _count, const ScreenRect* viewPort);
 
 	/*
 	** function   :
 	** factor   : Move the starting point of the line from the intersection.
-	POINT _s1     - The starting point of LINE 1.
-	POINT _e1     - The end point of Line 1.
-	POINT _s2     - The starting point of LINE 2.
-	POINT _e2     - The end point of Line 2.
+	LongPoint _s1     - The starting point of LINE 1.
+	LongPoint _e1     - The end point of Line 1.
+	LongPoint _s2     - The starting point of LINE 2.
+	LongPoint _e2     - The end point of Line 2.
 	** return value :
 	*/
-	static void CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, const RECT* viewPort);
+	static void CutLineToIntersect(LongPoint &_s1, LongPoint &_e1, LongPoint _s2, LongPoint _e2, const ScreenRect* viewPort);
 
 
 	/*
 	** function   : Find the angle in the positive direction between the two-dimensional vector and the x-axis.
 	** factor   :
-	POINT _p1 - The starting point of the vector.
-	POINT _p2 - The end point of a vector.
+	LongPoint _p1 - The starting point of the vector.
+	LongPoint _p2 - The end point of a vector.
 	** return value : Result value (unit: radian, range: 0 to 2 * pi)
 	*/
-	static double GetAngle(POINT _p1, POINT _p2);
+	static double GetAngle(LongPoint _p1, LongPoint _p2);
 
 
 	/*
 	** function   : Find a point (distance) away from the starting point of the line by offset.
 	** factor   :
-	POINT _p1     - The starting point of the line.
-	POINT _p2     - The end point of the line.
+	LongPoint _p1     - The starting point of the line.
+	LongPoint _p2     - The end point of the line.
 	double offset - offset
 	** return value : The point that is offset from the starting point of the line.
 	*/
-	static POINT GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset);
+	static LongPoint GetOffsetPointOnLine(LongPoint _p1, LongPoint _p2, double offset);
 
 	//static const int NewGeometryScale = 70000000;
 	static const int NewGeometryScale = 5000;

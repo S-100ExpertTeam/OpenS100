@@ -52,7 +52,7 @@ public:
 	// outside that polar region (60 degrees of latitude to the pole), it shows the region.
 	void SetMapProjection(MapProjection value);
 
-	void SetViewMBR(RECT r);
+	void SetViewMBR(ScreenRect r);
 
 	MBR* GetMBR();
 						
@@ -60,8 +60,7 @@ public:
 	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = true);
 
 	// setting screen
-	void SetScreen(RECT *rect);
-	void SetScreen(const RECT& rect);
+	void SetScreen(const ScreenRect& rect);
 	int GetCenterXScreen();
 	int GetCenterYScreen();
 

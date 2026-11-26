@@ -25,7 +25,7 @@ public:
 	static int sizeOfPoint;
 
 	// It also has a CPoint arrangement to minimize memory allocation and recovery.
-	static POINT* viewPoints;
+	static LongPoint* viewPoints;
 
 public:
 	std::vector<GF::InformationType*> additionalInformation;

@@ -7,13 +7,6 @@
 //                 [--catalogues <feature catalogue xml> <portrayal catalogue xml>]... <dataset>...
 //
 // The first two arguments are the catalogues of one product; --catalogues adds those of another.
-#ifdef _WIN32
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#endif
-
 #include <GISLibrary/GISLibrary.h>
 #include <GISLibrary/SkiaViewFrame.h>
 
@@ -93,7 +86,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	RECT screen{};
+	ScreenRect screen{};
 	screen.right = width;
 	screen.bottom = height;
 	view.SetScreen(screen);

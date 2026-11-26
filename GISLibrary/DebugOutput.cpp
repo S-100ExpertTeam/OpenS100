@@ -4,6 +4,9 @@
 #include "../GeoMetryLibrary/TextCodec.h"
 
 #include <iostream>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #include <string>
 
 namespace GISLibrary

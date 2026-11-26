@@ -167,7 +167,7 @@ void CGISLibraryApp::ReMBR()
 	m_pLayerManager->ReMBR();
 }
 
-void CGISLibraryApp::SetViewMBR(RECT r)
+void CGISLibraryApp::SetViewMBR(ScreenRect r)
 {
 	m_pLayerManager->SetViewMBR(r);
 }
@@ -193,13 +193,7 @@ void CGISLibraryApp::WorldToDevice(double mx, double my, long* sx, long* sy, boo
 /*
 ** screen setting
 */
-void CGISLibraryApp::SetScreen(RECT* rect)
-{
-	if (rect == nullptr) return;
-	SetScreen(*rect);
-}
-
-void CGISLibraryApp::SetScreen(const RECT& rect)
+void CGISLibraryApp::SetScreen(const ScreenRect& rect)
 {
 	m_pScaler->SetScreen(rect.left, rect.top, rect.right, rect.bottom);
 }

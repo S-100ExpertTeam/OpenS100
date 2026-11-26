@@ -803,7 +803,7 @@ namespace s100::render
 		auto p = (SPoint*)geom;
 
 		// (Not in SGeometry::viewPoints: a dataset being opened on another thread resizes it.)
-		POINT onDevice{};
+		LongPoint onDevice{};
 		scaler.WorldToDevice(
 			p->x,
 			p->y,
@@ -922,7 +922,7 @@ namespace s100::render
 		}
 
 		SPoint* p = (SPoint*)geom;
-		POINT onDevice{};
+		LongPoint onDevice{};
 		scaler.WorldToDevice(p->x, p->y, &onDevice.x, &onDevice.y);
 
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)

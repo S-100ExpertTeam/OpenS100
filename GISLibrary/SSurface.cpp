@@ -74,7 +74,7 @@ SSurface::SSurface(MBR* mbr)
 	m_mbr.ymax = mbr->ymax;
 }
 
-SSurface::SSurface(std::vector<POINT>& points, std::vector<int>& parts)
+SSurface::SSurface(std::vector<LongPoint>& points, std::vector<int>& parts)
 {
 	Set(points, parts);
 }
@@ -241,11 +241,11 @@ void SSurface::Init()
 	ResetRenderAttachment();
 }
 
-void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourceParts)
+void SSurface::Set(std::vector<LongPoint>& sourcePoints, std::vector<int>& sourceParts)
 {
 	// About a pole the segments of the rings, rhumb lines, are not straight on the chart: long
 	// ones get points between their ends (RhumbLinePointsBetween), in the units of the points.
-	std::vector<POINT> points;
+	std::vector<LongPoint> points;
 	std::vector<int> parts;
 	if (IsPolarProjection())
 	{
@@ -268,7 +268,7 @@ void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourcePar
 			for (const auto& [longitude, latitude] : RhumbLinePointsBetween(sourcePoints[i].x / unit, sourcePoints[i].y / unit,
 				sourcePoints[i + 1].x / unit, sourcePoints[i + 1].y / unit))
 			{
-				points.push_back(POINT{ static_cast<long>(std::lround(longitude * unit)), static_cast<long>(std::lround(latitude * unit)) });
+				points.push_back(LongPoint{ static_cast<long>(std::lround(longitude * unit)), static_cast<long>(std::lround(latitude * unit)) });
 			}
 		}
 		// The last entry is not the start of a ring (see below): kept so the count of rings is.
@@ -314,7 +314,7 @@ void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourcePar
 	if (SGeometry::viewPoints == nullptr)
 	{
 		SGeometry::sizeOfPoint = m_numPoints * 1.5;
-		SGeometry::viewPoints = new POINT[SGeometry::sizeOfPoint]();
+		SGeometry::viewPoints = new LongPoint[SGeometry::sizeOfPoint]();
 	}
 
 	for (int i = 0; i < m_numPoints; i++)

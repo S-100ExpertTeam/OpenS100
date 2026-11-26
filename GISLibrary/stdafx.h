@@ -22,15 +22,7 @@
 #include <variant>
 #include <vector>
 
-// On Windows the device-space types of the model (POINT, RECT: DeviceTypes.h) are the Win32
-// ones, so <windows.h> is here for their definitions. Nothing else of the operating system
-// is: no COM, no ATL. It goes when those types are the library's own.
-#ifdef _WIN32
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN // keep commdlg.h and friends out (their function-name macros clash with model methods)
-#endif
-#include "targetver.h"
-#include <windows.h>
-#endif
+// No header of an operating system here: the sources are the same on every platform, and
+// the few that call Windows include <windows.h> themselves, inside #ifdef _WIN32.
 
 #include "Common.h"

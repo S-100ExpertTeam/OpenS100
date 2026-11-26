@@ -242,9 +242,9 @@ void COpenS100View::OnDraw(CDC* pDC)
 
 	CRect rect;
 	GetClientRect(&rect);
-	theApp.gisLib->SetViewMBR(rect);
+	theApp.gisLib->SetViewMBR(ScreenRect{ rect.left, rect.top, rect.right, rect.bottom });
 	if (theApp.gisLib2) {
-		theApp.gisLib2->SetViewMBR(rect);
+		theApp.gisLib2->SetViewMBR(ScreenRect{ rect.left, rect.top, rect.right, rect.bottom });
 	}
 
 	CreateDCs(pDC, rect);
@@ -301,10 +301,10 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 	CRect viewRect;
 	GetClientRect(viewRect);
 
-	theApp.gisLib->SetScreen(viewRect);
+	theApp.gisLib->SetScreen(ScreenRect{ viewRect.left, viewRect.top, viewRect.right, viewRect.bottom });
 	
 	if (theApp.gisLib2) {
-		theApp.gisLib2->SetScreen(viewRect);
+		theApp.gisLib2->SetScreen(ScreenRect{ viewRect.left, viewRect.top, viewRect.right, viewRect.bottom });
 	}
 
 	DeleteDCs();
@@ -836,7 +836,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 				CRect viewRect;
 				GetClientRect(viewRect);
 
-				theApp.gisLib->SetScreen(viewRect);
+				theApp.gisLib->SetScreen(ScreenRect{ viewRect.left, viewRect.top, viewRect.right, viewRect.bottom });
 				theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
 				theApp.gisLib->UpdateScale();
 

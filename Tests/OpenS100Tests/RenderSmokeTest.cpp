@@ -193,7 +193,7 @@ namespace
 		ASSERT_NE(pc, nullptr);
 		const auto t1 = Clock::now();
 
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
 		// Opening a layer parses the dataset and runs the portrayal rules.
@@ -269,7 +269,7 @@ TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
 		GTEST_SKIP() << "reference cell not available: " << cell.string();
 	}
 
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	const auto open = [&](CGISLibraryApp& gis, bool nightBeforeOpening)
 	{
 		auto cm = gis.GetCatalogManager();
@@ -326,7 +326,7 @@ TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
 	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
 
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	std::size_t opened = 0;
 	for (const auto& entry : std::filesystem::directory_iterator(cells))
@@ -424,7 +424,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
 		GISLibrary::SystemDatabaseSession session(root);
@@ -474,7 +474,7 @@ TEST(RenderSmoke, DrawsTheBackgroundMapOfTheWorld)
 		GTEST_SKIP() << "no world map";
 	}
 	CGISLibraryApp gis;
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddBackgroundLayer(world.wstring()));
 	MBR eastAsia(100.0, 20.0, 150.0, 50.0);   // degrees
@@ -569,7 +569,7 @@ TEST(RenderSmoke, TimesCellsFromEnvironment)
 	auto cm = gis.GetCatalogManager();
 	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 
 	std::size_t start = 0;
@@ -646,7 +646,7 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
 
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(catalog.wstring()));
 
@@ -720,7 +720,7 @@ TEST(RenderSmoke, ExchangeSetOpensItsCellsInTheBackground)
 		auto cm = gis.GetCatalogManager();
 		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 		ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 		ASSERT_TRUE(gis.AddLayer(catalog.wstring()));
 
@@ -822,7 +822,7 @@ TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
 	// "Restart": a new library instance over the same System Database.
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 
 	GISLibrary::SystemDatabaseSession session(root);
@@ -896,7 +896,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS102Grid)
 
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 
 	GISLibrary::SystemDatabaseSession session(root);
@@ -951,7 +951,7 @@ TEST(RenderSmoke, DrawsS102GridAsLayer)
 		GTEST_SKIP() << "S-102 portrayal catalogue not available: " << pc.string();
 	}
 	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(grid.wstring()));
 	gis.SetViewMBR(view);
@@ -984,7 +984,7 @@ TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-111_FC.xml").string()), nullptr);
 	ASSERT_NE(catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S111_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(s111.wstring()));
 	auto* layer = gis.GetLayerManager()->GetLayer(gis.GetLayerManager()->LayerCount() - 1);
@@ -1150,7 +1150,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS111)
 	const auto draw = [&](const std::filesystem::path& root, const char* name) {
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 		GISLibrary::SystemDatabaseSession session(root);
 		session.attach(*gis.GetLayerManager(), *catalogues);
@@ -1222,7 +1222,7 @@ TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-104_FC.xml").string()), nullptr);
 	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(s104.wstring()));
 	ASSERT_TRUE(gis.AddLayer(s102.wstring()));
@@ -1319,7 +1319,7 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 	// The S-102 without its portrayal catalogue: open, with its data outline, but not drawn, so what
 	// changes with ESC on is the S-101 depth portrayal alone.
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
 	ASSERT_TRUE(gis.AddLayer(s102.wstring()));
@@ -1449,7 +1449,7 @@ TEST(RenderSmoke, CoverageChartAtScales)
 
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	GISLibrary::SystemDatabaseSession session(root);
 	session.attach(*gis.GetLayerManager(), *catalogues);
@@ -1539,7 +1539,7 @@ namespace
 
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
 		GISLibrary::SystemDatabaseSession session(root);
@@ -1622,7 +1622,7 @@ TEST(RenderSmoke, AdjacentCellsOfOneGroupDoNotCoverEachOther)
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(west.wstring()));
 	ASSERT_TRUE(gis.AddLayer(east.wstring()));
@@ -1703,7 +1703,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS124OverTheS101)
 	const auto draw = [&](const std::filesystem::path& root, MemoryCanvas& canvas) {
 		CGISLibraryApp gis;
 		auto* catalogues = gis.GetCatalogManager();
-		const RECT view{ 0, 0, kWidth, kHeight };
+		const ScreenRect view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 		GISLibrary::SystemDatabaseSession session(root);
 		session.attach(*gis.GetLayerManager(), *catalogues);
@@ -1754,7 +1754,7 @@ TEST(RenderSmoke, S102PictureCoversItsDataOnMercator)
 	ASSERT_NE(s101pc, nullptr);
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
 	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(cellPath(L"101KR00659C71").wstring()));
 	ASSERT_TRUE(gis.AddLayer(cellPath(L"101KR00659C72").wstring()));
@@ -1806,7 +1806,7 @@ TEST(RenderSmoke, ChangingProjectionDoesNotGrowMemory)
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 	ASSERT_NE(pc, nullptr);
-	const RECT view{ 0, 0, kWidth, kHeight };
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
 
@@ -1858,7 +1858,7 @@ TEST(RenderSmoke, ACatalogueMadeWhereAnotherWasIsDrawnWithItsOwnSymbols)
 
 	constexpr int side = 200;
 	CGISLibraryApp gis;
-	gis.SetScreen(RECT{ 0, 0, side, side });
+	gis.SetScreen(ScreenRect{ 0, 0, side, side });
 
 	// A buoy of the S-101 catalogue, which the S-124 catalogue does not have.
 	const auto drawBuoy = [&](GISLibrary::SkiaViewFrame& frame, PortrayalCatalogue& catalogue, MemoryCanvas& canvas) {

@@ -777,7 +777,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	R_SurfaceRecord* sr = nullptr;
 	std::int64_t iKey;
 
-	std::vector<POINT> _vecPoint;
+	std::vector<LongPoint> _vecPoint;
 	std::vector<int> boundaryList;
 
 	fe->geometry = new SSurface();
@@ -971,7 +971,7 @@ bool S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 	return false;
 }
 
-bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT)
+bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<LongPoint>& geoArr, int ORNT)
 {
 	if (nullptr != r->m_ptas)
 	{
@@ -1284,7 +1284,7 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 	return true;
 }
 
-bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int /*ORNT*/)
+bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<LongPoint>& geoArr, int /*ORNT*/)
 {
 	for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++)
 	{

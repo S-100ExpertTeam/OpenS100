@@ -50,9 +50,9 @@ SCompositeCurve SCompositeCurve::operator=(const SCompositeCurve& other)
 	if (other.sizeOfPoint > 0)
 	{
 		sizeOfPoint = other.sizeOfPoint;
-		viewPoints = new POINT[sizeOfPoint];
-		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
+		viewPoints = new LongPoint[sizeOfPoint];
+		memset(viewPoints, 0x00, sizeof(LongPoint) * sizeOfPoint);
+		memcpy(viewPoints, other.viewPoints, sizeof(LongPoint) * sizeOfPoint);
 	}
 
 	//SCompositeCurve

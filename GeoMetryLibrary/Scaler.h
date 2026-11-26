@@ -1,14 +1,8 @@
 #pragma once
 #include <string>
 
-// Device-space rectangle in pixels (no Win32 types in the geometry library).
-struct ScreenRect
-{
-	long left = 0;
-	long top = 0;
-	long right = 0;
-	long bottom = 0;
-};
+
+#include "ScreenTypes.h"
 #include <vector>
 
 #include "MBR.h"

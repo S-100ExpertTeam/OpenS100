@@ -104,7 +104,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //						{
 //							int numPoints = curve->getNumPoint();
 //
-//							POINT* screenPoints = new POINT[numPoints];
+//							LongPoint* screenPoints = new LongPoint[numPoints];
 //
 //							for (int k = 0; k < numPoints; k++)
 //							{
@@ -113,7 +113,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //									&screenPoints[k].x, &screenPoints[k].y);
 //							}
 //
-//							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+//							LongPoint* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 //
 //							if (symbolPoint)
 //							{
@@ -138,7 +138,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //					{
 //						int numPoints = curve->GetNumPoints();
 //
-//						POINT* screenPoints = new POINT[numPoints];
+//						LongPoint* screenPoints = new LongPoint[numPoints];
 //
 //						for (int k = 0; k < numPoints; k++)
 //						{
@@ -147,7 +147,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //								&screenPoints[k].x, &screenPoints[k].y);
 //						}
 //
-//						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+//						LongPoint* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 //
 //						if (symbolPoint)
 //						{
@@ -176,7 +176,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //						if (rcid == sr->reference)
 //						{
 //							int numPoints = curve->GetNumPoints();
-//							POINT* screenPoints = new POINT[numPoints];
+//							LongPoint* screenPoints = new LongPoint[numPoints];
 //
 //							for (int k = 0; k < numPoints; k++)
 //							{
@@ -185,7 +185,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //									&screenPoints[k].x, &screenPoints[k].y);
 //							}
 //
-//							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+//							LongPoint* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 //
 //							if (symbolPoint)
 //							{
@@ -257,7 +257,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //			
 //			if (viewPointNum || bDraw)
 //			{
-//				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//				LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //				if (symbolPoint)
 //				{
 //					tempPoint.x = (float)symbolPoint[0].x;
@@ -272,7 +272,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //
 //		if (viewPointNum)
 //		{
-//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //			if (symbolPoint)
 //			{
 //				tempPoint.x = (float)symbolPoint[0].x;
@@ -289,7 +289,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //		SSurface* geo = (SSurface*)geom;
 //
 //		// need coordinates that are not clipped.
-//		std::vector<POINT> vp;
+//		std::vector<LongPoint> vp;
 //		SCommonFuction::CalculateCenterOfGravityOfSurface(vp, geo, &CRect(scaler->sxMin, scaler->syMin, scaler->sxMax, scaler->syMax), scaler);
 //
 //		for (auto itor = vp.begin(); itor != vp.end(); itor++)
@@ -321,7 +321,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //
 //		if (viewPointNum)
 //		{
-//			POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			LongPoint* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //			if (symbolPoint)
 //			{
 //				tempPoint.x = (float)symbolPoint[0].x;
@@ -381,7 +381,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //					{
 //						int numPoints = curve->GetNumPoints();
 //
-//						POINT *screenPoints = new POINT[numPoints];
+//						LongPoint *screenPoints = new LongPoint[numPoints];
 //
 //						for (int k = 0; k < numPoints; k++)
 //						{
@@ -390,7 +390,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //								&screenPoints[k].x, &screenPoints[k].y);
 //						}
 //
-//						POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+//						LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 //
 //						if (symbolPoint)
 //						{
@@ -420,7 +420,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //					if (rcid == sr->reference)
 //					{
 //						int numPoints = curve->GetNumPoints();
-//						POINT *screenPoints = new POINT[numPoints];
+//						LongPoint *screenPoints = new LongPoint[numPoints];
 //
 //						for (int k = 0; k < numPoints; k++)
 //						{
@@ -429,7 +429,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //								&screenPoints[k].x, &screenPoints[k].y);
 //						}
 //
-//						POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+//						LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 //
 //						if (symbolPoint)
 //						{
@@ -491,7 +491,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //			
 //			if (viewPointNum || bDraw)
 //			{
-//				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//				LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //				if (symbolPoint)
 //				{
 //					D2D1_POINT_2F tempPoint;
@@ -507,7 +507,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //
 //		if (viewPointNum)
 //		{
-//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //			if (symbolPoint)
 //			{
 //				D2D1_POINT_2F tempPoint;

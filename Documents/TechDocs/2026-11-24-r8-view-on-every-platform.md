@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8e 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -85,9 +85,19 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 
 검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 231개 중 227개 통과·4개 건너뜀, 그림 62장이 걷기 전과 같다(다른 픽셀 0%). Linux 트리 안 빌드 621단계 통과. (Release x64는 R8a~R8d와 4.3의 수정에 대해서도 이때 처음 돌렸다: 통과, 그림은 Debug와 같다.)
 
+### 4.6 R8f: `POINT`·`RECT`가 라이브러리의 형이 되었다, `stdafx.h`에 `<windows.h>`가 없다 (2026-11-26)
+
+- `GeoMetryLibrary/ScreenTypes.h`: `ScreenRect`(`Scaler.h`에서 옮김)와 `LongPoint`(긴 정수 둘). `GISLibrary`의 `POINT` → `LongPoint`, `RECT` → `ScreenRect`(20개 파일). 멤버 이름과 크기는 Win32의 것과 같다.
+- `DeviceTypes.h`는 `ScreenTypes.h`를 포함하고 `HDC`의 이름만 선언한다.
+- **공개 API가 바뀌었다**: `CGISLibraryApp::SetScreen(const ScreenRect&)`, `SetViewMBR(ScreenRect)`, `LayerManager::SetViewMBR(ScreenRect)`. `SetScreen(RECT*)`는 없앴다. Win32의 `RECT`나 MFC의 `CRect`는 저절로 바뀌지 않으므로 호출부가 `ScreenRect{ r.left, r.top, r.right, r.bottom }`으로 넘긴다: 뷰어 5곳(`OpenS100View.cpp`), 테스트 22곳, 예제 1곳.
+- `GISLibrary/stdafx.h`에서 `<windows.h>`를 뺐다. Windows를 부르는 소스는 제가 포함한다(`DebugOutput.cpp`가 하나 더해졌다; `PathUtil.cpp`·`SkiaViewFrame.cpp`·`SystemDatabaseSession.cpp`는 이미 그랬다). `examples/view/main.cpp`도 `<windows.h>` 없이 빌드된다.
+
+검증: Windows Debug x64·Release x64 솔루션 빌드(뷰어 포함), 전체 테스트 각각 231개 중 227개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다(다른 픽셀 0%). Linux 트리 안 빌드 621단계 통과, `opens100_view`의 그림이 R8c 때의 것과 바이트 단위로 같다. 뷰어는 빌드만 했고 화면은 보지 않았다. 포트 설치본으로의 소비자 예제 빌드는 이 변경 뒤에 다시 돌리지 않았다.
+
 ## 5. 남은 것
 
 - CI `port` 잡은 `view`만 넣었다(`render-skia`·`view-skia`는 Skia 빌드가 무거워 CI에 없다). CI는 돌려 보지 않았다.
 - Windows에서 포트의 `view`·`view-skia`(4.4는 Linux에서만 확인).
-- `DeviceTypes.h`의 `RECT`·`POINT`를 라이브러리의 것으로(4.5): `GISLibrary`에서 `POINT` 97곳(17파일), `RECT` 23곳(7파일). Windows에서는 Win32의 형이라 `stdafx.h`에 `<windows.h>`가 남아 있다. `SetScreen`·`SetViewMBR`의 인자이므로 뷰어(`CRect`를 넘긴다)와 테스트의 호출부가 함께 바뀐다. `HDC`는 `SkiaViewFrame`과 `CGISLibraryApp::Draw(HDC&)`만 쓴다.
+- `DeviceTypes.h`에 남은 것은 `HDC`의 이름뿐이다: `SkiaViewFrame`의 Windows 끝과 `CGISLibraryApp::Draw(HDC&)`만 쓴다.
+- `LongPoint`는 화면의 픽셀과 데이터셋의 정수 좌표(1e-7도)에 함께 쓰인다(`POINT`가 그렇게 쓰였다). 둘을 가르는 것은 하지 않았다.
 - 한 표면에 한 프레임(R7 3.1), GPU 표면(R7g).

@@ -22,6 +22,6 @@ public:
 	// for S101
 	static int inside(SPoint *point, SSurface *poly);
 	static int inside(double x, double y, SSurface *poly); // Used for surface Pick Report
-	static double GetAngle(POINT _p1, POINT _p2);
+	static double GetAngle(LongPoint _p1, LongPoint _p2);
 	static double GetAngle(double p1x, double p1y, double p2x, double p2y);
 };

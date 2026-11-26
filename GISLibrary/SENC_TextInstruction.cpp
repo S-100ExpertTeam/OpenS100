@@ -68,12 +68,12 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //	{
 //		auto geo = (SCurve*)geom;
 //		auto cnt = geo->getNumPoint();
-//		POINT* sPoints = new POINT[cnt];
+//		LongPoint* sPoints = new LongPoint[cnt];
 //		for (int i = 0; i < cnt; i++)
 //		{
 //			scaler->WorldToDevice(geo->GetX(i), geo->GetY(i), &sPoints[i].x, &sPoints[i].y);
 //		}
-//		POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(sPoints, cnt, &scaler->GetScreenRect());
+//		LongPoint* symbolPoint = SCommonFuction::GetCenterPointOfCurve(sPoints, cnt, &scaler->GetScreenRect());
 //		delete[] sPoints;
 //		if (symbolPoint)
 //		{
@@ -112,7 +112,7 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //
 //			if (viewPointNum || bDraw)
 //			{
-//				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//				LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //				if (symbolPoint)
 //				{
 //					tempPoint.x = (float)symbolPoint[0].x;
@@ -127,7 +127,7 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //
 //		if (viewPointNum)
 //		{
-//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			LongPoint *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 //			if (symbolPoint)
 //			{
 //				tempPoint.x = (float)symbolPoint[0].x;
@@ -144,7 +144,7 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //		SSurface* geo = (SSurface*)geom;
 //
 //		// need coordinates that are not clipped.
-//		std::vector<POINT> vp;
+//		std::vector<LongPoint> vp;
 //		SCommonFuction::CalculateCenterOfGravityOfSurface(vp, geo, &CRect(scaler->sxMin, scaler->syMin, scaler->sxMax, scaler->syMax), scaler);
 //
 //		for (auto itor = vp.begin(); itor != vp.end(); itor++)

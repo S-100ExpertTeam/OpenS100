@@ -275,7 +275,7 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 		return -1;
 }
 
-double SGeometricFuc::GetAngle(POINT _p1, POINT _p2)
+double SGeometricFuc::GetAngle(LongPoint _p1, LongPoint _p2)
 {
 	return GetAngle(_p1.x, _p1.y, _p2.x, _p2.y);
 }

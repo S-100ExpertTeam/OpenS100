@@ -294,7 +294,7 @@ namespace GISLibrary
 					{
 						for (RIAS* rias : riasField->m_arr)
 						{
-							std::vector<POINT> points;
+							std::vector<LongPoint> points;
 							if (rias->m_name.RCNM == curveRecord)
 							{
 								if (auto* curve = cell.GetCurveRecord(rias->m_name.GetName()))
@@ -315,7 +315,7 @@ namespace GISLibrary
 							}
 							Ring ring;
 							ring.reserve(points.size());
-							for (const POINT& point : points)
+							for (const LongPoint& point : points)
 							{
 								ring.push_back(Position{ point.x / cmfx, point.y / cmfy });
 							}
