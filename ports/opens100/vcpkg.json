@@ -1,6 +1,7 @@
 {
   "name": "opens100",
   "version": "0.2.0",
+  "port-version": 1,
   "description": "Core C++ library for IHO S-100 hydrographic data. The base package is the geodesy module (opens100::latlon); the other modules are features.",
   "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
   "license": "MPL-2.0",
@@ -111,6 +112,33 @@
           "features": [
             "freetype",
             "png"
+          ]
+        }
+      ]
+    },
+    "view": {
+      "description": "A view of layers: datasets opened as layers, their drawing order, grids, exchange catalogues and the System Database chart, drawn on a frame a backend supplies (opens100::view)",
+      "dependencies": [
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "coverage",
+            "portrayal",
+            "system-database"
+          ]
+        }
+      ]
+    },
+    "view-skia": {
+      "description": "The frame of a view on Skia: a view drawn with no window, as a PNG file; on Windows also onto a device context (opens100::view-skia)",
+      "dependencies": [
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "render-skia",
+            "view"
           ]
         }
       ]

@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8c 완료, 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8d 완료(포트 기능 `view`·`view-skia` 포함, 4.4), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -66,9 +66,20 @@ R7에서 Direct2D·GDI+가 빠진 뒤 이 소스들을 Windows에 묶는 것을 
 
 R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 못했다(대조할 수정 전 그림이 흔들렸으므로). 다만 R8의 58장은 수정 전과 같았고 나머지는 위 원인으로 설명된다.
 
+### 4.4 R8d: 포트 기능 `view`·`view-skia` (2026-11-26)
+
+- `ports/opens100`: 기능 `view`(→ `portrayal`·`system-database`·`coverage`)와 `view-skia`(→ `view`·`render-skia`). `portfile.cmake`가 `OPENS100_BUILD_VIEW`를 기능에 맞춰 켜고 끈다. `port-version` 1.
+- **R8c가 포트를 깨뜨려 놓았었다**: `OPENS100_BUILD_VIEW`의 기본값이 ON인데 포트는 그 옵션을 몰랐으므로, `portrayal`·`system-database`·`coverage`를 다 고르지 않은 설치(기본 기능 포함)는 구성 단계에서 `FATAL_ERROR`로 멈췄다. 기능이 생기면서 풀렸다.
+- `opens100Config.cmake.in`은 바꿀 것이 없었다: 뷰가 찾는 의존성은 `portrayal`·`sdb`·`coverage`의 것과 같다.
+- 소비자 예제: 패키지에 `opens100::view-skia`가 있으면 `opens100_consumer_view`를 함께 빌드한다. 소스는 `examples/view/main.cpp` 그대로다(포함 경로를 `<GISLibrary/...>`로 바꿔 트리 안 빌드와 설치본 양쪽에서 쓴다).
+- 소비자 예제의 `--png` 쪽이 `9d3332ad` 이후 컴파일되지 않고 있었다(`SkiaResources`에 멤버가 끼어들어 중괄호 초기화가 어긋남). 멤버 이름으로 채우게 고쳤다.
+
+검증(Linux, Docker `opens100-lin`, vcpkg 클래식 모드, 오버레이 포트): `opens100`(기본 기능) 설치 통과, `opens100[core,view-skia]` 설치 통과(라이브러리 12개), 소비자 예제 구성·빌드 통과, `opens100_consumer`(카탈로그 읽기, `--png`로 셀 한 장) 실행, `opens100_consumer_view`로 배경 지도 + 셀 2개를 그린 PNG가 트리 안 빌드의 `opens100_view`가 그린 것과 **바이트 단위로 같다**. 트리 안 빌드(621단계)도 다시 통과.
+
 ## 5. 남은 것
 
-- 포트(`ports/opens100`)의 기능 `view`·`view-skia`, `opens100Config.cmake.in`, 소비자 예제에서 뷰 그리기, CI `port` 잡에 추가.
+- CI `port` 잡은 `view`만 넣었다(`render-skia`·`view-skia`는 Skia 빌드가 무거워 CI에 없다). CI는 돌려 보지 않았다.
+- Windows에서 포트의 `view`·`view-skia`(4.4는 Linux에서만 확인).
 - `GISLIBRARY_MODEL_ONLY`와 `stdafx.h`의 `<windows.h>`·ATL: 뷰 소스가 이제 그것 없이 빌드되므로 솔루션 쪽에서도 걷을 수 있다.
 - `DeviceTypes.h`의 `HDC`·`RECT`·`POINT`: `HDC`는 `SkiaViewFrame`과 `CGISLibraryApp::Draw(HDC&)`만 쓴다. `RECT`는 `SetScreen`·`SetViewMBR`의 인자다.
 - 한 표면에 한 프레임(R7 3.1), GPU 표면(R7g).

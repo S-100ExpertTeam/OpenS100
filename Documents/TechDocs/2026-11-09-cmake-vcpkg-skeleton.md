@@ -78,5 +78,5 @@ build\consumer\opens100_consumer.exe ProgramData\FC\S-101_FC.xml
 - [ ] `iso8211`·`gml` 타깃: `GISLibrary`에서 8211/GML 모델과 리더를 렌더·Win32 코드와 떼어 내야 한다(Phase 4의 `S101Cell` 분리).
 - [ ] CMake로 테스트 빌드(`OPENS100_BUILD_TESTS`), GitHub Actions에 CMake 잡 추가(수동 실행 유지).
 - [x] `x64-linux`·macOS 구성 (700fa4fe, ec157193, 04e46464, 2026-11-16): Phase 1의 5-2 참조. GitHub Actions `port` 잡(수동 실행)이 두 플랫폼에서 포트를 빌드한다. 버전 0.2.0(db3c03d0).
-- [x] `view`·`view-skia` 타깃 (2026-11-24): `GISLibrary`의 남은 소스(레이어 관리자, 격자·셰이프파일·교환 카탈로그의 그리기, System Database 차트)가 타깃에 들어왔다. `GISLibrary` 디렉터리에서 타깃 밖에 남은 소스는 없다. [R8](2026-11-24-r8-view-on-every-platform.md). 포트 기능은 아직.
+- [x] `view`·`view-skia` 타깃 (2026-11-24): `GISLibrary`의 남은 소스(레이어 관리자, 격자·셰이프파일·교환 카탈로그의 그리기, System Database 차트)가 타깃에 들어왔다. `GISLibrary` 디렉터리에서 타깃 밖에 남은 소스는 없다. [R8](2026-11-24-r8-view-on-every-platform.md). 포트 기능 `view`·`view-skia`도 있다(2026-11-26, R8 4.4).
 - [ ] 자체 Git 레지스트리(`S-100ExpertTeam/vcpkg-registry`)에 포트 게시: 첫 태그(0.1.0)와 함께.

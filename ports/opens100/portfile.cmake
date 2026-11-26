@@ -32,7 +32,10 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
         portrayal-catalogue OPENS100_BUILD_PORTRAYALCATALOGUE
         render-skia       OPENS100_BUILD_RENDER_SKIA
         system-database   OPENS100_BUILD_SYSTEMDATABASE
+        view              OPENS100_BUILD_VIEW
 )
+# opens100::view-skia has no option of its own: it is built when both the view and the Skia
+# backend are (the feature "view-skia" asks for both).
 
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"

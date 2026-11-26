@@ -610,7 +610,13 @@ int main(int argc, char** argv)
 					std::set<int> shownPriorities;
 					s100::render::CollectInstructions(displayList, scaler.GetCurrentScale(), scaler, nullptr, shown, shownPriorities);
 					s100::render::SuppressSharedCurves(shownPriorities, shown);
-					s100::render::SkiaRenderer skia(image.Canvas(), { &symbols, &areaFills, &lineStyles, color, &fonts });
+					s100::render::SkiaResources with;
+					with.symbols = &symbols;
+					with.areaFills = &areaFills;
+					with.lineStyles = &lineStyles;
+					with.color = color;
+					with.fonts = &fonts;
+					s100::render::SkiaRenderer skia(image.Canvas(), with);
 					s100::render::DisplayListPainter picture(skia, scaler, color);
 					for (const int priority : shownPriorities)
 					{

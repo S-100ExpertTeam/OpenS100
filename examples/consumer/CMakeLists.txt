@@ -41,3 +41,14 @@ endif()
 if(MSVC)
     target_compile_options(opens100_consumer PRIVATE /utf-8 /W4)
 endif()
+
+# A view of several layers as a PNG file is the port feature "view-skia". The program is the
+# example of the library's own build (examples/view), here built against the installed package:
+#   opens100_consumer_view <FC> <PC> <picture.png> [--background <shp>] [--font <file>]... <dataset>...
+if(TARGET opens100::view-skia)
+    add_executable(opens100_consumer_view ../view/main.cpp)
+    target_link_libraries(opens100_consumer_view PRIVATE opens100::view-skia)
+    if(MSVC)
+        target_compile_options(opens100_consumer_view PRIVATE /utf-8 /W4)
+    endif()
+endif()

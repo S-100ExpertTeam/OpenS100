@@ -38,6 +38,14 @@ with PNG output is included:
     #include <RenderSkia/SkiaFonts.h>
     #include <RenderSkia/SkiaImage.h>
 
+A view of several layers (feature "view") is opens100::view: datasets opened as layers, their
+drawing order, grids, exchange catalogues and the System Database chart. It draws on a
+ViewFrame. The frame on Skia (feature "view-skia") is opens100::view-skia; with no window a
+view is drawn and written as a PNG file:
+
+    #include <GISLibrary/GISLibrary.h>
+    #include <GISLibrary/SkiaViewFrame.h>
+
 On Windows, Skia built by MSVC draws on the CPU about six times slower than Skia built by
 clang-cl. The overlay port "skia" next to this port (ports/skia of the OpenS100 repository)
 builds it with clang-cl; vcpkg's own skia port uses MSVC.

@@ -14,8 +14,8 @@
 #include <windows.h>
 #endif
 
-#include "../../GISLibrary/GISLibrary.h"
-#include "../../GISLibrary/SkiaViewFrame.h"
+#include <GISLibrary/GISLibrary.h>
+#include <GISLibrary/SkiaViewFrame.h>
 
 #include <chrono>
 #include <cstdlib>

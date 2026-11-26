@@ -75,7 +75,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database,dataset,lua-scripting,portrayal]"
+      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database,dataset,lua-scripting,portrayal,view]"
     steps:
       - uses: actions/checkout@v4
 
