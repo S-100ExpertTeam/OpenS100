@@ -202,9 +202,7 @@ if(OPENS100_BUILD_DATASET)
         DEPENDS latlon geometry featurecatalog portrayalcatalogue
                 pugixml::pugixml polyclipping::polyclipping Boost::headers ${OPENS100_HDF5_TARGET}
         EXCLUDE ${OPENS100_GISLIBRARY_NON_DATASET_SOURCES})
-    # GISLIBRARY_MODEL_ONLY keeps COM, ATL, GDI+ and Direct2D out of the precompiled header.
     target_compile_definitions(dataset
-        PRIVATE GISLIBRARY_MODEL_ONLY
         # spatial_association (a plain struct of the Lua scripting module) is named by the feature
         # model; without this it would be declared __declspec(dllimport) on Windows.
         PUBLIC KRS_LUA_SCRIPT_REFERENCE_STATIC)
@@ -250,12 +248,11 @@ if(OPENS100_BUILD_PORTRAYAL)
     opens100_add_module(portrayal GISLibrary
         DEPENDS dataset luascripting LibXslt::LibXslt LibXml2::LibXml2
         SOURCES ${OPENS100_GISLIBRARY_PORTRAYAL_SOURCES})
-    target_compile_definitions(portrayal PRIVATE GISLIBRARY_MODEL_ONLY)
     if(MSVC)
-        # As for dataset; C4505: the Lua host keeps two unused static helpers.
-        target_compile_options(portrayal PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251 /wd4505)
+        # As for dataset.
+        target_compile_options(portrayal PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251)
     else()
-        target_compile_options(portrayal PRIVATE -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function)
+        target_compile_options(portrayal PRIVATE -Wno-sign-compare -Wno-unused-parameter)
     endif()
 endif()
 
@@ -272,11 +269,10 @@ if(OPENS100_BUILD_VIEW)
     opens100_add_module(view GISLibrary
         DEPENDS portrayal sdb coverage
         SOURCES ${OPENS100_GISLIBRARY_VIEW_SOURCES})
-    target_compile_definitions(view PRIVATE GISLIBRARY_MODEL_ONLY)
     if(MSVC)
-        target_compile_options(view PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251 /wd4505)
+        target_compile_options(view PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251)
     else()
-        target_compile_options(view PRIVATE -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function)
+        target_compile_options(view PRIVATE -Wno-sign-compare -Wno-unused-parameter)
     endif()
 endif()
 
@@ -286,7 +282,6 @@ if(OPENS100_BUILD_VIEW AND OPENS100_BUILD_RENDER_SKIA)
     opens100_add_module(view-skia GISLibrary
         DEPENDS view render-skia
         SOURCES ${OPENS100_GISLIBRARY_VIEW_SKIA_SOURCES})
-    target_compile_definitions(view-skia PRIVATE GISLIBRARY_MODEL_ONLY)
     if(MSVC)
         target_compile_options(view-skia PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251)
     else()

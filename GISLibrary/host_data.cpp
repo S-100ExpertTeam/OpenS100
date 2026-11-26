@@ -72,7 +72,6 @@ static std::unordered_map<std::string, std::set<std::string>> s_spatial_features
 
 static spatial_association get_spatial_association(PTAS* ptas);
 static spatial_association get_spatial_association(CUCO* cuco);
-static spatial_association get_spatial_association(F_SPAS* spatial);
 static spatial_association get_spatial_association(RIAS* rias);
 
 // The kind of spatial an identifier names: what is before its first bar ("Curve|12" is a Curve).
@@ -404,43 +403,6 @@ std::string hd_get_feature_code(std::string id)
 	return "";
 }
 
-static spatial_association get_spatial_association(F_SPAS* spatial)
-{
-	spatial_association sa;
-	for (auto itor = spatial->m_arr.begin(); itor != spatial->m_arr.end(); itor++)
-	{
-		SPAS* spas = *itor;
-		// Leave scaleMin/Max unset since Part 9 input schema doesn't define it.
-		///SGJ
-		std::string primitive1;
-		switch (spas->m_name.RCNM)
-		{
-		case 110: primitive1 = "Point"; break;
-		case 115: primitive1 = "MultiPoint"; break;
-		case 120: primitive1 = "Curve"; break;
-		case 125: primitive1 = "CompositeCurve"; break;
-		case 130: primitive1 = "Surface"; break;
-		default: //Err  
-			break;
-		}
-		std::string orientation = "Forward";
-		if (spas->m_name.RCNM == 120 || spas->m_name.RCNM == 125)
-		{
-			switch (spas->m_ornt)
-			{
-			case 1:
-				orientation = "Forward";
-				break;
-			case 2:
-				orientation = "Reverse";
-				break;
-			}
-		}
-		sa = { primitive1, primitive1 + "|" + std::to_string(spas->m_name.RCID), orientation };
-	}
-	return sa;
-}
-
 static spatial_association get_spatial_association(PTAS* ptas)
 {
 	spatial_association sa;
@@ -646,84 +608,6 @@ static std::vector<std::string> get_simple_attribute_values(GF::ObjectType* obje
 	//	//OutputDebugString(_T("Attribute path error\n"));
 	//}
 	//return attr_values;
-}
-
-static std::vector<std::string> get_simple_attribute_values(R_InformationRecord* Ir, std::string path, std::string attribute_code)
-{
-	std::vector<std::string> attr_values;
-	std::vector<std::string> path_items;
-
-	size_t offset = 0;
-	size_t found;
-
-	if (!path.empty())
-		path += ";";
-
-	while ((found = path.find_first_of(';', offset)) != std::string::npos)
-	{
-		auto path_item = path.substr(offset, found - offset);
-		path_items.push_back(path_item);
-		offset = found + 1;
-	}
-
-	for (auto itorParent = Ir->m_attr.begin(); itorParent != Ir->m_attr.end(); itorParent++)
-	{
-		F_ATTR* attrParent = *itorParent;
-
-		for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
-		{
-			ATTR* attr = *itor;
-
-			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
-			{
-				std::string attributeAcronym = aitor->second->getCodeAsString();
-
-				if (attributeAcronym.compare(attribute_code) == 0)
-				{
-					if (offset != 0)
-					{
-						std::string r_value = attr->getValueAsString();
-
-						std::string parent_name = *path_items.begin();
-						auto split = parent_name.find(':', 0);
-						auto parent_code_in_path = parent_name.substr(0, split);
-
-						ATTR* parent_attribute = attrParent->m_arr[attr->m_paix - 1];
-
-						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
-						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
-						{
-							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
-
-							if (parent_code_in_path.compare(parent_attributeAcronym) == 0)
-							{
-								if (r_value.compare("") == 0)
-								{
-									r_value = ProcessS101::g_unknown_attribute_value;
-								}
-								attr_values.push_back(r_value);
-							}
-						}
-
-					}
-					else
-					{
-						if (!attr->m_atvl.empty())
-						{
-							std::string r_value = attr->getValueAsString();
-						}
-						else
-						{
-							std::string r_value = ProcessS101::g_unknown_attribute_value;
-							attr_values.push_back(r_value);
-						}
-					}
-				}
-			}
-		}
-	}
-	return attr_values;
 }
 
 

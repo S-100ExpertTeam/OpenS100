@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8d 완료(포트 기능 `view`·`view-skia` 포함, 4.4), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8e 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -76,10 +76,18 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 
 검증(Linux, Docker `opens100-lin`, vcpkg 클래식 모드, 오버레이 포트): `opens100`(기본 기능) 설치 통과, `opens100[core,view-skia]` 설치 통과(라이브러리 12개), 소비자 예제 구성·빌드 통과, `opens100_consumer`(카탈로그 읽기, `--png`로 셀 한 장) 실행, `opens100_consumer_view`로 배경 지도 + 셀 2개를 그린 PNG가 트리 안 빌드의 `opens100_view`가 그린 것과 **바이트 단위로 같다**. 트리 안 빌드(621단계)도 다시 통과.
 
+### 4.5 R8e: `stdafx.h`에서 COM·ATL을 걷었다 (2026-11-26)
+
+- `GISLibrary/stdafx.h`: `<tchar.h>`, `<comdef.h>`, `<atlbase.h>`, `<atlconv.h>`, `<atlsafe.h>`, `SafeRelease`, `ole32.lib`·`winmm.lib` 링크 지시를 지웠다. `GISLibrary`의 어떤 소스도 쓰지 않았다(주석 속 흔적뿐).
+- `GISLIBRARY_MODEL_ONLY`가 없어졌다: 솔루션과 CMake가 같은 머리말로 같은 코드를 빌드한다.
+- `<windows.h>`는 남았다. 통째로 빼 보니 `POINT`·`RECT`의 정의가 없어 일곱 소스가 걸렸다(`DeviceTypes.h`는 Windows에서 Win32의 형을 선언만 한다). 그 형을 라이브러리의 것으로 바꾸는 일은 뷰어의 호출부까지 닿으므로 따로 한다(5절).
+- ATL 머리말이 꺼 주던 경고 C4505가 드러나 `host_data.cpp`의 쓰이지 않는 정적 함수 둘(`get_spatial_association(F_SPAS*)`, `get_simple_attribute_values(R_InformationRecord*, …)`)을 지웠다. CMake의 `portrayal`·`view`에서 `/wd4505`·`-Wno-unused-function`도 뺐다(Linux 빌드에 그 경고 0건).
+
+검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 231개 중 227개 통과·4개 건너뜀, 그림 62장이 걷기 전과 같다(다른 픽셀 0%). Linux 트리 안 빌드 621단계 통과. (Release x64는 R8a~R8d와 4.3의 수정에 대해서도 이때 처음 돌렸다: 통과, 그림은 Debug와 같다.)
+
 ## 5. 남은 것
 
 - CI `port` 잡은 `view`만 넣었다(`render-skia`·`view-skia`는 Skia 빌드가 무거워 CI에 없다). CI는 돌려 보지 않았다.
 - Windows에서 포트의 `view`·`view-skia`(4.4는 Linux에서만 확인).
-- `GISLIBRARY_MODEL_ONLY`와 `stdafx.h`의 `<windows.h>`·ATL: 뷰 소스가 이제 그것 없이 빌드되므로 솔루션 쪽에서도 걷을 수 있다.
-- `DeviceTypes.h`의 `HDC`·`RECT`·`POINT`: `HDC`는 `SkiaViewFrame`과 `CGISLibraryApp::Draw(HDC&)`만 쓴다. `RECT`는 `SetScreen`·`SetViewMBR`의 인자다.
+- `DeviceTypes.h`의 `RECT`·`POINT`를 라이브러리의 것으로(4.5): `GISLibrary`에서 `POINT` 97곳(17파일), `RECT` 23곳(7파일). Windows에서는 Win32의 형이라 `stdafx.h`에 `<windows.h>`가 남아 있다. `SetScreen`·`SetViewMBR`의 인자이므로 뷰어(`CRect`를 넘긴다)와 테스트의 호출부가 함께 바뀐다. `HDC`는 `SkiaViewFrame`과 `CGISLibraryApp::Draw(HDC&)`만 쓴다.
 - 한 표면에 한 프레임(R7 3.1), GPU 표면(R7g).
