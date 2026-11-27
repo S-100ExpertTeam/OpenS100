@@ -130,6 +130,12 @@ namespace
 			return count;
 		}
 
+		// The colour of a pixel (blue in the low byte); the fourth byte is cleared.
+		std::uint32_t Pixel(int x, int y) const
+		{
+			return m_bits[y * m_width + x] & 0x00FFFFFF;
+		}
+
 		bool SavePng(const std::filesystem::path& path) const
 		{
 			::GdiFlush();
@@ -2022,4 +2028,75 @@ TEST(RenderSmoke, AFrameHandsOutItsPixelsAndShowsATargetOnceAScene)
 	MemoryCanvas viewer(kWidth, kHeight);
 	DrawOnDeviceContext(gis, viewer.dc());
 	EXPECT_EQ(canvas.DifferingPixels(viewer), 0u);
+}
+
+// A turned view: the chart is turned about the centre of the screen, all of it by the same
+// angle. (Before, the surfaces kept in the coordinates of the dataset were not turned while the
+// points were, so soundings stood on the land.)
+TEST(RenderSmoke, ATurnedViewTurnsTheWholeChart)
+{
+	const auto cell = testpaths::korS101Cell().parent_path().parent_path() / "101KR00659C71" / "101KR00659C71.000";
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "reference cell not available: " << cell.string();
+	}
+
+	constexpr int side = 900;
+	CGISLibraryApp gis;
+	auto cm = gis.GetCatalogManager();
+	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
+	const ScreenRect view{ 0, 0, side, side };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+	gis.SetViewMBR(view);
+
+	const auto draw = [&](int degrees, MemoryCanvas& canvas) {
+		gis.GetScaler()->SetRotationDegree(degrees);
+		DrawOnDeviceContext(gis, canvas.dc());
+		::GdiFlush();
+	};
+	// Zoomed out (the surfaces are drawn from what is kept in the coordinates of the dataset)
+	// and zoomed far in (they are drawn in device pixels): both must turn.
+	for (const int scale : { 0, 4000 })
+	{
+		if (scale)
+		{
+			gis.SetScale(scale);
+		}
+		const std::string name = scale ? "rotation_in" : "rotation_out";
+
+		MemoryCanvas north(side + 1, side + 1);
+		MemoryCanvas quarter(side + 1, side + 1);
+		MemoryCanvas turned(side + 1, side + 1);
+		MemoryCanvas round(side + 1, side + 1);
+		draw(0, north);
+		draw(90, quarter);
+		draw(30, turned);
+		draw(360, round);
+		EXPECT_TRUE(north.SavePng(OutputDirectory() / (name + "_000.png")));
+		EXPECT_TRUE(quarter.SavePng(OutputDirectory() / (name + "_090.png")));
+		EXPECT_TRUE(turned.SavePng(OutputDirectory() / (name + "_030.png")));
+
+		EXPECT_EQ(round.DifferingPixels(north), 0u) << name << ": a whole turn is no turn";
+
+		// The picture turned 90 degrees clockwise is the unturned one with every pixel moved a
+		// quarter of a turn about the centre, but for what stays upright (texts, symbols,
+		// patterns) and the edges of lines.
+		const int centre = side / 2;
+		std::size_t compared = 0;
+		std::size_t different = 0;
+		for (int dy = -centre; dy <= centre; ++dy)
+		{
+			for (int dx = -centre; dx <= centre; ++dx)
+			{
+				++compared;
+				different += north.Pixel(centre + dx, centre + dy) != quarter.Pixel(centre - dy, centre + dx);
+			}
+		}
+		const double share = static_cast<double>(different) / static_cast<double>(compared);
+		std::cout << "[ rotation ] " << name << ": " << share * 100 << "% of the pixels differ from the unturned picture turned" << std::endl;
+		EXPECT_LT(share, 0.25) << name;
+		EXPECT_GT(turned.DifferingPixels(north), static_cast<std::size_t>(side) * side / 100) << name << ": 30 degrees changed (almost) nothing";
+	}
 }

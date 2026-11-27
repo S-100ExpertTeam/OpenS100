@@ -58,10 +58,10 @@ namespace s100::render
 		// zoomed far in, a path in device pixels.
 		void StrokeCurve(const ColorF& penColor, const Stroke& stroke);
 		// The curve being styled in device pixels, turned with the view if asked.
-		void CurveOnDevice(bool turnWithView);
+		void CurveOnDevice();
 		// Fills the surface: its kept path under the transform of the view, or, zoomed far in, a
 		// path in device pixels under the given transform.
-		void FillSurface(SSurface* surface, const Fill& fill, const Transform& zoomedIn);
+		void FillSurface(SSurface* surface, const Fill& fill);
 		// The dataset (x, -y) to device pixels, as Scaler::WorldToDevice has it.
 		const Transform& ViewTransform();
 		// How far the view is zoomed out, in doublings of the size of a pixel in the units of

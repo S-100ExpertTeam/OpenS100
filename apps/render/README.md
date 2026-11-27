@@ -96,6 +96,7 @@ answers.
 | `center` | `{ latitude, longitude }` | | Degrees, WGS 84, north and east positive. The middle of the picture. |
 | `scale` | whole number | | The denominator: `25000` is 1:25 000. |
 | `bbox` | `{ west, south, east, north }` | | Degrees. The view holds this range; it is widened one way to the shape of the picture. Not together with `center` or `scale`. |
+| `rotation` | whole number | `0` | Degrees the chart is turned clockwise about the middle of the picture, -360 to 360: north is that far clockwise from up. For a ship heading 040 to point up, give `-40`. |
 
 What the view shows:
 
@@ -111,7 +112,12 @@ A pixel is taken to be 1/38 cm (about 96 dots an inch): at 1:25 000 a pixel is 6
 ground and a picture 1600 pixels wide shows 10.5 km. The scale is true at the centre of the
 view (Mercator enlarges the ground away from the equator).
 
-The view is north up. A rotated view is not offered: see "Limits".
+With `rotation` the chart is turned and what is read stays upright: texts, soundings and the
+symbols that are not directions. Symbols and lines that are directions from north (the sectors
+of a light, a leading line, a current arrow) turn with the chart. The scale and the centre are
+the same as without it. With `bbox` and `rotation` the range is that of the unturned picture:
+turned, its corners may be outside the picture. The report gives the range that holds the
+turned picture.
 
 ### `display`
 
@@ -212,8 +218,6 @@ In a build of this repository with CMake: `-DOPENS100_BUILD_RENDER_SKIA=ON
 ## Limits
 
 - One process draws one job. The display settings are those of the process.
-- No rotated view. The library turns point symbols and area fills differently when the view is
-  rotated off screen; until that is understood the program does not offer it.
 - `background` is one shapefile.
 - Where the datasets do not cover the picture and there is no background, the colour is
   `output.background`.

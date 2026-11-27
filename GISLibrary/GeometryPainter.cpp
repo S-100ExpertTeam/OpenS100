@@ -89,11 +89,12 @@ namespace
 	// Polyline with coarse clipping against the visible map extent, part by part.
 	void DrawPolyline(GeoPolyline& g, IRenderer& renderer, Scaler& scaler, double offset)
 	{
-		MBR visible;
-		visible.xmin = scaler.mxMin - 0.2;
-		visible.xmax = scaler.mxMax + 0.2;
-		visible.ymin = scaler.myMin - 0.2;
-		visible.ymax = scaler.myMax + 0.2;
+		// What the view shows, whichever way it is turned.
+		MBR visible = scaler.GetMap();
+		visible.xmin -= 0.2;
+		visible.xmax += 0.2;
+		visible.ymin -= 0.2;
+		visible.ymax += 0.2;
 
 		Path path;
 		std::vector<s100::render::PointF> device;

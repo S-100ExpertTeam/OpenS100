@@ -206,6 +206,10 @@ BEGIN
     BUTTON      T5
     BUTTON      T6
     SEPARATOR
+    BUTTON      T11
+    BUTTON      T12
+    BUTTON      T13
+    SEPARATOR
     BUTTON      T7
     BUTTON      T8
     SEPARATOR
@@ -788,6 +792,9 @@ BEGIN
     T8                      "List of information types"
     T9                      "Setting"
     T10                     "Dataset Manager"
+    T11                     "Turn the chart 10 degrees to the left (Home)"
+    T12                     "Turn the chart 10 degrees to the right (End)"
+    T13                     "North up"
 END
 
 #endif    // 중립(기본값) resources

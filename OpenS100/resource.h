@@ -98,6 +98,7 @@
 #define IDR_TOOLBAR3                    334
 #define IDC_LIST_LM                     335
 #define IDB_BITMAP1                     336
+#define T13                             337
 #define IDC_DIALOG_DOCK_PROPERTI        338
 #define IDC_LIST_NOGEOMETRY             339
 #define IDC_LIST_INFORMATIONTYPE        340

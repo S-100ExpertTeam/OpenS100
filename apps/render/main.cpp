@@ -98,6 +98,8 @@ namespace
 		"      center       { latitude, longitude } in degrees (WGS 84)\n"
 		"      scale        denominator of the scale, 25000 is 1:25 000 (a pixel is 1/38 cm)\n"
 		"      bbox         { west, south, east, north } in degrees; not with center or scale\n"
+		"      rotation     whole degrees the chart is turned clockwise          default 0\n"
+		"                   (north is that far clockwise from up; -30 and 330 are the same)\n"
 		"    With none of center, scale and bbox the view shows all the datasets. With only\n"
 		"    center it keeps that scale; with only scale it keeps that centre.\n"
 		"  display\n"
@@ -162,6 +164,7 @@ namespace
 		std::optional<Position> center;
 		std::optional<int> scale;
 		std::optional<Box> bbox;
+		int rotation = 0;
 
 		GeoMetryLibrary::ColorTable palette = GeoMetryLibrary::ColorTable::Day;
 		GeoMetryLibrary::DisplayModeTable mode = GeoMetryLibrary::DisplayModeTable::all;
@@ -384,7 +387,7 @@ namespace
 
 		if (root.contains("view"))
 		{
-			const Json& view = Object(root["view"], "view", { "size", "projection", "center", "scale", "bbox" });
+			const Json& view = Object(root["view"], "view", { "size", "projection", "center", "scale", "bbox", "rotation" });
 			if (view.contains("size"))
 			{
 				if (!view["size"].is_array() || view["size"].size() != 2)
@@ -427,6 +430,14 @@ namespace
 				if (*job.scale < 1)
 				{
 					throw JobError("view.scale must be 1 or more (25000 is 1:25 000)");
+				}
+			}
+			if (view.contains("rotation"))
+			{
+				job.rotation = Integer(view["rotation"], "view.rotation");
+				if (job.rotation < -360 || job.rotation > 360)
+				{
+					throw JobError("view.rotation must be from -360 to 360 degrees");
 				}
 			}
 			if (view.contains("bbox"))
@@ -673,6 +684,8 @@ namespace
 		}
 		// The map range is given the shape of the picture.
 		view.SetViewMBR(screen);
+		// The chart is turned about the middle of the picture.
+		view.GetScaler()->SetRotationDegree(job.rotation);
 		if (job.scale)
 		{
 			view.SetScale(*job.scale);
@@ -716,8 +729,9 @@ namespace
 		inverseProjection(centerX, centerY);
 
 		report["scale"] = view.GetCurrentScale();
+		report["rotation"] = view.GetScaler()->GetRotationDegree();
 		report["center"] = { { "latitude", centerY }, { "longitude", centerX } };
-		// The corners of the picture: lower left and upper right.
+		// The range that holds the picture (its corners, lower left and upper right, when it is not turned).
 		report["bbox"] = { { "west", west }, { "south", south }, { "east", east }, { "north", north } };
 		report["milliseconds"] = { { "open", ms(opening, drawing) }, { "draw", ms(drawing, drawn) } };
 		if (!writeReport(true))

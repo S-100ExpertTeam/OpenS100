@@ -22,5 +22,6 @@ OpenS100 개발자용 기술 문서. 새 세션은 **DIRECTIVES → 로드맵 �
 | [2026-11-24-r8-view-on-every-platform.md](2026-11-24-r8-view-on-every-platform.md) | R8: 뷰(레이어 관리자, 격자, 교환 카탈로그, System Database 차트)를 모든 플랫폼에서 — 그리기 함수가 `HDC` 대신 `ViewFrame`을 받는다, CMake 타깃 `view`·`view-skia`, 예제 `opens100_view`. Linux에서 여러 레이어의 뷰를 PNG로 그린다. 그림이 실행마다 흔들리던 것(4.1)은 프레임이 카탈로그의 것을 주소로 기억해서였다 — 고침(4.3) |
 | [2026-11-27-route-backport-plan.md](2026-11-27-route-backport-plan.md) | 항로 기능 역이식: opens100-web `core/src/route`(모델·편집·선회 호·XTD 회랑·검사·감시)를 새 모듈 `opens100::route`로, 경보 탐지·그리기(`RouteScene` → `IRenderer`)·S-421/RTZ 읽기·쓰기·편집 세션. 단계 RT-0~9. 계획만 작성 |
 | [2026-11-27-opens100-render.md](2026-11-27-opens100-render.md) | `opens100-render`: JSON 작업 파일 하나(카탈로그·데이터셋·중심·축척·팔레트·표시 설정·컨텍스트 파라미터)로 PNG를 그리는 콘솔 프로그램(`apps/render`, 포트 기능 `apps`). 쓰는 법은 `apps/render/README.md`. Windows·Linux 확인. 만들다 고친 것: S-101 규칙에 컨텍스트 파라미터의 값이 가지 않았다. 남은 것: 회전한 뷰 |
+| [2026-11-27-view-rotation.md](2026-11-27-view-rotation.md) | 뷰 회전: 회전을 `Scaler`의 좌표 변환 한곳에서 한다(전에는 그리는 쪽이 일곱 군데에서 손으로 돌렸고 축소한 화면의 면은 돌지 않았다). 뷰어 툴바에 왼쪽·오른쪽·북쪽 위 버튼, `opens100-render`에 `view.rotation`. 격자 데이터의 회전은 따로 커밋 |
 
 기존 문서: 상위 `../Functions/`(기능 설명), `../../BUILD.md`, `../../CONVENTIONS.md`, `../../DOXYGEN.md`.

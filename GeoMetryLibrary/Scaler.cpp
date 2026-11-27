@@ -37,8 +37,10 @@ void Scaler::UpdateLimits()
 	myMaxLimit = limits.ymax;
 }
 
-#pragma warning(disable:4244)
-void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool /*rotate*/)
+// The size of a pixel in the units of the map: the map range fits the screen in both directions,
+// so the larger of the two ratios wins. False when the map or the screen has no size. The
+// centres of the map and of the screen are taken from their ranges on the way.
+bool Scaler::PixelSize(double& ratio)
 {
 	double mxWidth = mxMax - mxMin;
 	double myHeight = myMax - myMin;
@@ -50,106 +52,88 @@ void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool /*rota
 		std::fabs(myHeight) < epsilon ||
 		std::fabs(sxWidth) < epsilon ||
 		std::fabs(syHeight) < epsilon) {
-		return;
+		return false;
 	}
 
-	double currentRatio = 0;
 	double currentXRatio = mxWidth / sxWidth;
 	double currentYRatio = myHeight / syHeight;
-
-	if (currentXRatio > currentYRatio)
-	{
-		currentRatio = currentXRatio;
-	}
-	else 
-	{
-		currentRatio = currentYRatio;
-	}
+	ratio = currentXRatio > currentYRatio ? currentXRatio : currentYRatio;
 
 	mox = (mxMax + mxMin) / 2;
 	moy = (myMax + myMin) / 2;
 	sox = (sxMax + sxMin) / 2;
 	soy = (syMax + syMin) / 2;
+	return true;
+}
 
-	*mx = mox + (sx - sox) * currentRatio;
-	*my = moy - (sy - soy) * currentRatio;
+// Where a point of the map is from the centre of the screen, in pixels.
+bool Scaler::FromCentre(double mx, double my, double& dx, double& dy, bool rotate)
+{
+	double ratio = 0;
+	if (!PixelSize(ratio))
+	{
+		return false;
+	}
+	dx = (mx - mox) / ratio;
+	dy = (moy - my) / ratio;
+	if (rotate && rotateDegree != 0)
+	{
+		// The picture is turned clockwise about the centre of the screen.
+		const double x = dx * rotateCos - dy * rotateSin;
+		const double y = dx * rotateSin + dy * rotateCos;
+		dx = x;
+		dy = y;
+	}
+	return true;
 }
 
 #pragma warning(disable:4244)
-void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool /*rotate*/)
+void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate)
 {
-	double mxWidth = mxMax - mxMin;
-	double myHeight = myMax - myMin;
-	double sxWidth = sxMax - sxMin;
-	double syHeight = syMax - syMin;
-
-	double epsilon = std::numeric_limits<double>::epsilon();
-	if (std::fabs(mxWidth) < epsilon ||
-		std::fabs(myHeight) < epsilon ||
-		std::fabs(sxWidth) < epsilon ||
-		std::fabs(syHeight) < epsilon) {
+	double ratio = 0;
+	if (!PixelSize(ratio))
+	{
 		return;
 	}
 
-	double currentRatio = 0;
-	double currentXRatio = mxWidth / sxWidth;
-	double currentYRatio = myHeight / syHeight;
-	
-	if (currentXRatio > currentYRatio)
+	double dx = sx - sox;
+	double dy = sy - soy;
+	if (rotate && rotateDegree != 0)
 	{
-		currentRatio = currentXRatio;
-	}
-	else
-	{
-		currentRatio = currentYRatio;
+		const double x = dx * rotateCos + dy * rotateSin;
+		const double y = dy * rotateCos - dx * rotateSin;
+		dx = x;
+		dy = y;
 	}
 
-	mox = (mxMax + mxMin) / 2;
-	moy = (myMax + myMin) / 2;
-	sox = (sxMax + sxMin) / 2;
-	soy = (syMax + syMin) / 2;
-
-	*sx = (long)((mx - mox) / currentRatio + sox);
-	*sy = (long)((moy - my) / currentRatio + soy);
-
+	*mx = mox + dx * ratio;
+	*my = moy - dy * ratio;
 }
 
 #pragma warning(disable:4244)
-void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool /*rotate*/)
+void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate)
 {
-	double mxWidth = mxMax - mxMin;
-	double myHeight = myMax - myMin;
-	double sxWidth = sxMax - sxMin;
-	double syHeight = syMax - syMin;
-
-	double epsilon = std::numeric_limits<double>::epsilon();
-	if (std::fabs(mxWidth) < epsilon ||
-		std::fabs(myHeight) < epsilon ||
-		std::fabs(sxWidth) < epsilon ||
-		std::fabs(syHeight) < epsilon) {
+	double dx = 0;
+	double dy = 0;
+	if (!FromCentre(mx, my, dx, dy, rotate))
+	{
 		return;
 	}
+	*sx = (long)(dx + sox);
+	*sy = (long)(dy + soy);
+}
 
-	double currentRatio = 0;
-	double currentXRatio = mxWidth / sxWidth;
-	double currentYRatio = myHeight / syHeight;
-
-	if (currentXRatio > currentYRatio)
+#pragma warning(disable:4244)
+void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate)
+{
+	double dx = 0;
+	double dy = 0;
+	if (!FromCentre(mx, my, dx, dy, rotate))
 	{
-		currentRatio = currentXRatio;
+		return;
 	}
-	else
-	{
-		currentRatio = currentYRatio;
-	}
-
-	mox = (mxMax + mxMin) / 2;
-	moy = (myMax + myMin) / 2;
-	sox = (sxMax + sxMin) / 2;
-	soy = (syMax + syMin) / 2;
-
-	*sx = (float)((mx - mox) / currentRatio + sox);
-	*sy = (float)((moy - my) / currentRatio + soy);
+	*sx = (float)(dx + sox);
+	*sy = (float)(dy + soy);
 }
 
 void Scaler::SetScreen(long left, long top, long right, long bottom)
@@ -189,8 +173,22 @@ void Scaler::SetMapFromScreen(long left, long top, long right, long bottom)
 	double xmax = 0;
 	double ymax = 0;
 
-	DeviceToWorld(left, bottom, &xmin, &ymin);
-	DeviceToWorld(right, top, &xmax, &ymax);
+	double centreX = 0;
+	double centreY = 0;
+	DeviceToWorld((left + right) / 2, (top + bottom) / 2, &centreX, &centreY);
+
+	DeviceToWorld(left, bottom, &xmin, &ymin, false);
+	DeviceToWorld(right, top, &xmax, &ymax, false);
+
+	if (rotateDegree != 0)
+	{
+		const double halfWidth = (xmax - xmin) / 2;
+		const double halfHeight = (ymax - ymin) / 2;
+		xmin = centreX - halfWidth;
+		xmax = centreX + halfWidth;
+		ymin = centreY - halfHeight;
+		ymax = centreY + halfHeight;
+	}
 
 	SetMap(xmin, ymin, xmax, ymax);
 }
@@ -265,12 +263,20 @@ int Scaler::GetRotationDegree()
 
 void Scaler::SetRotationDegree(int _value)
 {
-	rotateDegree = _value;
+	// 0 to 359: the picture turned clockwise about the centre of the screen.
+	rotateDegree = ((_value % 360) + 360) % 360;
+	rotateSin = std::sin(rotateDegree * DEG2RAD);
+	rotateCos = std::cos(rotateDegree * DEG2RAD);
 }
 
 void Scaler::Rotate(int value)
 {
-	rotateDegree += value;
+	SetRotationDegree(rotateDegree + value);
+}
+
+double Scaler::NorthOnScreen(double mx, double my) const
+{
+	return NorthAngle(mx, my) + rotateDegree;
 }
 
 void Scaler::ZoomIn(double value)
@@ -395,6 +401,19 @@ void Scaler::MoveMap(int sx, int sy, double mx, double my)
 		return;
 	}
 
+	if (rotateDegree != 0)
+	{
+		// Turned, the ends of the world are not columns of the screen: the centre of the view is
+		// kept within one turn of the world.
+		const double turn = 2 * acos(-1.0);
+		const double width = mxMax - mxMin;
+		while (mox > turn / 2) mox -= turn;
+		while (mox < -turn / 2) mox += turn;
+		mxMin = mox - width / 2;
+		mxMax = mox + width / 2;
+		return;
+	}
+
 	long sx1 = 0, sy1 = 0;     // On the right side of the map.
 	long sx2 = 0, sy2 = 0;	   // The left side of the map.
 
@@ -500,8 +519,8 @@ void Scaler::AdjustScreenMap()
 #pragma warning(disable:4244)
 void Scaler::AdjustScreenMap_Internal()
 {
-	DeviceToWorld(sxMin, syMax, &mxMin, &myMin);
-	DeviceToWorld(sxMax, syMin, &mxMax, &myMax);
+	DeviceToWorld(sxMin, syMax, &mxMin, &myMin, false);
+	DeviceToWorld(sxMax, syMin, &mxMax, &myMax, false);
 	mox = (mxMax + mxMin) / 2;
 	moy = (myMax + myMin) / 2;
 
@@ -611,8 +630,10 @@ MBR Scaler::GetMap()
 
 		for (const auto& [x, y] : corners)
 		{
-			const double rx = y * sinValue + x * cosValue;
-			const double ry = y * cosValue - x * sinValue;
+			// The corners of the screen on the map: the screen is turned clockwise, so they are
+			// turned the other way.
+			const double rx = x * cosValue - y * sinValue;
+			const double ry = x * sinValue + y * cosValue;
 			mxMinCalcMBR = std::min(mxMinCalcMBR, rx);
 			mxMaxCalcMBR = std::max(mxMaxCalcMBR, rx);
 			myMinCalcMBR = std::min(myMinCalcMBR, ry);

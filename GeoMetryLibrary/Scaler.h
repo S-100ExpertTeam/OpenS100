@@ -49,10 +49,17 @@ public:
 
 private:
 	int rotateDegree = 0;
+	double rotateSin = 0;
+	double rotateCos = 1;
+
+	bool PixelSize(double& ratio);
+	bool FromCentre(double mx, double my, double& dx, double& dy, bool rotate);
 
 public:
 	/*
-	** Coordinate change.
+	** Coordinate change. The view may be turned (SetRotationDegree): a point of the map goes
+	** to where it is on the turned screen, and a point of the screen to where it is on the map.
+	** With rotate false the turn is left out (the screen as it would be with north up).
 	*/
 	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = true);
 	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = true);
@@ -93,9 +100,14 @@ public:
 	/*
 	** Rotation info
 	*/
+	// The picture is turned clockwise about the centre of the screen by this many degrees
+	// (0 to 359): north is that far clockwise from up.
 	int GetRotationDegree();
 	void SetRotationDegree(int _value);
 	void Rotate(int value);
+	// Where north is on the screen at a point of the map, in degrees clockwise from up: the
+	// turn of the view and, about a pole, of the projection (NorthAngle).
+	double NorthOnScreen(double mx, double my) const;
 
 	/*
 	** zoom in & zoom out

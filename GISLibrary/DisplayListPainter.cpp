@@ -215,26 +215,14 @@ namespace s100::render
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
 			// A rotation from north (GeographicCRS) starts from where north is at the point,
-			// which is not up about a pole.
-			float northAngle = 0;
+			// which is not up about a pole or in a turned view.
+			float northAngle = static_cast<float>(scaler.GetRotationDegree());
 			if (IsPolarProjection())
 			{
 				double mx = 0;
 				double my = 0;
 				scaler.DeviceToWorld(static_cast<long>(pi->x), static_cast<long>(pi->y), &mx, &my);
-				northAngle = static_cast<float>(NorthAngle(mx, my));
-			}
-
-			// rotate Point
-			if (scaler.GetRotationDegree())
-			{
-				double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-				float tempX = (float)(scaler.soy - pi->y) * (float)sin(radian) + (float)(scaler.sox - pi->x) * (float)cos(radian);
-				float tempY = (float)(scaler.soy - pi->y) * (float)cos(radian) - (float)(scaler.sox - pi->x) * (float)sin(radian);
-
-				pi->x = tempX + (float)scaler.sox;
-				pi->y = tempY + (float)scaler.soy;
+				northAngle = static_cast<float>(scaler.NorthOnScreen(mx, my));
 			}
 
 			float rotation = 0;
@@ -265,10 +253,6 @@ namespace s100::render
 		}
 		auto surface = (SSurface*)fr->GetGeometry();
 
-		// Zoomed far in, the surface is drawn in device pixels and turned with the view.
-		const Transform turned = { TransformStep::RotateAbout(
-			(float)scaler.GetRotationDegree(), (float)scaler.sox, (float)scaler.soy) };
-
 		Fill fill;
 		switch (areaFill->type)
 		{
@@ -279,7 +263,7 @@ namespace s100::render
 			{
 				fill.color = color(colorFill->color->token);
 				fill.color.a = 1 - colorFill->color->transparency;
-				FillSurface(surface, fill, turned);
+				FillSurface(surface, fill);
 			}
 			break;
 		}
@@ -289,7 +273,7 @@ namespace s100::render
 			fill.kind = Fill::Kind::AreaFill;
 			fill.reference = pugi::as_utf8(areaFillReference->GetFileStem());
 			fill.fallback = "QUESMRK1";
-			FillSurface(surface, fill, turned);
+			FillSurface(surface, fill);
 			break;
 		}
 		case 4:
@@ -313,14 +297,13 @@ namespace s100::render
 			{
 				break;
 			}
-			// Zoomed far in, not turned with the view (as before).
-			FillSurface(surface, fill, {});
+			FillSurface(surface, fill);
 			break;
 		}
 		}
 	}
 
-	void DisplayListPainter::FillSurface(SSurface* surface, const Fill& fill, const Transform& zoomedIn)
+	void DisplayListPainter::FillSurface(SSurface* surface, const Fill& fill)
 	{
 		if (scaler.GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 		{
@@ -370,7 +353,8 @@ namespace s100::render
 			});
 			if (!path.figures.empty())
 			{
-				renderer.SetTransform(zoomedIn);
+				// Zoomed far in, the surface is drawn in device pixels.
+				renderer.SetTransform({});
 				renderer.FillPath(path, fill);
 				renderer.SetTransform(ViewTransform());
 			}
@@ -493,7 +477,7 @@ namespace s100::render
 
 		if (name != L"")
 		{
-			CurveOnDevice(true);
+			CurveOnDevice();
 			const ColorF penColor = color(lineStyle.GetPenColorToken());
 			renderer.StrokeLineStyle(pugi::as_utf8(name), devicePoints, &penColor);
 		}
@@ -525,14 +509,14 @@ namespace s100::render
 		}
 	}
 
-	// A line style of the catalogue. (Not turned with the view, as before: see the design notes.)
+	// A line style of the catalogue.
 	void DisplayListPainter::Visit(SENC_LineStyleReference& lineStyle)
 	{
-		CurveOnDevice(false);
+		CurveOnDevice();
 		renderer.StrokeLineStyle(pugi::as_utf8(lineStyle.GetReference()), devicePoints, nullptr);
 	}
 
-	void DisplayListPainter::CurveOnDevice(bool turnWithView)
+	void DisplayListPainter::CurveOnDevice()
 	{
 		auto curve = styleCurve;
 		auto numPoints = curve->GetNumPoints();
@@ -545,22 +529,6 @@ namespace s100::render
 				curve->GetY(pi),
 				&devicePoints[pi].x,
 				&devicePoints[pi].y);
-		}
-
-		// Point rotate
-		if (turnWithView && scaler.GetRotationDegree())
-		{
-			double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-			for (auto id = 0; id < numPoints; id++)
-			{
-				auto p = &devicePoints[id];
-				float tempX = (float)(scaler.soy - p->y) * (float)sin(radian) + (float)(scaler.sox - p->x) * (float)cos(radian);
-				float tempY = (float)(scaler.soy - p->y) * (float)cos(radian) - (float)(scaler.sox - p->x) * (float)sin(radian);
-
-				p->x = (float)tempX + (float)scaler.sox;
-				p->y = (float)tempY + (float)scaler.soy;
-			}
 		}
 	}
 
@@ -602,6 +570,12 @@ namespace s100::render
 		viewTransform.push_back(TransformStep::Translate(static_cast<float>(-mox), static_cast<float>(moy)));
 		viewTransform.push_back(TransformStep::Scale(static_cast<float>(ratio)));
 		viewTransform.push_back(TransformStep::Translate(static_cast<float>(sox), static_cast<float>(soy)));
+		if (scaler.GetRotationDegree() != 0)
+		{
+			// The view is turned about the centre of the screen, as Scaler::WorldToDevice turns it.
+			viewTransform.push_back(TransformStep::RotateAbout(static_cast<float>(scaler.GetRotationDegree()),
+				static_cast<float>(sox), static_cast<float>(soy)));
+		}
 		return viewTransform;
 	}
 
@@ -651,7 +625,7 @@ namespace s100::render
 		}
 		else
 		{
-			CurveOnDevice(false);
+			CurveOnDevice();
 			if (devicePoints.size() >= 2)
 			{
 				PathFigure figure;
@@ -660,8 +634,7 @@ namespace s100::render
 				Path path;
 				path.figures.push_back(std::move(figure));
 
-				renderer.SetTransform({ TransformStep::RotateAbout(
-					(float)scaler.GetRotationDegree(), (float)scaler.sox, (float)scaler.soy) });
+				renderer.SetTransform({});
 				renderer.StrokePath(path, penColor, stroke);
 				renderer.SetTransform(ViewTransform());
 			}
@@ -762,18 +735,6 @@ namespace s100::render
 				float x = itor->x + offset_x;
 				float y = itor->y + offset_y;
 
-				// rotate Point
-				if (scaler.GetRotationDegree())
-				{
-					double _radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-					float tempX = (float)(scaler.soy - y) * (float)sin(_radian) + (float)(scaler.sox - x) * (float)cos(_radian);
-					float tempY = (float)(scaler.soy - y) * (float)cos(_radian) - (float)(scaler.sox - x) * (float)sin(_radian);
-
-					x = tempX + (float)scaler.sox;
-					y = tempY + (float)scaler.soy;
-				}
-
 				renderer.SetTransform({});
 				renderer.FillText(text, { x, y }, font, foreground);
 			}
@@ -824,18 +785,6 @@ namespace s100::render
 			PointF pBeginningPt = { (float)onDevice.x, (float)onDevice.y };
 			PointF pEndPt;
 
-			// Point rotate
-			if (scaler.GetRotationDegree())
-			{
-				double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-				float tempX = (scaler.soy - pBeginningPt.y) * sin(radian) + (scaler.sox - pBeginningPt.x) * cos(radian);
-				float tempY = (scaler.soy - pBeginningPt.y) * cos(radian) - (scaler.sox - pBeginningPt.x) * sin(radian);
-
-				pBeginningPt.x = tempX + scaler.sox;
-				pBeginningPt.y = tempY + scaler.soy;
-			}
-
 			long ix = 0;
 			long iy = 0;
 			double mx = p->x;
@@ -843,22 +792,10 @@ namespace s100::render
 
 			if (false == ENCCommon::FULL_SECTORS)
 			{
-				// The direction is from north, which is not up about a pole.
-				const double onScreen = direction + NorthAngle(mx, my) - 90;
+				// The direction is from north, which is not up about a pole or in a turned view.
+				const double onScreen = direction + scaler.NorthOnScreen(mx, my) - 90;
 				ix = pBeginningPt.x + (int)((cos(onScreen * M_PI / 180) * length) * factor);
 				iy = pBeginningPt.y + (int)((sin(onScreen * M_PI / 180) * length) * factor);
-
-				// Point rotate
-				if (scaler.GetRotationDegree())
-				{
-					double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-					float tempX = (pBeginningPt.y - iy) * sin(radian) + (pBeginningPt.x - ix) * cos(radian);
-					float tempY = (pBeginningPt.y - iy) * cos(radian) - (pBeginningPt.x - ix) * sin(radian);
-
-					ix = tempX + pBeginningPt.x;
-					iy = tempY + pBeginningPt.y;
-				}
 			}
 			else
 			{
@@ -866,18 +803,6 @@ namespace s100::render
 				auto dest = LatLonUtility::GetDestinationPointRhumbLineMercatorByGeographicLib(my, mx, direction, length);
 				projection(dest.lon, dest.lat);
 				scaler.WorldToDevice(dest.lon, dest.lat, &ix, &iy);
-
-				// Point rotate
-				if (scaler.GetRotationDegree())
-				{
-					double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
-
-					float tempX = (scaler.soy - iy) * sin(radian) + (scaler.sox - ix) * cos(radian);
-					float tempY = (scaler.soy - iy) * cos(radian) - (scaler.sox - ix) * sin(radian);
-
-					ix = tempX + scaler.sox;
-					iy = tempY + scaler.soy;
-				}
 			}
 
 			pEndPt.x = (float)ix;
@@ -959,7 +884,7 @@ namespace s100::render
 
 			// The arcs are built from north up: turned to where north is at the point.
 			renderer.SetTransform({
-				TransformStep::Rotate(static_cast<float>(NorthAngle(p->x, p->y))),
+				TransformStep::Rotate(static_cast<float>(scaler.NorthOnScreen(p->x, p->y))),
 				TransformStep::Translate(onDevice.x, onDevice.y) });
 
 			Stroke stroke;

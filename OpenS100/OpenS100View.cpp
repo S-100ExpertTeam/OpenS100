@@ -100,6 +100,10 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(T4, MapMinus)
 	ON_COMMAND(T5, MapDragSize)
 	ON_COMMAND(T6, MapFill)
+	ON_COMMAND(T11, MapTurnLeft)
+	ON_COMMAND(T12, MapTurnRight)
+	ON_COMMAND(T13, MapNorthUp)
+	ON_UPDATE_COMMAND_UI(T13, OnUpdateMapNorthUp)
 	ON_COMMAND(T7, NoGeometry)
 	ON_COMMAND(T8, NoGeometryInfo)
 	ON_COMMAND(T9, Setting)
@@ -447,6 +451,60 @@ void COpenS100View::MapMinus()
 	MapRefresh();
 }
 
+void COpenS100View::TurnMap(int degrees)
+{
+	for (CGISLibraryApp* gis : { theApp.gisLib, theApp.gisLib2 })
+	{
+		if (!gis)
+		{
+			continue;
+		}
+		auto scaler = gis->GetScaler();
+		scaler->SetRotationDegree(degrees == 0 ? 0 : scaler->GetRotationDegree() + degrees);
+	}
+	MapRefresh();
+	ShowViewStatus();
+}
+
+void COpenS100View::MapTurnLeft()
+{
+	TurnMap(-10);
+}
+
+void COpenS100View::MapTurnRight()
+{
+	TurnMap(10);
+}
+
+void COpenS100View::MapNorthUp()
+{
+	TurnMap(0);
+}
+
+void COpenS100View::OnUpdateMapNorthUp(CCmdUI* pCmdUI)
+{
+	// There is something to put back only when the chart is turned.
+	pCmdUI->Enable(theApp.gisLib && theApp.gisLib->GetScaler()->GetRotationDegree() != 0);
+}
+
+void COpenS100View::ShowViewStatus()
+{
+	CString text;
+	text.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
+	const int turn = theApp.gisLib ? theApp.gisLib->GetScaler()->GetRotationDegree() : 0;
+	if (turn != 0)
+	{
+		// North is this far clockwise from up.
+		CString north;
+		north.Format(_T(" , North %d\x00B0"), turn);
+		text += north;
+	}
+	if (auto* frame = dynamic_cast<CMainFrame*>(AfxGetMainWnd()))
+	{
+		frame->SetMessageText(text);
+	}
+}
+
 void COpenS100View::MapDragSize()
 {
 	(m_Icon == ZOOM_AREA) ? m_Icon = MOVE : m_Icon = ZOOM_AREA;
@@ -787,51 +845,10 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 			if ((m_ptStartZoomArea.x != m_ptEndZoomArea.x) &&
 				(m_ptStartZoomArea.y != m_ptEndZoomArea.y))
 			{
-				double startX = 0;
-				double startY = 0;
-				double endX = 0;
-				double endY = 0;
-
-				theApp.gisLib->DeviceToWorld(
-					m_ptStartZoomArea.x,
-					m_ptStartZoomArea.y,
-					&startX,
-					&startY);
-
-				theApp.gisLib->DeviceToWorld(
-					m_ptEndZoomArea.x,
-					m_ptEndZoomArea.y,
-					&endX,
-					&endY);
-
-				double xmin = 0;
-				double ymin = 0;
-				double xmax = 0;
-				double ymax = 0;
-
-				if (startX < endX)
-				{
-					xmin = startX;
-					xmax = endX;
-				}
-				else
-				{
-					xmin = endX;
-					xmax = startX;
-				}
-
-				if (startY < endY)
-				{
-					ymin = startY;
-					ymax = endY;
-				}
-				else
-				{
-					ymin = endY;
-					ymax = startY;
-				}
-
-				theApp.gisLib->SetMap(xmin, ymin, xmax, ymax);
+				// The rectangle of the screen becomes the view, whichever way the chart is turned.
+				theApp.gisLib->GetScaler()->SetMapFromScreen(
+					(std::min)(m_ptStartZoomArea.x, m_ptEndZoomArea.x), (std::min)(m_ptStartZoomArea.y, m_ptEndZoomArea.y),
+					(std::max)(m_ptStartZoomArea.x, m_ptEndZoomArea.x), (std::max)(m_ptStartZoomArea.y, m_ptEndZoomArea.y));
 
 				CRect viewRect;
 				GetClientRect(viewRect);
@@ -927,11 +944,7 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 
 	
 	
-	CString strFomatedInfo = _T("");
-	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
-
-	CMainFrame *frame = (CMainFrame*)AfxGetMainWnd(); 
-	frame->SetMessageText(strFomatedInfo);
+	ShowViewStatus();
 
 
 	CFont mFont3;
@@ -955,7 +968,7 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 		_T("Consolas") // font
 	);
 
-	frame->SetFont(&mFont3);
+	AfxGetMainWnd()->SetFont(&mFont3);
 	m_ep = point;
 	
 	if (!(beModifyWaypoint ||
@@ -1262,11 +1275,7 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	MapRefresh();
 
 	m_strFormatedScale = CString(theApp.gisLib->GetScaler()->GetFormattedScale().c_str());
-	CString strFomatedInfo = _T("");
-	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
-
-	CMainFrame* frame = (CMainFrame*)AfxGetMainWnd();
-	frame->SetMessageText(strFomatedInfo);
+	ShowViewStatus();
 
 	return CView::OnMouseWheel(nFlags, zDelta, pt);
 }
@@ -1430,8 +1439,21 @@ static void collectPickedFeatures(CPoint _point, S100SpatialObject* cell, CStrin
 	double xmax = 0;
 	double ymax = 0;
 
-	theApp.gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin);  // start point
-	theApp.gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax);  // end point
+	// A box of ten pixels about the point: its size is that of an unturned view, its place is
+	// where the point is on the chart as it is turned.
+	theApp.gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin, false);
+	theApp.gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax, false);
+	{
+		double x = 0;
+		double y = 0;
+		theApp.gisLib->DeviceToWorld(_point.x, _point.y, &x, &y);
+		const double halfWidth = (xmax - xmin) / 2;
+		const double halfHeight = (ymax - ymin) / 2;
+		xmin = x - halfWidth;
+		xmax = x + halfWidth;
+		ymin = y - halfHeight;
+		ymax = y + halfHeight;
+	}
 
 	MBR pickMBR(xmin, ymin, xmax, ymax);
 
@@ -1750,12 +1772,10 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		MapRefresh();
 		break;
 	case VK_HOME:
-		theApp.gisLib->GetScaler()->Rotate(-10);
-		MapRefresh();
+		MapTurnLeft();
 		break;
 	case VK_END:
-		theApp.gisLib->GetScaler()->Rotate(10);
-		MapRefresh();
+		MapTurnRight();
 		break;
 	case VK_F1:
 		PointFeatureList();

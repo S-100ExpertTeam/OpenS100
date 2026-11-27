@@ -204,3 +204,100 @@ TEST(MapProjection, TheScaleIsThatOfTheGroundAtTheCentreOfTheView)
 		EXPECT_NEAR(scaler.GetCurrentScale(), 50000, 5);
 	}
 }
+
+// A turned view (Scaler::SetRotationDegree): the picture is turned clockwise about the centre
+// of the screen, and the two directions of the transform undo each other.
+TEST(ScalerRotation, TurnsThePictureClockwiseAboutTheCentreOfTheScreen)
+{
+	ProjectionScope scope(MapProjection::Mercator);
+	Scaler scaler;
+	scaler.SetScreen(0, 0, 1000, 600);
+	double x = 129.0;
+	double y = 35.0;
+	projection(x, y);
+	scaler.SetMap(x - 0.01, y - 0.006, x + 0.01, y + 0.006);
+
+	// Unturned: a point north of the centre is straight up.
+	float sx = 0;
+	float sy = 0;
+	scaler.WorldToDevice_F(x, y + 0.001, &sx, &sy);
+	const float up = 300 - sy;
+	EXPECT_NEAR(sx, 500, 1e-3);
+	EXPECT_GT(up, 10);
+
+	// Turned 90 degrees, north is to the right; the centre stays.
+	scaler.SetRotationDegree(90);
+	scaler.WorldToDevice_F(x, y, &sx, &sy);
+	EXPECT_NEAR(sx, 500, 1e-3);
+	EXPECT_NEAR(sy, 300, 1e-3);
+	scaler.WorldToDevice_F(x, y + 0.001, &sx, &sy);
+	EXPECT_NEAR(sx, 500 + up, 1e-2);
+	EXPECT_NEAR(sy, 300, 1e-2);
+	EXPECT_NEAR(scaler.NorthOnScreen(x, y), 90, 1e-12);
+
+	// With rotate false the screen is as it would be with north up.
+	scaler.WorldToDevice_F(x, y + 0.001, &sx, &sy, false);
+	EXPECT_NEAR(sx, 500, 1e-3);
+	EXPECT_NEAR(sy, 300 - up, 1e-2);
+
+	// The degrees are kept from 0 to 359.
+	scaler.SetRotationDegree(-30);
+	EXPECT_EQ(scaler.GetRotationDegree(), 330);
+	scaler.Rotate(40);
+	EXPECT_EQ(scaler.GetRotationDegree(), 10);
+	scaler.SetRotationDegree(360);
+	EXPECT_EQ(scaler.GetRotationDegree(), 0);
+}
+
+TEST(ScalerRotation, ScreenToMapUndoesMapToScreen)
+{
+	ProjectionScope scope(MapProjection::Mercator);
+	Scaler scaler;
+	scaler.SetScreen(0, 0, 1000, 600);
+	double x = 129.0;
+	double y = 35.0;
+	projection(x, y);
+	scaler.SetMap(x - 0.01, y - 0.006, x + 0.01, y + 0.006);
+	const double pixel = 0.02 / 1000;
+
+	for (int degrees : { 0, 37, 90, 180, 233, 330 })
+	{
+		scaler.SetRotationDegree(degrees);
+		for (const auto& [px, py] : { std::pair<long, long>{ 0, 0 }, { 1000, 600 }, { 123, 456 }, { 500, 300 } })
+		{
+			double mx = 0;
+			double my = 0;
+			scaler.DeviceToWorld(px, py, &mx, &my);
+			float sx = 0;
+			float sy = 0;
+			scaler.WorldToDevice_F(mx, my, &sx, &sy);
+			EXPECT_NEAR(sx, px, 1e-2) << degrees;
+			EXPECT_NEAR(sy, py, 1e-2) << degrees;
+
+			// What the view shows holds every point of the screen.
+			const MBR map = scaler.GetMap();
+			EXPECT_GE(mx, map.xmin - pixel) << degrees;
+			EXPECT_LE(mx, map.xmax + pixel) << degrees;
+			EXPECT_GE(my, map.ymin - pixel) << degrees;
+			EXPECT_LE(my, map.ymax + pixel) << degrees;
+		}
+	}
+
+	// A point of the map put at a point of the screen is there, turned or not; and a rectangle
+	// of the screen made the view keeps its middle.
+	scaler.SetRotationDegree(37);
+	scaler.MoveMap(200, 100, x, y);
+	float sx = 0;
+	float sy = 0;
+	scaler.WorldToDevice_F(x, y, &sx, &sy);
+	EXPECT_NEAR(sx, 200, 1e-2);
+	EXPECT_NEAR(sy, 100, 1e-2);
+
+	double middleX = 0;
+	double middleY = 0;
+	scaler.DeviceToWorld(300, 200, &middleX, &middleY);
+	scaler.SetMapFromScreen(200, 140, 400, 260);
+	scaler.WorldToDevice_F(middleX, middleY, &sx, &sy);
+	EXPECT_NEAR(sx, 500, 0.5);
+	EXPECT_NEAR(sy, 300, 0.5);
+}

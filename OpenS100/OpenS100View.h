@@ -114,6 +114,14 @@ public:
 	afx_msg void MapMinus(); //Layer Zoomout
 	afx_msg	void MapDragSize(); //
 	afx_msg void MapFill();
+	afx_msg void MapTurnLeft();
+	afx_msg void MapTurnRight();
+	afx_msg void MapNorthUp();
+	afx_msg void OnUpdateMapNorthUp(CCmdUI* pCmdUI);
+	// Turns the chart of both views by so many degrees clockwise; 0 puts north up again.
+	void TurnMap(int degrees);
+	// The scale, the position of the pointer and the turn of the chart, on the status bar.
+	void ShowViewStatus();
 
 	afx_msg void NoGeometry();
 	afx_msg void NoGeometryInfo();
