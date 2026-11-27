@@ -1,8 +1,7 @@
 #pragma once
 // Platform-neutral UTF-8 <-> wide-string conversion for the core projects.
 //
-// Replaces LibMFCUtil::ConvertWCtoC / ConvertCtoWC (Win32 WideCharToMultiByte) so that
-// GeoMetryLibrary has no MFC/Win32 dependency. wchar_t is UTF-16 on Windows and UTF-32
+// No call of an operating system (not WideCharToMultiByte). wchar_t is UTF-16 on Windows and UTF-32
 // elsewhere; both are handled. Malformed input is replaced with U+FFFD.
 // Phase 1 step 3-4 (Documents/TechDocs/2026-11-08-phase1-core-decoupling.md).
 #include <cstdint>

@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7, 죽은 코드 정리 4.8, 라이브러리에서 `HDC` 제거 4.9), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7, 죽은 코드 정리 4.8, 라이브러리에서 `HDC` 제거 4.9, `LibMFCUtil` 삭제 4.10), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -117,7 +117,7 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 
 검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 233개 중 229개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다. Linux 트리 안 빌드 통과, `opens100-render`의 그림 셋(전체·중심+축척·Night)이 바꾸기 전과 바이트 단위로 같다.
 
-남긴 것: `namespace libS100Engine`(`PortrayalCatalogue/Color.*`, 이름만 옛 엔진의 것이다), `LibMFCUtil` 프로젝트(뷰어만 쓴다), 저장소에 든 `*.vcxproj.user` 여덟 개.
+남긴 것: `namespace libS100Engine`(`PortrayalCatalogue/Color.*`, 이름만 옛 엔진의 것이다), `LibMFCUtil` 프로젝트(뷰어만 쓴다; 4.10에서 지웠다), 저장소에 든 `*.vcxproj.user` 여덟 개.
 
 ### 4.9 라이브러리에서 `HDC`가 사라졌다: 프레임은 픽셀을 내주고, 창은 응용이 그린다 (2026-11-27)
 
@@ -137,6 +137,26 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 새 테스트 `RenderSmoke.AFrameHandsOutItsPixelsAndShowsATargetOnceAScene`: 장면 하나에 `Show`가 한 번, `Pixels()`가 그 픽셀과 같고 크기·자리가 스케일러의 화면 사각형과 같다, 알파 곱이 지켜진다, 그 픽셀을 `DeviceContextTarget`으로 올린 것과 `DrawOnDeviceContext`로 그린 것이 한 픽셀도 다르지 않다.
 
 검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 234개 중 230개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다(다른 픽셀 0%). Linux(GCC 13) 트리 안 빌드 통과, `opens100-render`의 그림 네 장(fit, night, center, bbox)이 바꾸기 전과 바이트 단위로 같다. 뷰어는 빌드만 했다: 화면에서 보지 않았다.
+
+### 4.10 `LibMFCUtil` 프로젝트를 지웠다 (2026-11-27)
+
+`LibMFCUtil`은 MFC DLL 프로젝트였고(문자열 변환, 토크나이저, 점 회전 등 290줄), 라이브러리 모듈은 Phase 1에서 이미 쓰지 않게 되었다. 남은 사용자는 뷰어뿐이었고, 세어 보니 호출은 둘, 클래스는 하나였다. 모두 라이브러리에 같은 것이 있어서 뷰어로 옮길 것이 없었다.
+
+| 뷰어가 쓰던 것 | 바꾼 것 |
+|---|---|
+| `LibMFCUtil::ConvertWCtoC`(`ConfigrationDlg.cpp`) | `s100::text::ToUtf8`(`GeoMetryLibrary/TextCodec.h`) |
+| `LibMFCUtil::StringToWString`(`DockablePaneEditWindow.cpp`) | `pugi::as_wide`(바로 윗줄이 쓰는 것) |
+| `StringTokenizer`(`ConfigrationDlg.cpp`, 설정 파일 읽기) | `s100::StringTokenizer`(`GeoMetryLibrary/StringTokenizer.h`) |
+
+둘 다 UTF-8 변환이고(`LibMFCUtil`은 `CP_UTF8`로 불렀다) 토크나이저의 동작은 같다(연속한 구분자는 하나로, 빈 토큰 없음).
+
+- `LibMFCUtil/` 디렉터리(파일 15개), 솔루션의 프로젝트 항목, 뷰어의 프로젝트 참조를 지웠다. 뷰어는 `LibMFCUtil.dll` 없이 실행 파일이 만들어진다(실행 파일에 그 이름이 없다).
+- `Redist_header.bat`에서 `LibMFCUtil` 두 줄을 뺐다. 이 배치 파일은 없는 디렉터리(`S100Engine`, `S100Geometry`)도 복사하려 한다: 헤더를 내보내는 일은 CMake 패키지가 하므로 파일 자체가 쓸모를 잃었다. 지우지는 않았다.
+- 라이브러리 헤더 세 곳의 주석이 `LibMFCUtil`을 말하던 것을 고쳤다.
+
+보다가 찾은 것(고치지 않았다): `ConfigrationDlg.cpp`의 확인 처리에서 `DISPLAY_FONT_NAME`과 `DISPLAY_FONT_SIZE`에 **깊은 등심선 입력란의 글자**가 들어간다(바로 앞에서 읽은 `value`를 그대로 쓴다). 설정 창에 서체 입력란은 없다. 설정 창에서 확인을 누르면 서체 이름이 "30" 같은 값이 되고, Skia는 그 이름의 서체를 찾지 못해 대체 서체로 쓴다. 이번 변경 전부터 그랬다.
+
+검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 234개 중 230개 통과·4개 건너뜀. 바뀐 것이 뷰어의 소스와 주석뿐이라 그림 비교와 Linux 빌드는 다시 하지 않았다. 뷰어는 빌드만 했다: 설정 창과 속성 창을 화면에서 보지 않았다.
 
 ## 5. 남은 것
 

@@ -7,7 +7,6 @@
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -344,7 +343,7 @@ void CDockablePaneEditWindow::addSimpleAttribute(CMFCPropertyGridProperty* paren
 	auto sa = fc->GetSimpleAttribute(code);
 	if (sa) {
 		CString strCode = pugi::as_wide(code).c_str();
-		CString strValue = LibMFCUtil::StringToWString(value).c_str();
+		CString strValue = pugi::as_wide(value).c_str();
 		if (strValue.CompareNoCase(pugi::as_wide(ProcessS101::g_unknown_attribute_value).c_str()) == 0)
 		{
 			strValue = L"Unknown";

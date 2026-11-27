@@ -1,7 +1,7 @@
 #pragma once
 // Header-only whitespace tokenizer for the core projects (no MFC).
 //
-// Same behaviour as LibMFCUtil's StringTokenizer: consecutive separators collapse,
+// Consecutive separators collapse,
 // leading/trailing separators produce no empty tokens.
 // Phase 1 step 3-4 (Documents/TechDocs/2026-11-08-phase1-core-decoupling.md).
 #include <string>

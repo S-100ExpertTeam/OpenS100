@@ -1,5 +1,5 @@
 #pragma once
-// Path helpers for the core (replace LibMFCUtil::GetExtension/GetFileName and ad-hoc CString slicing).
+// Path helpers for the core: the extension and the file name of a path.
 //
 // Both separators are recognised. Results are plain std::wstring so callers stay simple;
 // use std::filesystem::path directly when you need more than a component.

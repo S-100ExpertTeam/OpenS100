@@ -46,7 +46,6 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <atomic>
 #include <locale>        

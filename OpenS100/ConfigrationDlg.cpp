@@ -5,8 +5,8 @@
 #include "DialogDockLayerManager.h"
 #include "DialogDockCurrentSelection.h"
 
-#include "../LibMFCUtil/StringTokenizer.h"
-#include "../LibMFCUtil/LibMFCUtil.h"
+#include "../GeoMetryLibrary/StringTokenizer.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
@@ -226,11 +226,7 @@ void CConfigrationDlg::OnBnClickedApply()
 	mainTab.m_veryDeepWaterLevel.GetWindowText(value);
 	m_config.DEEP_CONTOUR = _ttof(value);
 
-	{
-		auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)value.GetString());
-		m_config.DISPLAY_FONT_NAME = narrow;
-		delete[] narrow;
-	}
+	m_config.DISPLAY_FONT_NAME = s100::text::ToUtf8(value.GetString());
 
 	m_config.DISPLAY_FONT_SIZE = _ttoi(value);
 
@@ -368,7 +364,7 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 		if (opt.compare("*") == 0)
 			continue;
 
-		StringTokenizer *pstringTokenizer = new StringTokenizer(strLine, " \t");
+		s100::StringTokenizer *pstringTokenizer = new s100::StringTokenizer(strLine, " \t");
 		strLine.clear();
 
 		if (pstringTokenizer->hasMoreTokens())
@@ -485,7 +481,7 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					int objectCode = 0;
 					bool objectValue = 0;
 
-					StringTokenizer *pstringTokenizerObjSettings = new StringTokenizer(strLine, " \t");
+					s100::StringTokenizer *pstringTokenizerObjSettings = new s100::StringTokenizer(strLine, " \t");
 
 					if (pstringTokenizerObjSettings->hasMoreTokens())
 					{

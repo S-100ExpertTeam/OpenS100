@@ -437,9 +437,6 @@
     <None Include="res\OpenS100.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
-      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\GeoMetryLibrary\GeoMetryLibrary.vcxproj">
       <Project>{a95f413a-d144-4140-8e51-05d2e2ba5770}</Project>
     </ProjectReference>
