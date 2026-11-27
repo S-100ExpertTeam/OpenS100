@@ -6,7 +6,6 @@
 #include "DialogDockCurrentSelection.h"
 
 #include "../GeoMetryLibrary/StringTokenizer.h"
-#include "../GeoMetryLibrary/TextCodec.h"
 
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
@@ -226,10 +225,7 @@ void CConfigrationDlg::OnBnClickedApply()
 	mainTab.m_veryDeepWaterLevel.GetWindowText(value);
 	m_config.DEEP_CONTOUR = _ttof(value);
 
-	m_config.DISPLAY_FONT_NAME = s100::text::ToUtf8(value.GetString());
-
-	m_config.DISPLAY_FONT_SIZE = _ttoi(value);
-
+	// The display font has no field in the dialog: it stays as it was set (the settings file).
 
 	ASSERT(!(mainTab.m_colorScheme < (int)GeoMetryLibrary::ColorTable::Day || mainTab.m_colorScheme >(int)GeoMetryLibrary::ColorTable::Night));
 
