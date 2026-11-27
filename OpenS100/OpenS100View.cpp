@@ -7,6 +7,7 @@
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
 #include "../GISLibrary/SkiaViewFrame.h"
+#include "DeviceContextTarget.h"
 #include "../GISLibrary/FeatureHighlight.h"
 #include "../RenderSkia/SkiaFonts.h"
 #include "../GISLibrary/PortrayalRenderCache.h"
@@ -1056,10 +1057,10 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 
 	HDC hdc = pDC->GetSafeHdc();
 
-	theApp.gisLib->Draw(hdc);
+	DrawOnDeviceContext(*theApp.gisLib, hdc);
 
 	if (theApp.gisLib2) {
-		theApp.gisLib2->Draw(hdc);
+		DrawOnDeviceContext(*theApp.gisLib2, hdc);
 	}
 
 	m_bMapRefesh = false;
@@ -1301,7 +1302,7 @@ void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 			s100EditRender.renderer = nullptr;
 		}
 	}
-	frame.End(_hdc);
+	frame.End(&SharedDeviceContextTarget(_hdc));
 }
 
 void COpenS100View::ClearPickReport()

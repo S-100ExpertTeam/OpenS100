@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "DeviceTypes.h"
+#include "../GeoMetryLibrary/ScreenTypes.h"
 #include "Enum_S100_FileType.h"
 #include "SpatialObjectType.h"
 #include "ViewFrame.h"

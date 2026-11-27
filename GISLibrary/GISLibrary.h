@@ -1,5 +1,5 @@
 #pragma once
-#include "DeviceTypes.h"
+#include "../GeoMetryLibrary/ScreenTypes.h"
 
 #include "LayerManager.h"
 #include "S101Creator.h"
@@ -31,11 +31,6 @@ public:
 	bool AddLayer(const std::wstring& _filepath);
 	// Draws the view on a frame.
 	void Draw(GISLibrary::ViewFrame& frame, int offset = 0);
-#ifdef _WIN32
-	// Draws the view on a device context, with the frame of the process (SkiaViewFrame, which
-	// defines this).
-	void Draw(HDC &hDC, int offset = 0);
-#endif
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
 	Layer* GetLayer(int index);

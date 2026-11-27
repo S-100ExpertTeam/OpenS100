@@ -1,5 +1,5 @@
 #pragma once
-#include "DeviceTypes.h"
+#include "../GeoMetryLibrary/ScreenTypes.h"
 #include <string>
 #include "SpatialObject.h"
 #include "ExchangeCatalogue.h"

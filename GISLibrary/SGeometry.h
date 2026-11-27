@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-#include "DeviceTypes.h"
+#include "../GeoMetryLibrary/ScreenTypes.h"
 
 class SSurface;
 class Symbol;

@@ -789,7 +789,6 @@
     <ClInclude Include="DebugOutput.h" />
     <ClInclude Include="SENC_InstructionVisitor.h" />
     <ClInclude Include="RenderCacheSlot.h" />
-    <ClInclude Include="DeviceTypes.h" />
     <ClInclude Include="DrawTypes.h" />
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />

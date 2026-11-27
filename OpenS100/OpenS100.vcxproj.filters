@@ -50,6 +50,9 @@
     <ClInclude Include="OpenS100View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DeviceContextTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="MainFrm.h">
       <Filter>Header Files</Filter>
     </ClInclude>

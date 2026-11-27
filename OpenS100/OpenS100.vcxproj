@@ -343,6 +343,7 @@
     <ClInclude Include="OpenS100.h" />
     <ClInclude Include="OpenS100Doc.h" />
     <ClInclude Include="OpenS100View.h" />
+    <ClInclude Include="DeviceContextTarget.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCTabCtrlMsgToParent.h" />
     <ClInclude Include="pch.h" />

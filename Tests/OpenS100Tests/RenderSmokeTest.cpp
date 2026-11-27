@@ -1,6 +1,6 @@
 // Off-screen render smoke test.
 //
-// Draws an S-101 cell through the same path the viewer uses (CGISLibraryApp::Draw into an HDC),
+// Draws an S-101 cell through the same path the viewer uses (DrawOnDeviceContext, into an HDC),
 // but into a memory bitmap, so it needs no window and no interactive desktop. The picture is
 // saved as PNG for a human (or an agent) to look at:
 //
@@ -54,6 +54,7 @@
 #include "S100Layer.h"
 #include "SENC_DisplayList.h"
 #include "SkiaViewFrame.h"
+#include "../OpenS100/DeviceContextTarget.h"
 #include "S10XGML.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -205,7 +206,7 @@ namespace
 
 		MemoryCanvas canvas(kWidth, kHeight);
 		ASSERT_TRUE(canvas.valid());
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		const auto t3 = Clock::now();
 
@@ -226,7 +227,7 @@ namespace
 		{
 			canvas.Clear();
 			const auto a = Clock::now();
-			gis.Draw(canvas.dc());
+			DrawOnDeviceContext(gis, canvas.dc());
 			::GdiFlush();
 			frames += " " + std::to_string(ms(a, Clock::now()));
 		}
@@ -291,16 +292,16 @@ TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
 	open(switched, false);
 	ASSERT_FALSE(HasFatalFailure());
 	MemoryCanvas day(kWidth, kHeight);
-	switched.Draw(day.dc());
+	DrawOnDeviceContext(switched, day.dc());
 	switched.GetLayerManager()->ChangeS100ColorPalette(L"Night");
 	MemoryCanvas nightAfterSwitch(kWidth, kHeight);
-	switched.Draw(nightAfterSwitch.dc());
+	DrawOnDeviceContext(switched, nightAfterSwitch.dc());
 
 	CGISLibraryApp openedAtNight;
 	open(openedAtNight, true);
 	ASSERT_FALSE(HasFatalFailure());
 	MemoryCanvas nightFromTheStart(kWidth, kHeight);
-	openedAtNight.Draw(nightFromTheStart.dc());
+	DrawOnDeviceContext(openedAtNight, nightFromTheStart.dc());
 
 	EXPECT_GT(nightAfterSwitch.DifferingPixels(day), static_cast<std::size_t>(kWidth) * kHeight / 50) << "the palette switch changed (almost) nothing";
 	EXPECT_EQ(nightAfterSwitch.DifferingPixels(nightFromTheStart), 0u);
@@ -342,13 +343,13 @@ TEST(RenderSmoke, AContextParameterSetOnTheCatalogueChangesTheChart)
 	open(byDefault, nullptr);
 	ASSERT_FALSE(HasFatalFailure());
 	MemoryCanvas defaults(kWidth, kHeight);
-	byDefault.Draw(defaults.dc());
+	DrawOnDeviceContext(byDefault, defaults.dc());
 
 	CGISLibraryApp shallow;
 	open(shallow, "2");
 	ASSERT_FALSE(HasFatalFailure());
 	MemoryCanvas twoMetres(kWidth, kHeight);
-	shallow.Draw(twoMetres.dc());
+	DrawOnDeviceContext(shallow, twoMetres.dc());
 
 	EXPECT_GT(twoMetres.DifferingPixels(defaults), static_cast<std::size_t>(kWidth) * kHeight / 200) << "the safety contour changed (almost) nothing";
 }
@@ -388,7 +389,7 @@ TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
 
 	const auto draw = [&](const char* name) {
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
@@ -488,7 +489,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
 			gis.SetMap(MBR(longitude, latitude, longitude, latitude));
 			gis.SetScale(3000000);
 			MemoryCanvas canvas(kWidth, kHeight);
-			gis.Draw(canvas.dc());
+			DrawOnDeviceContext(gis, canvas.dc());
 			std::size_t nonWhite = 0;
 			std::size_t colours = 0;
 			canvas.Measure(nonWhite, colours);
@@ -530,7 +531,7 @@ TEST(RenderSmoke, DrawsTheBackgroundMapOfTheWorld)
 
 	MemoryCanvas canvas(kWidth, kHeight);
 	ASSERT_TRUE(canvas.valid());
-	gis.Draw(canvas.dc());
+	DrawOnDeviceContext(gis, canvas.dc());
 	::GdiFlush();
 	const auto png = OutputDirectory() / "background-world.png";
 	EXPECT_TRUE(canvas.SavePng(png)) << png.string();
@@ -658,7 +659,7 @@ TEST(RenderSmoke, TimesCellsFromEnvironment)
 			{
 				canvas.Clear();
 				const auto a = Clock::now();
-				gis.Draw(canvas.dc());
+				DrawOnDeviceContext(gis, canvas.dc());
 				::GdiFlush();
 				(i == 0 ? first : times.emplace_back()) = ms(a, Clock::now());
 			}
@@ -715,7 +716,7 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 		gis.SetMap(area);
 		MemoryCanvas canvas(kWidth, kHeight);
 		const auto start = std::chrono::steady_clock::now();
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
@@ -790,7 +791,7 @@ TEST(RenderSmoke, ExchangeSetOpensItsCellsInTheBackground)
 		};
 		const auto draw = [&](MemoryCanvas& canvas) {
 			const auto start = Clock::now();
-			gis.Draw(canvas.dc());
+			DrawOnDeviceContext(gis, canvas.dc());
 			::GdiFlush();
 			return ms(start, Clock::now());
 		};
@@ -885,7 +886,7 @@ TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
 		projection(area);
 		gis.SetMap(area);
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
 		canvas.Measure(nonWhite, colours);
@@ -957,7 +958,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS102Grid)
 	projection(area);
 	gis.SetMap(area);
 	MemoryCanvas canvas(kWidth, kHeight);
-	gis.Draw(canvas.dc());
+	DrawOnDeviceContext(gis, canvas.dc());
 	std::size_t nonWhite = 0;
 	std::size_t colours = 0;
 	canvas.Measure(nonWhite, colours);
@@ -1003,7 +1004,7 @@ TEST(RenderSmoke, DrawsS102GridAsLayer)
 	ASSERT_TRUE(gis.AddLayer(grid.wstring()));
 	gis.SetViewMBR(view);
 	MemoryCanvas canvas(kWidth, kHeight);
-	gis.Draw(canvas.dc());
+	DrawOnDeviceContext(gis, canvas.dc());
 	std::size_t nonWhite = 0;
 	std::size_t colours = 0;
 	canvas.Measure(nonWhite, colours);
@@ -1060,7 +1061,7 @@ TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
 	};
 	const auto render = [&](const char* name) {
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		Frame frame{ .status = dataset->LastSymbolStatus() };
 		canvas.Measure(frame.nonWhite, frame.colours);
@@ -1206,7 +1207,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS111)
 		projection(area);
 		gis.SetMap(area);
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		EXPECT_TRUE(canvas.SavePng(OutputDirectory() / (std::string("sdb-chart-s111-") + name + ".png")));
 		std::size_t arrows = 0;
@@ -1233,7 +1234,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS111)
 		// time before its records.
 		CoverageDataset::SetDisplaySettings({ .time = s100::coverage::TimePoint{} });
 		MemoryCanvas without(kWidth, kHeight);
-		gis.Draw(without.dc());
+		DrawOnDeviceContext(gis, without.dc());
 		::GdiFlush();
 		CoverageDataset::SetDisplaySettings({});
 		const std::size_t changed = without.DifferingPixels(canvas);
@@ -1279,7 +1280,7 @@ TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
 		// Fit the S-102 layer: the last one added.
 		gis.SetMap(gis.GetLayerManager()->GetLayer(gis.GetLayerManager()->LayerCount() - 1)->GetMBR());
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		const auto png = OutputDirectory() / (std::string("s102-wla-") + name + ".png");
 		EXPECT_TRUE(canvas.SavePng(png));
@@ -1377,7 +1378,7 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 		settings.enhancedSafetyContour = esc;
 		CoverageDataset::SetDepthSettings(settings);
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		const auto png = OutputDirectory() / (std::string("s101-under-s102-") + name + ".png");
 		EXPECT_TRUE(canvas.SavePng(png));
@@ -1522,7 +1523,7 @@ TEST(RenderSmoke, CoverageChartAtScales)
 		{
 			MemoryCanvas canvas(kWidth, kHeight);
 			const auto start = Clock::now();
-			gis.Draw(canvas.dc());
+			DrawOnDeviceContext(gis, canvas.dc());
 			::GdiFlush();
 			time = ms(start, Clock::now());
 			if (&time == &times[1])
@@ -1603,7 +1604,7 @@ namespace
 		projection(area);
 		gis.SetMap(area);
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		std::size_t nonWhite = 0;
 		std::size_t colours = 0;
 		canvas.Measure(nonWhite, colours);
@@ -1690,7 +1691,7 @@ TEST(RenderSmoke, AdjacentCellsOfOneGroupDoNotCoverEachOther)
 		{
 			for (const Layer* layer : layers->layers) layers->drawGroups[layer] = 1;
 		}
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 	};
 
@@ -1758,7 +1759,7 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS124OverTheS101)
 		MBR area(129.045, 35.105, 129.063, 35.119);
 		projection(area);
 		gis.SetMap(area);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 	};
 	MemoryCanvas chart(kWidth, kHeight);
@@ -1817,7 +1818,7 @@ TEST(RenderSmoke, S102PictureCoversItsDataOnMercator)
 		settings.enhancedSafetyContour = esc;
 		CoverageDataset::SetDepthSettings(settings);
 		MemoryCanvas canvas(kWidth, kHeight);
-		gis.Draw(canvas.dc());
+		DrawOnDeviceContext(gis, canvas.dc());
 		::GdiFlush();
 		EXPECT_TRUE(canvas.SavePng(OutputDirectory() / (std::string("s102-covers-data-") + name + ".png")));
 		std::size_t nonWhite = 0;
@@ -1913,7 +1914,8 @@ TEST(RenderSmoke, ACatalogueMadeWhereAnotherWasIsDrawnWithItsOwnSymbols)
 		s100::render::IRenderer* renderer = frame.Renderer(&catalogue);
 		ASSERT_NE(renderer, nullptr);
 		renderer->DrawSymbol("BOYLAT13", { side / 2.0f, side / 2.0f }, 0.0f, 8.0f);
-		frame.End(canvas.dc());
+		DeviceContextTarget target(canvas.dc());
+		frame.End(&target);
 		::GdiFlush();
 	};
 
@@ -1943,4 +1945,81 @@ TEST(RenderSmoke, ACatalogueMadeWhereAnotherWasIsDrawnWithItsOwnSymbols)
 	EXPECT_GT(nonWhite, 50u) << "the buoy is drawn";
 	EXPECT_GT(alone.DifferingPixels(unknown), 50u) << "the S-124 catalogue draws its question mark for the buoy";
 	EXPECT_EQ(after.DifferingPixels(alone), 0u) << "the symbols kept for the catalogue before were used";
+}
+
+// With no window and no type of an operating system: a frame hands out its pixels, and a target
+// is shown the same pixels once for the whole scene.
+TEST(RenderSmoke, AFrameHandsOutItsPixelsAndShowsATargetOnceAScene)
+{
+	const auto cell = testpaths::korS101Cell();
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "reference cell not available: " << cell.string();
+	}
+
+	CGISLibraryApp gis;
+	auto cm = gis.GetCatalogManager();
+	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	ASSERT_NE(cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+	gis.SetViewMBR(view);
+
+	struct Counting final : GISLibrary::FrameTarget
+	{
+		void Show(const GISLibrary::FramePixels& pixels) override
+		{
+			++shown;
+			last = pixels;
+		}
+		int shown = 0;
+		GISLibrary::FramePixels last;
+	};
+
+	GISLibrary::SkiaViewFrame frame;
+	EXPECT_EQ(frame.Pixels().data, nullptr) << "no frame yet";
+
+	Counting target;
+	{
+		const GISLibrary::SkiaViewFrame::Scene scene(frame, &target);
+		gis.Draw(frame);
+		EXPECT_EQ(target.shown, 0) << "the layers are shown together, when the scene closes";
+	}
+	EXPECT_EQ(target.shown, 1);
+
+	const GISLibrary::FramePixels pixels = frame.Pixels();
+	ASSERT_NE(pixels.data, nullptr);
+	EXPECT_EQ(pixels.data, target.last.data);
+	// The frame is of the size of the scaler's screen rectangle, and at its place.
+	const ScreenRect screen = gis.GetScaler()->GetScreenRect();
+	EXPECT_EQ(pixels.width, screen.right - screen.left);
+	EXPECT_EQ(pixels.height, screen.bottom - screen.top);
+	EXPECT_EQ(pixels.rowBytes, static_cast<std::size_t>(pixels.width) * 4);
+	EXPECT_EQ(pixels.left, screen.left);
+	EXPECT_EQ(pixels.top, screen.top);
+
+	// Premultiplied: no colour above its alpha; and the chart covers a good part of the view.
+	std::size_t covered = 0;
+	bool premultiplied = true;
+	for (int y = 0; y < pixels.height; ++y)
+	{
+		const std::uint8_t* row = pixels.data + pixels.rowBytes * y;
+		for (int x = 0; x < pixels.width; ++x)
+		{
+			const std::uint8_t* p = row + x * 4;
+			covered += p[3] != 0;
+			premultiplied = premultiplied && p[0] <= p[3] && p[1] <= p[3] && p[2] <= p[3];
+		}
+	}
+	EXPECT_TRUE(premultiplied);
+	EXPECT_GT(covered, static_cast<std::size_t>(kWidth) * kHeight / 20);
+
+	// What the device context of the viewer gets is these pixels over white.
+	MemoryCanvas canvas(kWidth, kHeight);
+	DeviceContextTarget onCanvas(canvas.dc());
+	onCanvas.Show(pixels);
+	MemoryCanvas viewer(kWidth, kHeight);
+	DrawOnDeviceContext(gis, viewer.dc());
+	EXPECT_EQ(canvas.DifferingPixels(viewer), 0u);
 }

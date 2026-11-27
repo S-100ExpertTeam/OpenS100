@@ -1,5 +1,5 @@
 #pragma once
-#include "DeviceTypes.h"
+#include "../GeoMetryLibrary/ScreenTypes.h"
 #include "SPoint.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"

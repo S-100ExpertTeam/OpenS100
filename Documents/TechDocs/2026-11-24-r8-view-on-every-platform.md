@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7, 죽은 코드 정리 4.8), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7, 죽은 코드 정리 4.8, 라이브러리에서 `HDC` 제거 4.9), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -119,10 +119,28 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 
 남긴 것: `namespace libS100Engine`(`PortrayalCatalogue/Color.*`, 이름만 옛 엔진의 것이다), `LibMFCUtil` 프로젝트(뷰어만 쓴다), 저장소에 든 `*.vcxproj.user` 여덟 개.
 
+### 4.9 라이브러리에서 `HDC`가 사라졌다: 프레임은 픽셀을 내주고, 창은 응용이 그린다 (2026-11-27)
+
+4.6까지 하고도 라이브러리에 Windows의 형이 하나 남아 있었다: `HDC`. `SkiaViewFrame::End(HDC)`·`Scene(frame, HDC)`·`CGISLibraryApp::Draw(HDC&)`가 받았고, 프레임의 픽셀은 Windows에서 DIB였으며 `AlphaBlend`를 `SkiaViewFrame.cpp`가 불렀다. Windows가 아닌 곳에서는 그린 것을 받아 갈 길이 `WritePng`뿐이어서 창에 띄울 수 없었다.
+
+- **`GISLibrary::FramePixels`**: 프레임의 픽셀(`data`, `width`, `height`, `rowBytes`, 뷰가 장치에서 놓이는 자리 `left`·`top`). 한 성분 한 바이트, 메모리 순서로 파랑·초록·빨강·알파, 색은 알파가 곱해진 값, 윗줄 먼저. 그려지지 않은 곳은 투명하다. 프레임의 것이고 다음 프레임이 시작될 때까지 유효하다.
+- **`SkiaViewFrame::Pixels()`**: 마지막으로 래스터화한 프레임의 픽셀. 아무것도 그리지 않았으면 `data`가 null이다.
+- **`GISLibrary::FrameTarget`**(추상, `Show(const FramePixels&)`): 응용이 프레임을 보여 주는 곳(창, 장치 컨텍스트, 텍스처). `Scene(frame, FrameTarget*)`와 `End(FrameTarget*)`가 전에 `HDC`가 있던 자리를 그대로 대신한다: 장면이 닫힐 때 한 번, 무언가 그려졌을 때만 `Show`가 불린다.
+- 프레임의 픽셀은 어느 플랫폼에서나 제 버퍼다(DIB 없음). `SkiaViewFrame.cpp`에 `<windows.h>`도 `msimg32`도 없다. `kN32 == BGRA`의 `static_assert`는 모든 플랫폼에 건다(위 약속의 근거).
+- `CGISLibraryApp::Draw(HDC&)`를 지웠다. `GISLibrary/DeviceTypes.h`를 지웠다(남은 것이 `HDC`의 이름뿐이었다); 포함하던 헤더 열네 개는 `GeoMetryLibrary/ScreenTypes.h`를 직접 포함한다.
+- **Windows의 끝은 뷰어에 있다**: `OpenS100/DeviceContextTarget.h`(헤더 하나). `DeviceContextTarget`이 `FrameTarget`을 구현해 픽셀을 제 DIB에 옮기고 `AlphaBlend`한다. `DrawOnDeviceContext(view, hdc)`가 전의 `view.Draw(hdc)`다. 뷰어(`OpenS100View.cpp` 세 곳)와 테스트(`RenderSmokeTest.cpp` 스물일곱 곳)가 이것을 쓴다 — 테스트는 여전히 뷰어와 같은 길로 그린다.
+
+달라진 점 하나: 화면에 올릴 때 픽셀을 한 번 복사한다(전에는 Skia가 DIB에 직접 그렸다). 1600×1000에서 6.4 MB이고 새로 고침마다 한 번이다. 시간은 재지 않았다.
+
+다른 플랫폼의 창에 그리는 길: `FrameTarget`을 구현하거나(`Show`에서 픽셀을 제 창의 이미지로 옮긴다), `frame.Draw(view)` 뒤에 `frame.Pixels()`를 읽는다. BGRA·알파 곱은 Cocoa의 `CGImage`(`kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little`), Qt의 `QImage::Format_ARGB32_Premultiplied`, Cairo의 `CAIRO_FORMAT_ARGB32`가 복사 없이 받는 형식이다. 이 길로 창을 띄워 본 것은 없다.
+
+새 테스트 `RenderSmoke.AFrameHandsOutItsPixelsAndShowsATargetOnceAScene`: 장면 하나에 `Show`가 한 번, `Pixels()`가 그 픽셀과 같고 크기·자리가 스케일러의 화면 사각형과 같다, 알파 곱이 지켜진다, 그 픽셀을 `DeviceContextTarget`으로 올린 것과 `DrawOnDeviceContext`로 그린 것이 한 픽셀도 다르지 않다.
+
+검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 234개 중 230개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다(다른 픽셀 0%). Linux(GCC 13) 트리 안 빌드 통과, `opens100-render`의 그림 네 장(fit, night, center, bbox)이 바꾸기 전과 바이트 단위로 같다. 뷰어는 빌드만 했다: 화면에서 보지 않았다.
+
 ## 5. 남은 것
 
 - CI `port` 잡은 `view`만 넣었다(`render-skia`·`view-skia`는 Skia 빌드가 무거워 CI에 없다). CI는 돌려 보지 않았다.
 - 상대 경로의 배경 레이어는 실행 파일의 디렉터리에서 찾는다(`LayerOpen.cpp`, 뷰어의 옛 동작). 라이브러리의 소비자는 절대 경로를 넘겨야 한다. 바꾸지 않았다.
-- `DeviceTypes.h`에 남은 것은 `HDC`의 이름뿐이다: `SkiaViewFrame`의 Windows 끝과 `CGISLibraryApp::Draw(HDC&)`만 쓴다.
 - `LongPoint`는 화면의 픽셀과 데이터셋의 정수 좌표(1e-7도)에 함께 쓰인다(`POINT`가 그렇게 쓰였다). 둘을 가르는 것은 하지 않았다.
 - 한 표면에 한 프레임(R7 3.1), GPU 표면(R7g).

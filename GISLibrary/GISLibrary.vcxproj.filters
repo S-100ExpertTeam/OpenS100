@@ -2237,9 +2237,6 @@
     <ClInclude Include="DebugOutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DeviceTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="D2DConvert.h">
       <Filter>Header Files</Filter>
     </ClInclude>

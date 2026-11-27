@@ -1,10 +1,3 @@
-#ifdef _WIN32
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#endif
-
 #include "SkiaViewFrame.h"
 
 #include "CoverageDataset.h"
@@ -50,16 +43,10 @@
 #include <thread>
 #include <vector>
 
-#ifdef _WIN32
-#pragma comment(lib, "msimg32.lib")   // AlphaBlend
-#endif
-
 namespace
 {
-#ifdef _WIN32
-	// Skia's native 32-bit pixels are what a Windows bitmap holds: blue first, premultiplied.
-	static_assert(kN32_SkColorType == kBGRA_8888_SkColorType, "the layer is blended as a BGRA bitmap");
-#endif
+	// Skia's native 32-bit pixels are what FramePixels says: blue first, premultiplied.
+	static_assert(kN32_SkColorType == kBGRA_8888_SkColorType, "the pixels of a frame are handed out as BGRA");
 
 	// What a catalogue's instructions are drawn with, read once.
 	struct CatalogueResources
@@ -207,14 +194,8 @@ namespace GISLibrary
 {
 	struct SkiaViewFrame::State
 	{
-		// The pixels of the view's size. On Windows a bitmap that both GDI and Skia know.
-#ifdef _WIN32
-		HDC memory = nullptr;
-		HBITMAP bitmap = nullptr;
-		HGDIOBJ previous = nullptr;
-#else
+		// The pixels of the view's size.
 		std::vector<std::uint32_t> owned;
-#endif
 		void* bits = nullptr;
 		int width = 0;
 		int height = 0;
@@ -238,10 +219,10 @@ namespace GISLibrary
 		std::unique_ptr<BandWorkers> workers;
 		int threads = 1;                 // the threads a frame is rasterised on, this one counted
 
-		// The scene in hand: how many are open, the device context of the outermost, and whether
+		// The scene in hand: how many are open, the target of the outermost, and whether
 		// frames ended on it wait in the recording to be shown.
 		int scenes = 0;
-		HDC sceneTarget = nullptr;
+		FrameTarget* sceneTarget = nullptr;
 		bool sceneWaiting = false;
 		int frameSave = 0;               // the save count of the recording when the frame began
 
@@ -301,21 +282,7 @@ namespace GISLibrary
 			}
 			bands.clear();
 			surface.reset();
-#ifdef _WIN32
-			if (memory)
-			{
-				::SelectObject(memory, previous);
-				::DeleteDC(memory);
-				memory = nullptr;
-			}
-			if (bitmap)
-			{
-				::DeleteObject(bitmap);
-				bitmap = nullptr;
-			}
-#else
 			owned.clear();
-#endif
 			bits = nullptr;
 			drawn = false;
 			width = 0;
@@ -334,26 +301,8 @@ namespace GISLibrary
 				return false;
 			}
 
-#ifdef _WIN32
-			BITMAPINFO info{};
-			info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-			info.bmiHeader.biWidth = newWidth;
-			info.bmiHeader.biHeight = -newHeight;   // top row first, as Skia has it
-			info.bmiHeader.biPlanes = 1;
-			info.bmiHeader.biBitCount = 32;
-			info.bmiHeader.biCompression = BI_RGB;
-			memory = ::CreateCompatibleDC(nullptr);
-			bitmap = memory ? ::CreateDIBSection(memory, &info, DIB_RGB_COLORS, &bits, nullptr, 0) : nullptr;
-			if (!bitmap || !bits)
-			{
-				Release();
-				return false;
-			}
-			previous = ::SelectObject(memory, bitmap);
-#else
 			owned.assign(static_cast<size_t>(newWidth) * static_cast<size_t>(newHeight), 0);
 			bits = owned.data();
-#endif
 
 			// Texts at full contrast, as SkiaImage sets them.
 			const SkSurfaceProps props(0, kUnknown_SkPixelGeometry, SkSurfaceProps::kMaxContrastInclusive, 2.2f);
@@ -578,7 +527,7 @@ namespace GISLibrary
 	{
 	}
 
-	SkiaViewFrame::Scene::Scene(SkiaViewFrame& frame, HDC target) : frame(frame)
+	SkiaViewFrame::Scene::Scene(SkiaViewFrame& frame, FrameTarget* target) : frame(frame)
 	{
 		if (frame.state->scenes++ == 0)
 		{
@@ -604,7 +553,7 @@ namespace GISLibrary
 		End(state->sceneTarget);
 	}
 
-	void SkiaViewFrame::End(HDC target)
+	void SkiaViewFrame::End(FrameTarget* target)
 	{
 		state->renderers.clear();
 		if (!state->recording)
@@ -622,18 +571,29 @@ namespace GISLibrary
 		Show(target);
 	}
 
-	void SkiaViewFrame::Show(HDC target)
+	void SkiaViewFrame::Show(FrameTarget* target)
 	{
 		state->sceneWaiting = false;
 		if (!state->Rasterise() || !target)
 		{
 			return;
 		}
-#ifdef _WIN32
-		const BLENDFUNCTION blend{ AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-		::AlphaBlend(target, state->view[0], state->view[1], state->width, state->height,
-			state->memory, 0, 0, state->width, state->height, blend);
-#endif
+		target->Show(Pixels());
+	}
+
+	FramePixels SkiaViewFrame::Pixels() const
+	{
+		FramePixels pixels;
+		if (state->drawn && state->bits)
+		{
+			pixels.data = static_cast<const std::uint8_t*>(state->bits);
+			pixels.width = state->width;
+			pixels.height = state->height;
+			pixels.rowBytes = static_cast<std::size_t>(state->width) * 4;
+			pixels.left = static_cast<int>(state->view[0]);
+			pixels.top = static_cast<int>(state->view[1]);
+		}
+		return pixels;
 	}
 
 	void SkiaViewFrame::SetFontFiles(std::vector<std::filesystem::path> files)
@@ -681,14 +641,3 @@ namespace GISLibrary
 		state->catalogues.clear();
 	}
 }
-
-#ifdef _WIN32
-// Everything a refresh draws is one scene: the layers are rasterised together and put on the
-// device context once.
-void CGISLibraryApp::Draw(HDC& hDC, int offset)
-{
-	auto& frame = GISLibrary::SkiaViewFrame::Shared();
-	const GISLibrary::SkiaViewFrame::Scene scene(frame, hDC);
-	Draw(frame, offset);
-}
-#endif
