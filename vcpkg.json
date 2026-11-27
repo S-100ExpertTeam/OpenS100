@@ -21,6 +21,12 @@
     "gtest"
   ],
   "features": {
+    "apps": {
+      "description": "Command line programs (apps/): opens100-render reads its job file as JSON",
+      "dependencies": [
+        "nlohmann-json"
+      ]
+    },
     "render-skia": {
       "description": "Skia backend of the renderer (opens100::render-skia): CPU raster, PNG output, fonts through FreeType",
       "dependencies": [

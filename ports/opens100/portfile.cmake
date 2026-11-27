@@ -23,6 +23,7 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES
+        apps              OPENS100_BUILD_APPS
         coverage          OPENS100_BUILD_COVERAGE
         dataset           OPENS100_BUILD_DATASET
         feature-catalogue OPENS100_BUILD_FEATURECATALOG
@@ -43,6 +44,9 @@ vcpkg_cmake_configure(
 )
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(PACKAGE_NAME opens100 CONFIG_PATH share/opens100)
+if("apps" IN_LIST FEATURES)
+    vcpkg_copy_tools(TOOL_NAMES opens100-render AUTO_CLEAN)
+endif()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include" "${CURRENT_PACKAGES_DIR}/debug/share")
 

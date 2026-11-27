@@ -46,6 +46,11 @@ view is drawn and written as a PNG file:
     #include <GISLibrary/GISLibrary.h>
     #include <GISLibrary/SkiaViewFrame.h>
 
+The feature "apps" installs the program opens100-render (tools/opens100): it draws datasets
+as a PNG file from a JSON job file that names the catalogues, the datasets, the centre and
+scale of the view and the display settings. `opens100-render --help` lists the job file,
+`--example` prints one.
+
 On Windows, Skia built by MSVC draws on the CPU about six times slower than Skia built by
 clang-cl. The overlay port "skia" next to this port (ports/skia of the OpenS100 repository)
 builds it with clang-cl; vcpkg's own skia port uses MSVC.

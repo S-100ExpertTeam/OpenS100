@@ -57,6 +57,8 @@
 #include "S10XGML.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
+#include "../PortrayalCatalogue/Context.h"
+#include "../PortrayalCatalogue/ContextParameter.h"
 
 namespace
 {
@@ -304,6 +306,51 @@ TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
 	EXPECT_EQ(nightAfterSwitch.DifferingPixels(nightFromTheStart), 0u);
 	EXPECT_TRUE(nightAfterSwitch.SavePng(OutputDirectory() / "palette_night_after_switch.png"));
 	EXPECT_TRUE(nightFromTheStart.SavePng(OutputDirectory() / "palette_night_from_the_start.png"));
+}
+
+// A context parameter the application sets on the catalogue before a cell is opened is told to
+// the rules: with a safety contour of 2 m the depth areas of a harbour are shaded otherwise than
+// with the 30 m of the catalogue. (The rules were given the defaults only.)
+TEST(RenderSmoke, AContextParameterSetOnTheCatalogueChangesTheChart)
+{
+	// A harbour cell: it has depths on both sides of 2 m (the overview cell of the other tests has not).
+	const auto cell = testpaths::korS101Cell().parent_path().parent_path() / "101KR00659C71" / "101KR00659C71.000";
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "reference cell not available: " << cell.string();
+	}
+
+	const ScreenRect view{ 0, 0, kWidth, kHeight };
+	const auto open = [&](CGISLibraryApp& gis, const char* safetyContour)
+	{
+		auto cm = gis.GetCatalogManager();
+		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+		ASSERT_NE(pc, nullptr);
+		if (safetyContour)
+		{
+			auto parameter = pc->GetContext()->GetContextParameter(std::string("SafetyContour"));
+			ASSERT_NE(parameter, nullptr);
+			parameter->setValue(std::string(safetyContour));
+		}
+		gis.SetScreen(view);
+		ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+		gis.SetViewMBR(view);
+	};
+
+	CGISLibraryApp byDefault;
+	open(byDefault, nullptr);
+	ASSERT_FALSE(HasFatalFailure());
+	MemoryCanvas defaults(kWidth, kHeight);
+	byDefault.Draw(defaults.dc());
+
+	CGISLibraryApp shallow;
+	open(shallow, "2");
+	ASSERT_FALSE(HasFatalFailure());
+	MemoryCanvas twoMetres(kWidth, kHeight);
+	shallow.Draw(twoMetres.dc());
+
+	EXPECT_GT(twoMetres.DifferingPixels(defaults), static_cast<std::size_t>(kWidth) * kHeight / 200) << "the safety contour changed (almost) nothing";
 }
 
 // The chart projection is the user's choice: cells about the North Pole, which Mercator cannot

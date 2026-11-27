@@ -1,7 +1,7 @@
 {
   "name": "opens100",
   "version": "0.2.0",
-  "port-version": 1,
+  "port-version": 2,
   "description": "Core C++ library for IHO S-100 hydrographic data. The base package is the geodesy module (opens100::latlon); the other modules are features.",
   "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
   "license": "MPL-2.0",
@@ -23,6 +23,19 @@
     "portrayal-catalogue"
   ],
   "features": {
+    "apps": {
+      "description": "Command line programs: opens100-render draws datasets as a PNG file from a JSON job file (tools/opens100)",
+      "dependencies": [
+        "nlohmann-json",
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "view-skia"
+          ]
+        }
+      ]
+    },
     "coverage": {
       "description": "S-100 Part 10c HDF5 coverage reader and water level adjustment (opens100::coverage)",
       "dependencies": [

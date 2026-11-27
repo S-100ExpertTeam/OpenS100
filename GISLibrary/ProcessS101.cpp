@@ -231,15 +231,17 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			return 0;
 		}
 
-		//int numContext = context->GetCountOfParameter();
-		//for (int i = 0; i < numContext; i++) {
-		//	auto contextParameter = context->GetContextParameter(i);
-		//	if (contextParameter) {
-		//		auto name = contextParameter->GetIdAsString();
-		//		auto defaultValue = contextParameter->GetDefaultAsString();
-		//		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter(name.c_str(), defaultValue.c_str());
-		//	}
-		//}
+		// The rules were given the defaults of the catalogue; a parameter the application set
+		// to another value (ContextParameter::setValue) is told to them.
+		const int numContext = context->GetCountOfParameter();
+		for (int i = 0; i < numContext; i++) {
+			auto contextParameter = context->GetContextParameter(i);
+			if (contextParameter && contextParameter->getValue() != contextParameter->GetDefault()) {
+				const auto name = contextParameter->GetId();
+				const auto value = contextParameter->getValue();
+				PortrayalSetContextParameter(name.c_str(), value.c_str());
+			}
+		}
 
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 

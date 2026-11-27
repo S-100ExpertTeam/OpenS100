@@ -299,6 +299,21 @@ if(OPENS100_BUILD_EXAMPLES AND TARGET view-skia)
     endif()
 endif()
 
+option(OPENS100_BUILD_APPS "Build the command line programs (apps/): opens100-render" OFF)
+if(OPENS100_BUILD_APPS)
+    if(NOT TARGET view-skia)
+        message(FATAL_ERROR "The programs of apps/ need opens100::view-skia (OPENS100_BUILD_VIEW and OPENS100_BUILD_RENDER_SKIA)")
+    endif()
+    find_package(nlohmann_json CONFIG REQUIRED)
+    # Draws datasets as a PNG file from a job file (apps/render/README.md).
+    add_executable(opens100-render apps/render/main.cpp)
+    target_link_libraries(opens100-render PRIVATE view-skia nlohmann_json::nlohmann_json)
+    if(MSVC)
+        target_compile_options(opens100-render PRIVATE /utf-8 /W4)
+    endif()
+    install(TARGETS opens100-render RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
+endif()
+
 # --- package ------------------------------------------------------------------------------
 set(OPENS100_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/opens100")
 
