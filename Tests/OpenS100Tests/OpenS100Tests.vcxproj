@@ -96,6 +96,7 @@
     <ClCompile Include="TestPaths.cpp" />
     <ClCompile Include="FeatureCatalogueTest.cpp" />
     <ClCompile Include="DisplayListJsonTest.cpp" />
+    <ClCompile Include="HostDataTest.cpp" />
     <ClCompile Include="DisplayListPainterTest.cpp" />
     <ClCompile Include="S101CellTest.cpp" />
     <ClCompile Include="S10XGMLTest.cpp" />

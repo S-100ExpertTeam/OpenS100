@@ -472,7 +472,17 @@ std::vector<spatial_association> hd_get_feature_spatial_associations(std::string
 
 	std::vector<spatial_association> sas;
 
-	sas.push_back(feature->getLuaSpatialAssociation());
+	// A feature with no geometry has no association: one with no spatial type is not an
+	// association the rules can read (they take the feature for one of primitive type None
+	// when the list is empty).
+	if (feature)
+	{
+		auto association = feature->getLuaSpatialAssociation();
+		if (!association.spatial_type.empty())
+		{
+			sas.push_back(std::move(association));
+		}
+	}
 
 	return sas;
 }
@@ -1140,19 +1150,11 @@ curve hd_get_curve(std::string spatial_id)
 		for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
 		{
 			auto ptas = *i;
-			std::string boundaryType;
-			switch (ptas->m_topi)
-			{
-			case 1:
-				boundaryType = "Begin";
-				break;
-			case 2:
-				boundaryType = "End";
-				break;
-			}
-			if (boundaryType == "Begin")
+			// The topology indicator: 1 is the beginning of the curve, 2 its end, 3 both (a
+			// closed curve has one point for its two ends).
+			if (ptas->m_topi == 1 || ptas->m_topi == 3)
 				curve.start_point = get_spatial_association(ptas);
-			else
+			if (ptas->m_topi != 1)
 				curve.end_point = get_spatial_association(ptas);
 		}
 

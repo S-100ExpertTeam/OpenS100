@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -94,10 +94,24 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 
 검증: Windows Debug x64·Release x64 솔루션 빌드(뷰어 포함), 전체 테스트 각각 231개 중 227개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다(다른 픽셀 0%). Linux 트리 안 빌드 621단계 통과, `opens100_view`의 그림이 R8c 때의 것과 바이트 단위로 같다. 뷰어는 빌드만 했고 화면은 보지 않았다. 포트 설치본으로의 소비자 예제 빌드는 이 변경 뒤에 다시 돌리지 않았다.
 
+### 4.7 포트를 Windows에서 확인했다, 기하 없는 피처의 Lua 오류를 고쳤다 (2026-11-27)
+
+**포트(R8f 뒤)**: 두 플랫폼에서 의존성을 바이너리 캐시에서 꺼내고 `opens100`(기본 기능)과 `opens100[core,view-skia]`를 클래식 모드로 설치한 뒤, 설치본으로 `examples/consumer`를 빌드해 돌렸다.
+
+- Linux(GCC 13, `x64-linux`): 설치·빌드·실행 통과, `opens100_consumer_view`의 그림이 트리 안 빌드의 것과 바이트 단위로 같다.
+- Windows(MSVC 19.51, `x64-windows`, `C:cpkg`): 설치 통과(라이브러리 12개), 소비자 예제 빌드·실행 통과, 셀 두 개의 그림을 썼다. Windows에서 포트를 확인한 것은 처음이다.
+- 소비자는 패키지를 빌드한 것과 같은 MSVC 도구 집합으로 빌드해야 한다. 패키지는 v145(VS 18)로 빌드되었는데 PATH의 CMake 3.29가 VS 2022(v143)를 골라 STL의 벡터화 함수(`__std_find_first_not_of_trivial_pos_1` 등)가 풀리지 않았다. 포트의 결함이 아니라 정적 라이브러리의 일반 규칙이다(새 도구 집합으로 만든 것을 옛 도구 집합으로 링크할 수 없다).
+
+**Lua 오류**: `PortrayalAPI.lua:806: Object given is of type "nil" not of type "SpatialType"`가 셀마다 한 번 났다(Windows에서는 `OutputDebugString`으로 가서 보이지 않았을 뿐 같은 코드다). 기하가 없는 피처에 `hd_get_feature_spatial_associations`가 공간 형이 빈 연관 하나를 돌려주었고, 규칙 파일이 그것으로 연관을 만들다 멈추어 그 피처는 포트레이얼을 받지 못했다. 이제 빈 목록을 돌려준다: 규칙은 그 피처를 기본형 `None`으로 본다. 테스트 `HostData.AFeatureWithNoGeometryHasNoSpatialAssociation`.
+
+- 함께 고친 것: `hd_get_curve`가 위상 지시자 3(시작이자 끝, 닫힌 곡선)을 끝점으로만 읽었다. 이제 시작점도 채운다(`R_CurveRecord.cpp`는 이미 3을 양쪽으로 읽는다). 이 경우를 가진 시험 데이터는 없었다: 그림은 바뀌지 않았다.
+
+검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 232개 중 228개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다. Linux 트리 안 빌드 통과, `opens100_view`에서 Lua 오류가 사라졌고 그림은 바이트 단위로 같다. 새 테스트를 고치기 전 코드에 돌려 보지는 않았다.
+
 ## 5. 남은 것
 
 - CI `port` 잡은 `view`만 넣었다(`render-skia`·`view-skia`는 Skia 빌드가 무거워 CI에 없다). CI는 돌려 보지 않았다.
-- Windows에서 포트의 `view`·`view-skia`(4.4는 Linux에서만 확인).
+- 상대 경로의 배경 레이어는 실행 파일의 디렉터리에서 찾는다(`LayerOpen.cpp`, 뷰어의 옛 동작). 라이브러리의 소비자는 절대 경로를 넘겨야 한다. 바꾸지 않았다.
 - `DeviceTypes.h`에 남은 것은 `HDC`의 이름뿐이다: `SkiaViewFrame`의 Windows 끝과 `CGISLibraryApp::Draw(HDC&)`만 쓴다.
 - `LongPoint`는 화면의 픽셀과 데이터셋의 정수 좌표(1e-7도)에 함께 쓰인다(`POINT`가 그렇게 쓰였다). 둘을 가르는 것은 하지 않았다.
 - 한 표면에 한 프레임(R7 3.1), GPU 표면(R7g).
