@@ -17,25 +17,6 @@ DefinitionSources::~DefinitionSources()
 
 void DefinitionSources::GetContents(pugi::xml_node& /*node*/)
 {
-	//for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
-	//{
-	//	const char* instructionName = instruction.name();
-	//	if (!strcmp(instructionName, "S100FC:S100_FC_sourceIdentifier"))
-	//	{
-	//		sourceIdentifier = instruction.child_value();
-	//	}
-	//	else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSource"))
-	//	{
-	//		auto definition = new DefinitionSource();
-	//		definition->GetContents(instruction);
-	//		definitionSource[definition->Getvalue()] = definition;
-	//	}
-	//	else
-	//	{
-	//		std::string content = instruction.child_value();
-	//		content.append("is another data");
-	//	}
-	//}
 }
 
 void DefinitionSources::SetSourceIdentifier(std::string _value)

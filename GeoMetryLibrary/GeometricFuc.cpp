@@ -511,13 +511,6 @@ int GeometricFuc::ccw(double ax, double ay, double bx, double by, double cx, dou
 	l = bx*cy - ay*bx - ax*cy 
 		 - by*cx + ax*by + ay*cx;
 	
-	//l = bx*cy;
-	//l -= ay*bx;
-	//l -= ax*cy;
-	//l -= by*cx;
-	//l += ax*by;
-	//l += ay*cx;
-
 	if(l > 0)
 		return 1; // cw Direction
 	else if(l < 0)

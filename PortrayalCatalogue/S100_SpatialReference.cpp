@@ -15,16 +15,6 @@ S100_SpatialReference::~S100_SpatialReference()
 
 }
 
-//void S100_SpatialReference::SetType(std::string &value)
-//{
-//	type = std::wstring(value.begin(), value.end());
-//}
-
-//void S100_SpatialReference::SetType(std::string_view value)
-//{
-//	type = std::wstring(value.begin(), value.end());
-//}
-
 void S100_SpatialReference::SetReference(std::string& value)
 {
 	reference = value;
@@ -44,11 +34,6 @@ void S100_SpatialReference::SetBackward()
 {
 	forward = false;
 }
-
-//std::wstring S100_SpatialReference::GetType() 
-//{
-//	return type;
-//}
 
 
 std::string S100_SpatialReference::GetReference()

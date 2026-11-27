@@ -672,31 +672,6 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node node)
 		}
 	}
 
-	//auto strPosList = LatLonUtility::Split(strPos, " ");
-	//int posCnt = (int)strPosList.size();
-
-	//if (posCnt < 4)
-	//{
-	//	return false;
-	//}
-	//
-	//int latIndex = 1;
-	//int lonIndex = 0;
-
-	//if (object->getSRSName().find("4326") != std::string::npos || 
-	//	envelop.isYXSequence())
-	//{
-	//	latIndex = 0;
-	//	lonIndex = 1;
-	//}
-
-	//for (int i = 0; (i + 1) < posCnt; i += 2)
-	//{
-	//	double lon = cpp_util::stod(strPosList.at(i + lonIndex));
-	//	double lat = cpp_util::stod(strPosList.at(i + latIndex));
-	//	object->Add(lon, lat);
-	//}
-
 	return object;
 }
 
@@ -1504,40 +1479,6 @@ std::string S10XGML::GetInformationAssociationRoleCode(GF::InformationType* info
 	return std::string("");
 }
 
-//std::string S10XGML::GetObjectAttributeCode(int type, std::string id, int index)
-//{
-//	if (type == 1)
-//	{
-//		return GetFeatureAttributeCode(id, index);
-//	}
-//	else if (type == 2)
-//	{
-//		return GetInformationAttributeCode(id, index);
-//	}
-//
-//	return "";
-//}
-
-//int S10XGML::GetFeatureAttributeCount(std::string id)
-//{
-//	
-//}
-
-//std::string S10XGML::GetFeatureAttributeCode(std::string, int index)
-//{
-//	
-//}
-
-//int S10XGML::GetInformationAttributeCount(std::string id)
-//{
-//	
-//}
-
-//std::string S10XGML::GetInformationAttributeCode(std::string, int index)
-//{
-//	
-//}
-
 void S10XGML::Init()
 {
 	type = S100SpatialObjectType::S10XGML;
@@ -1791,31 +1732,6 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 			interiorRing = nullptr;
 		}
 	}
-
-	//auto boundary = surface->GetPolygon().boundary;
-	//auto interior = boundary.interior;
-
-	//auto i_begin = interior.begin();
-	//auto i_end = interior.end();
-
-	//for (auto i = i_begin;
-	//	i != i_end;
-	//	i++) {
-	//	auto interiorRing = CompositeCurveToSCompositeCurve(*i);
-	//	auto pointCountInteriorRing = interiorRing->GetPointCount();
-	//	for (auto i = 0; i < pointCountInteriorRing; i++) {
-	//		auto x = interiorRing->GetX(i);
-	//		auto y = interiorRing->GetY(i);
-
-	//		inverseProjection(x, y);
-
-	//		LongPoint pt = { x * 10000000, y * 10000000 };
-
-	//		points.push_back(pt);
-	//	}
-
-	//	parts.push_back(pointCountInteriorRing);
-	//}
 
 	result->Set(points, parts);
 

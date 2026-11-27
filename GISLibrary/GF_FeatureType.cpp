@@ -95,35 +95,6 @@ namespace GF
 		return ObjectType::GetAttributeCount();
 	}
 
-	//ThematicAttributeType* FeatureType::GetAttribute(int index)
-	//{
-	//	if (index >= 0 && index < GetAttributeCount())
-	//	{
-	//		return attributes.at(index);
-	//	}
-
-	//	return nullptr;
-	//}
-
-	//std::string FeatureType::GetAttributeValue(int index)
-	//{
-	//	auto attr = GetAttribute(index);
-	//	if (attr)
-	//	{
-	//		if (attr->IsSimple())
-	//		{
-	//			return attr->GetValue();
-	//		}
-	//	}
-
-	//	return "";
-	//}
-
-	//int FeatureType::GetParentAttributeIndex(int index)
-	//{
-	//	return 0;
-	//}
-
 	std::string FeatureType::GetGeometryID()
 	{
 		if (spatial)

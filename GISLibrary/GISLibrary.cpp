@@ -86,14 +86,6 @@ void CGISLibraryApp::Draw(GISLibrary::ViewFrame& frame, int offset)
 {
 	m_pLayerManager->Draw(frame, offset);
 		
-	//if (D2)
-	//{
-	//	CRect rectView = m_pScaler->GetScreenRect();
-	//	D2->Begin(hDC, rectView);
-	//	DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
-	//	DrawScaleBar();
-	//	D2->End();
-	//}
 }
 
 void CGISLibraryApp::BuildPortrayalCatalogue(Layer* l)

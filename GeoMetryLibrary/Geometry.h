@@ -20,7 +20,7 @@ public:
 	MBR m_mbr;
 	std::string id;
 
-	// Opaque per-geometry slot for a renderer cache (for example a Direct2D geometry).
+	// Opaque per-geometry slot for a renderer cache (for example the path of a backend).
 	// The model does not know the concrete type; the renderer attaches and owns it and it
 	// is destroyed with the geometry. It is never copied with the geometry.
 	struct RenderAttachment

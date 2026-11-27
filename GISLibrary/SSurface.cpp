@@ -643,11 +643,6 @@ SAbstractCurve* SSurface::getHole(int index) const
 	return nullptr;
 }
 
-//std::vector<SAbstractCurve*> SSurface::GetCurveList()
-//{
-//	return curveList;
-//}
-
 SCurve* SSurface::GetCurve(int rcid)
 {
 	for (auto i = curveList.begin(); i != curveList.end(); i++) {

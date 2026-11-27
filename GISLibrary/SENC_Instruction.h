@@ -113,9 +113,6 @@ public:
 	// Ensure that Instruction is referring to the Space Reference separately (if referring separately, it should be drawn in the geometry of the information in the corresponding Space Reference).
 	bool HasSpatialReference();
 
-	//void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
-	//virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
-	
 	// Hands the instruction, as what it is, to a visitor. The base class is no instruction of
 	// its own: nothing to visit.
 	virtual void Accept(SENC_InstructionVisitor& /*visitor*/) {}

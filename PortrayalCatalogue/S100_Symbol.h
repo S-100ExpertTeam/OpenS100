@@ -32,12 +32,6 @@ private:
 	std::optional<S100_LineSymbolPlacement> linePlacement;
 	std::optional<S100_AreaSymbolPlacement> areaPlacement;
 
-	//std::wstring id;
-	//S100_Description* description;
-	//std::wstring fileName;
-	//std::wstring fileType;
-	//std::wstring fileFormat;
-
 public:
 	//void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
@@ -60,15 +54,6 @@ public:
 
 	void SetLinePlacement(double offset, S100_LinePlacementMode placementMode, std::optional<bool> visibleParts);
 	void SetAreaPlacement(S100_AreaPlacementMode mode);
-
-	//S100_AreaPlacement* GetAreaPlacement();
-	//S100_LinePlacement* GetLinePlacement();
-	//std::wstring GetId();
-
-	//S100_Description* GetDescription();
-	//std::wstring GetFileName();
-	//std::wstring GetFileType();
-	//std::wstring GetFileFormat();
 
 	double GetOffsetX();
 	void SetOffsetX(double value);

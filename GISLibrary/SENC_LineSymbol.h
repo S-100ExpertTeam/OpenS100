@@ -1,7 +1,5 @@
 #pragma once
 
-//#include "..\\S100_SVG_D2D1_DLL\\SVG.h"
-
 class SENC_LineSymbol
 {
 public:
@@ -16,5 +14,4 @@ public:
 	double scaleFactor = 1;
 	int crsType = 0;
 
-	//S100_SVG_D2D1_DLL::SVG* pSvg;
 };

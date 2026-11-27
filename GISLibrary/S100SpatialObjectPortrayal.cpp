@@ -1,6 +1,6 @@
 #include "stdafx.h"
 // The portrayal output (drawing instructions) of a dataset. Kept apart from S100SpatialObject.cpp:
-// PCOutputSchemaManager builds Direct2D resources.
+// the dataset model is built without the drawing instruction model.
 #include "S100SpatialObject.h"
 #include "PCOutputSchemaManager.h"
 

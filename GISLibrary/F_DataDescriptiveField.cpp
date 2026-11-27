@@ -190,13 +190,3 @@ bool F_DataDescriptiveField::operator==(const F_DataDescriptiveField& other) con
 	return this->type == other.type;
 }
 
-//bool F_DataDescriptiveField::operator<(const F_DataDescriptiveField& other) const
-//{
-//	return this->type < other.type;
-//}
-//
-//
-//bool F_DataDescriptiveField::operator<(const F_DataDescriptiveField& other) const
-//{
-//	return this->type < other.type;
-//}

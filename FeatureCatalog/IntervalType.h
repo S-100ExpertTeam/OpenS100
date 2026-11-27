@@ -19,13 +19,3 @@ IntervalType stringToIntervalType(std::string value);
 std::string IntervalTypeToString(IntervalType value);
 
 
-//class IntervalType :
-//	public Restriction_Item
-//{
-//public:
-//	IntervalType();
-//	virtual ~IntervalType();
-//
-//public:
-//	void GetContents(pugi::xml_node& node);
-//};

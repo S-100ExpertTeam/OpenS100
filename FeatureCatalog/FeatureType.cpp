@@ -75,22 +75,6 @@ void FeatureType::SetSuperType(std::string value)
 	superType = value;
 }
 
-//FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
-//{
-//	auto item = featureBinding.find(featureTypeCode);
-//	if (item != featureBinding.end())
-//	{
-//		return item->second;
-//	}
-//
-//	return nullptr;
-//}
-//
-//FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
-//{
-//	return GetFeatureBinding(featureTypeCode);
-//}
-
 std::list<std::string>& FeatureType::GetSubTypePointer()
 {
 	return subType;

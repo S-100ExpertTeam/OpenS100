@@ -1,5 +1,5 @@
 #pragma once
-// GeoMetryLibrary is pure geometry and view math: no MFC, no GDI+, no Direct2D here.
+// GeoMetryLibrary is pure geometry and view math: no header of an operating system or of a graphics library here.
 // (Phase 1 step 3-4, Documents/TechDocs/2026-11-08-phase1-core-decoupling.md)
 #include <string>
 #include <vector>

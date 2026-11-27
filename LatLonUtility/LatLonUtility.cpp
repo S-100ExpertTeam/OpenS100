@@ -109,24 +109,6 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 void LatLonUtility::Split(std::string_view targetStr, std::string_view token, std::vector<std::string_view>& result)
 {
 	//// Check parameters
-	//if (token.length() == 0 || targetStr.find(token) == std::string::npos)
-	//{
-	//	result.push_back(targetStr);
-	//	return;
-	//}
-
-	//// return var
-	//std::vector<std::string> ret;
-
-	//int findOffset = 0;
-	//int splitOffset = 0;
-	//while ((splitOffset = (int)targetStr.find(token, findOffset)) != std::string::npos)
-	//{
-	//	result.push_back(targetStr.substr(findOffset, splitOffset - findOffset));
-	//	findOffset = splitOffset + (int)token.length();
-	//}
-
-	//result.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
 	result.clear();
 	// 토큰이 비어있으면 원본 전체를 하나로 반환
 	if (token.empty()) {

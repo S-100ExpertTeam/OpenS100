@@ -15,14 +15,6 @@
 #include <algorithm>
 #include <cassert>
 
-//#include <iostream>
-
-//#include <assert.h>
-//#include <afxcmn.h>
-
-//#include <mmsystem.h>
-//#pragma comment(lib, "winmm.lib" )
-
 std::list<Result_DrawingInstruction> resultDrawingInstructions;
 
 int HostGetFeatureIDs(lua_State *l)
@@ -526,13 +518,6 @@ int HostDebuggerEntry(lua_State *l)
 		text.append("\n");
 		GISLibrary::DebugOutput(text);
 	}
-	//else
-	//{
-	//	auto text = ls->peek<std::string>(2);
-	//	//std::cout << '\t\n' << text << std::endl;
-	//	text.append("\n");
-	//	GISLibrary::DebugOutput(text);
-	//}
 
 	return 0;
 }

@@ -3,7 +3,7 @@
 // that neither names the types of a graphics library.
 namespace GISLibrary
 {
-	// Straight (not premultiplied) RGBA, each component 0..1. Same layout as D2D1_COLOR_F.
+	// Straight (not premultiplied) RGBA, each component 0..1.
 	struct ColorF
 	{
 		float r = 0.0f;
@@ -12,7 +12,7 @@ namespace GISLibrary
 		float a = 1.0f;
 	};
 
-	// A point in the float coordinates the renderer draws in. Same layout as D2D1_POINT_2F.
+	// A point in the float coordinates the renderer draws in.
 	struct PointF
 	{
 		float x = 0.0f;

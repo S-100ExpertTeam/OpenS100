@@ -123,32 +123,6 @@ std::optional<bool> SENC_Instruction::getHover()
 	return hover;
 }
 
-//void SENC_Instruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2F>& points)
-//{
-//	if (nullptr == fr)
-//	{
-//		return;
-//	}
-//
-//	auto geom = fr->GetGeometry();
-//
-//	if (nullptr == geom)
-//	{
-//		return;
-//	}
-//
-//	//if (vectorPoint)
-//	//{
-//	//	SPoint geo;
-//	//	geo.x = vectorPoint->x;
-//	//	geo.y = vectorPoint->y;
-//	//	projection(geo.x, geo.y);
-//	//	D2D1_POINT_2F tempPoint;
-//	//	scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
-//	//	points.push_back(tempPoint);
-//	//}
-//}
-
 void SENC_Instruction::setAlertReference(SENC_AlertReference _alertReference)
 {
 	this->alertReference = _alertReference;

@@ -940,7 +940,6 @@
     <ClInclude Include="LayerManager.h" />
     <ClInclude Include="Leader.h" />
     <ClInclude Include="MASK.h" />
-    <ClInclude Include="Namespace_GISLibrary.h" />
     <ClInclude Include="NonPrintableCharacter.h" />
     <ClInclude Include="OrientedCurveRecord.h" />
     <ClInclude Include="PCOutputSchemaManager.h" />

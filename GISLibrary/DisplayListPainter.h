@@ -21,9 +21,6 @@ namespace s100::render
 	// it. It works out where things go on the screen (projection, rotation of the view, north
 	// at the point) and how they are stroked, and hands the backend paths.
 	//
-	// It draws every kind of instruction; the Direct2D painter of the viewer forwards all of
-	// them here.
-	//
 	// A line or an area is drawn in the coordinates of the dataset under the transform of the
 	// view, so the path of a curve or a surface is built once and kept by the backend. That
 	// transform is left set after a line or an area; every other kind sets its own.

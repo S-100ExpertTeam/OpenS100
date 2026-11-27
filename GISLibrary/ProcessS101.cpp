@@ -424,12 +424,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 					drawingCommand.pointInstruction.parse(cp[1]);
 				}
 
-				//auto ins = CommandToInstruction::ToS100PointInstruction(drawingCommand, stateCommands);
-				//if (ins)
-				//{
-				//	ins->SetFeatureReference(featureID);
-				//	pcm->displayList->SetDisplayInstruction(ins);
-				//}
 			}
 			else if (di_splited[0].compare("LineInstruction") == 0)
 			{
@@ -1051,28 +1045,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				{
 					// !Don't parsing AlertReference util new model of drawingCommands is completed... 
 					
-					//v_AlertReference = value;
-
-					//S100_AlertReference* in = new S100_AlertReference();
-					//pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
-
-					//in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-
-					//std::vector<std::string> v_splited = Split(v_AlertReference, ",");
-					//if (v_splited.size() > 0)
-					//{
-					//	in->alertType = std::wstring(v_splited[0].begin(), v_splited[0].end());
-					//}
-					//if (v_splited.size() > 1)
-					//{
-					//	in->plan = std::wstring(v_splited[1].begin(), v_splited[1].end());
-					//}
-					//if (v_splited.size() > 2)
-					//{
-					//	in->monitor = std::wstring(v_splited[2].begin(), v_splited[2].end());
-					//}
-
-					//v_AlertReference = "";
 				}
 			}
 			else if (sizeForIndex == 15)
@@ -1275,13 +1247,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 								sref->Set(std::string(v_SpatialReference));
 
 
-								//std::vector<std::string_view> v_splited;
-								//Split(v_SpatialReference, "|", v_splited);
-								//if (v_splited.size() == 2)
-								//{
-								//	//sref->SetType(v_splited[0]);
-								//	sref->SetReference(v_splited[1]);
-								//}
 							}
 							v_LineInstruction.clear();
 						}

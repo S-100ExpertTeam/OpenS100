@@ -41,8 +41,8 @@
 #include <memory>
 #include <utility>
 
-// The arithmetic below is the arithmetic of the Direct2D painter it came from, type for type:
-// the pictures are compared byte for byte.
+// The arithmetic below keeps the types it was first written with (floats narrowed from
+// doubles): the pictures are compared byte for byte.
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
 

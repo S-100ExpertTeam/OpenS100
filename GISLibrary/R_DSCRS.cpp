@@ -221,12 +221,6 @@ void R_DSCRS::Release()
 	delete m_csax;
 	m_csax = nullptr;
 
-	//delete m_proj;
-	//m_proj = nullptr;
-
-	//delete m_gdat;
-	//m_gdat = nullptr;
-
 	delete m_vdat;
 	m_vdat = nullptr;
 }

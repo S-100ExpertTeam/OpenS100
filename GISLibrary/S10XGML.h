@@ -120,14 +120,6 @@ public:
     std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
     std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
 
-    //std::string GetObjectAttributeCode(int type, std::string id, int index) override;
-
-    //int GetFeatureAttributeCount(std::string id) override;
-    //std::string GetFeatureAttributeCode(std::string, int index) override;
-	
-    //int GetInformationAttributeCount(std::string id) override;
-    //std::string GetInformationAttributeCode(std::string, int index) override;
-
     GM::Object* GetGeometry(std::string id) override;
 
     GM::OrientableCurve* GetOrientableCurve(std::string id);

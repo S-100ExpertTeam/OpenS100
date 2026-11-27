@@ -264,7 +264,7 @@ namespace
 }
 
 // A sample cell with lights: its areas, lines, symbols, texts and augmented rays and paths (sector limits and arcs) drawn on the
-// recording renderer. No Direct2D and no window: this is what runs on every platform.
+// recording renderer. No backend and no window: this is what runs on every platform.
 TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 {
 	const auto root = testpaths::repoRoot();

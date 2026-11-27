@@ -123,21 +123,6 @@ FeatureCatalogue* CatalogManager::getFC(std::string productId, Version version) 
 		}
 	}
 
-	//Version currentVersion = version;
-	//
-	//while (currentVersion.isEmpty() == false)
-	//{
-	//	for (auto i = FCs.begin(); i != FCs.end(); i++)
-	//	{
-	//		if (productId.compare((*i)->getProductId()) == 0 && version == (*i)->getVersion())
-	//		{
-	//			return *i;
-	//		}
-	//	}
-
-	//	currentVersion = currentVersion.getReducedVersion();
-	//}
-
 	return nullptr;
 }
 
@@ -152,20 +137,6 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId, Version version
 		}
 	}
 
-	//Version currentVersion = version;
-
-	//while (currentVersion.isEmpty() == false)
-	//{
-	//	for (auto i = PCs.begin(); i != PCs.end(); i++)
-	//	{
-	//		if (productId.compare((*i)->getProduct()) == 0 && version == (*i)->getVersion())
-	//		{
-	//			return *i;
-	//		}
-	//	}
-
-	//	currentVersion = currentVersion.getReducedVersion();
-	//}
 	//
 	return nullptr;
 }

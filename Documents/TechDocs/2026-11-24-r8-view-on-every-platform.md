@@ -1,6 +1,6 @@
 # R8: 뷰를 모든 플랫폼에서 (2026-11-24)
 
-- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
+- 상태: R8a~R8f 완료(포트 기능 `view`·`view-skia` 4.4, `stdafx.h`에서 COM·ATL 제거 4.5, `<windows.h>` 제거 4.6, Windows에서 포트 확인과 기하 없는 피처의 Lua 오류 4.7, 죽은 코드 정리 4.8), 4.1의 흔들림은 원인을 찾아 고쳤다(4.3). 남은 것은 5절.
 - 지침: 1(라이브러리), 18(전 플랫폼), 24(Skia 단일). 앞 단계: [R7](2026-11-24-r7-viewer-on-skia-design.md).
 
 ## 1. 출발점
@@ -107,6 +107,17 @@ R8a~R8c의 그림이 수정 전과 같은지는 여전히 직접 대조하지 �
 - 함께 고친 것: `hd_get_curve`가 위상 지시자 3(시작이자 끝, 닫힌 곡선)을 끝점으로만 읽었다. 이제 시작점도 채운다(`R_CurveRecord.cpp`는 이미 3을 양쪽으로 읽는다). 이 경우를 가진 시험 데이터는 없었다: 그림은 바뀌지 않았다.
 
 검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 232개 중 228개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다. Linux 트리 안 빌드 통과, `opens100_view`에서 Lua 오류가 사라졌고 그림은 바이트 단위로 같다. 새 테스트를 고치기 전 코드에 돌려 보지는 않았다.
+
+### 4.8 주석으로 남은 죽은 코드와 Direct2D의 흔적을 지웠다 (2026-11-27)
+
+- **주석 처리된 코드 약 1,900줄**(46개 파일)을 지웠다. 큰 것: `SENC_PointInstruction.cpp`(`D2D1_POINT_2F`로 점을 모으던 옛 함수들), `host_data.cpp`(8211 레코드에서 속성을 찾던 옛 구현), `SENC_TextInstruction.cpp`, `SENC_AugmentedRay.cpp`, `S100_CIE.*`, `S100_Symbol.*`. 줄 전체가 `//`인 것만 지웠으므로 컴파일되는 것은 바뀌지 않는다. 고른 기준: 주석 블록에서 코드로 읽히는 첫 줄부터 마지막 줄까지, 코드로 읽히는 줄이 셋 이상이고 3분의 2 이상일 때(설명 주석은 남긴다).
+- **Direct2D를 말하던 주석 13곳**을 지금의 사실로 고쳤다(`LayerOpen.cpp`, `S100SpatialObjectPortrayal.cpp`, `DisplayListPainter.*`, `DrawTypes.h` 등). 라이브러리 모듈과 테스트에 `Direct2D`·`D2D1`·`GDI+`라는 말이 남지 않았다.
+- `GISLibrary/Namespace_GISLibrary.h`를 지웠다: 없는 클래스(`D2D1Resources`, S-57·S-52의 것 열여섯)의 선언뿐이었다.
+- `LuaScriptingReference/stdafx.h`에서 `<windows.h>`를 뺐다(`lua_session.cpp`가 `OutputDebugStringA` 때문에 제가 포함한다). 미리 컴파일된 헤더에 운영체제 헤더가 있는 라이브러리 모듈이 없다.
+
+검증: Windows Debug x64·Release x64 솔루션 빌드, 전체 테스트 각각 233개 중 229개 통과·4개 건너뜀, 그림 62장이 바꾸기 전과 같다. Linux 트리 안 빌드 통과, `opens100-render`의 그림 셋(전체·중심+축척·Night)이 바꾸기 전과 바이트 단위로 같다.
+
+남긴 것: `namespace libS100Engine`(`PortrayalCatalogue/Color.*`, 이름만 옛 엔진의 것이다), `LibMFCUtil` 프로젝트(뷰어만 쓴다), 저장소에 든 `*.vcxproj.user` 여덟 개.
 
 ## 5. 남은 것
 

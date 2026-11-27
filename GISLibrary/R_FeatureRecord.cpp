@@ -100,12 +100,6 @@ R_FeatureRecord::~R_FeatureRecord(void)
 	}
 	m_mask.clear();
 
-	//if (m_geometry)
-	//{
-	//	m_geometry->Release();
-	//	delete m_geometry;
-	//	m_geometry = nullptr;
-	//}
 }
 
 R_FeatureRecord R_FeatureRecord::operator=(const R_FeatureRecord& other)
@@ -431,26 +425,6 @@ void R_FeatureRecord::SetNumericCode(int numericCode)
 {
 	m_frid.m_nftc = numericCode;
 }
-
-//int R_FeatureRecord::MinimumDisplayPriority()
-//{
-//	return minimumDisplayPriority;
-//}
-//
-//void R_FeatureRecord::MinimumDisplayPriority(int value)
-//{
-//	minimumDisplayPriority = value;
-//}
-//
-//int R_FeatureRecord::MaximumDisplayPriority()
-//{
-//	return maximumDisplayPriority;
-//}
-//
-//void R_FeatureRecord::MaximumDisplayPriority(int value)
-//{
-//	maximumDisplayPriority = value;
-//}
 
 int R_FeatureRecord::GetSPASRCNM()
 {

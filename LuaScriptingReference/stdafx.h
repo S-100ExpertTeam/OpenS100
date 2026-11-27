@@ -1,8 +1,6 @@
 ﻿#pragma once
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
+// No header of an operating system here: a source that calls one includes it itself.
 #include <string>
 #include <vector>
 #include <map>

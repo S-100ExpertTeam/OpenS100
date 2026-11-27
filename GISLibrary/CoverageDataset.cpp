@@ -62,7 +62,7 @@ namespace GISLibrary
 			};
 		}
 
-		// Straight RGBA bytes to the premultiplied BGRA a Direct2D bitmap takes.
+		// Straight RGBA bytes to the premultiplied BGRA the renderer takes for an image.
 		std::vector<std::uint32_t> toPremultipliedBgra(std::span<const std::uint32_t> pixels)
 		{
 			std::vector<std::uint32_t> out(pixels.size());

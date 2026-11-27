@@ -1,6 +1,6 @@
 #include "stdafx.h"
 // OpenLayer: picks the dataset class of a background or exchange-catalogue layer. Kept apart
-// from Layer.cpp because the exchange-catalogue view draws with Direct2D.
+// from Layer.cpp: the exchange catalogue is of the view, and Layer.cpp is of the dataset model.
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "LayerOpen.h"

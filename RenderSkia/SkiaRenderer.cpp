@@ -82,8 +82,8 @@ namespace
 			for (const auto& arc : path.arcs)
 			{
 				// A whole turn or more is the circle (the sector of an all-round light). Between
-				// two points that are the same there is no arc to pick, and Direct2D draws
-				// nothing there.
+				// two points that are the same there is no arc to pick, and nothing
+				// is drawn there.
 				if (std::fabs(arc.endDegrees - arc.startDegrees) >= 360.0f)
 				{
 					builder.addCircle(0.0f, 0.0f, arc.radius);

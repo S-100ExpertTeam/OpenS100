@@ -15,12 +15,6 @@ namespace GF
 
 	InformationType::~InformationType()
 	{
-		//for (auto i = attributes.begin(); i != attributes.end(); i++)
-		//{
-		//	delete (*i);
-		//}
-
-		//attributes.clear();
 	}
 
 	InformationType InformationType::operator=(const InformationType& other)
@@ -35,32 +29,4 @@ namespace GF
 		return ObjectType::GetAttributeCount();
 	}
 
-	//ThematicAttributeType* InformationType::GetAttribute(int index)
-	//{
-	//	if (index >= 0 && index < GetAttributeCount())
-	//	{
-	//		return attributes.at(index);
-	//	}
-
-	//	return nullptr;
-	//}
-
-	//std::string InformationType::GetAttributeValue(int index)
-	//{
-	//	auto attr = GetAttribute(index);
-	//	if (attr)
-	//	{
-	//		if (attr->IsSimple())
-	//		{
-	//			return attr->GetValue();
-	//		}
-	//	}
-
-	//	return "";
-	//}
-
-	//int InformationType::GetParentAttributeIndex(int index)
-	//{
-	//	return 0;
-	//}
 }

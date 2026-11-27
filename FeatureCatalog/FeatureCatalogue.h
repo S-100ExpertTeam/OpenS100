@@ -177,17 +177,6 @@ public:
 	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::string code);
 	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::wstring code);
 
-	//void SetFullAssociations();
-	//void SetSubAssociation(FeatureType* ft);
-	//void SetSubAssociation(InformationType* it);
-	//void SetFeatureAssociationFromSuperType(FeatureType* ft, std::string superTypeName, std::string roleName, std::string associationName);
-	//void SetInformationAssociationFromSuperType(FeatureType* ft, std::string superTypeName, std::string roleName, std::string associationName);
-	//void SetInformationAssociationFromSuperType(InformationType* it, std::string superTypeName, std::string roleName, std::string associationName);
-
-	//void AddFeatureBinding(FeatureType* ft, std::string bindedTypeName, std::string roleName, std::string associationName);
-	//void AddInformationBinding(FeatureType* ft, std::string bindedTypeName, std::string roleName, std::string associationName);
-	//void AddInformationBinding(InformationType* it, std::string bindedTypeName, std::string roleName, std::string associationName);
-
 	void NullCheckFieldOfApplication();
 
 	// Don't release result.

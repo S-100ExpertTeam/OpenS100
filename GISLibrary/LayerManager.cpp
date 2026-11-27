@@ -401,10 +401,6 @@ void LayerManager::Draw(GISLibrary::ViewFrame& frame, int offset)
 
 	DrawNonS100Datasets(frame, offset);
 
-	//gisLib->D2.Begin(hdc, rectView);
-	//gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
-	//gisLib->DrawScaleBar();
-	//gisLib->D2.End();
 }
 
 void LayerManager::DrawInformationLayer(GISLibrary::ViewFrame& frame, Layer* layer)

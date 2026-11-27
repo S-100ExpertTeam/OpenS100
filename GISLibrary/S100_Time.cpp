@@ -34,24 +34,6 @@ std::string S100_Time::ToString() const {
     return ss.str();
 }
 
-//std::string S100_Time::NormalizeTime(const std::string& time) {
-//    std::regex timeFormatRegex(R"(^(\d{2})(\d{2})(\d{2})(Z|[+-]\d{4})?$)");
-//    std::smatch matches;
-//    if (std::regex_match(time, matches, timeFormatRegex)) {
-//        return matches[1].str() + matches[2].str() + matches[3].str();
-//    }
-//    throw std::runtime_error("Invalid time format.");
-//}
-//
-//void S100_Time::ProcessUtcOffset(const std::string& time) {
-//    std::regex offsetRegex(R"(([+-])(\d{2})(\d{2})$)");
-//    std::smatch matches;
-//    if (std::regex_search(time, matches, offsetRegex)) {
-//        utcOffsetHours = cpp_util::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
-//        utcOffsetMinutes = cpp_util::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
-//    }
-//}
-
 std::string S100_Time::NormalizeTime(const std::string& time) {
     std::regex timeFormatRegex(R"(^(\d{2}):(\d{2}):(\d{2})(Z|[+-]\d{4})?$)");
     std::smatch matches;

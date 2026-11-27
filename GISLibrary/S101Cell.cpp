@@ -1194,10 +1194,6 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
 {
-	//if (r->m_cuco.size() != 1)
-	//{
-	//	return FALSE;
-	//}
 
 	for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++) {
 		auto f_cuco = *i;
@@ -3160,12 +3156,6 @@ void S101Cell::InitCurveSuppression()
 			auto compositeCurve = (SCompositeCurve*)feature->geometry;
 			compositeCurve->setSuppress(false);
 
-			//int curveCnt = compositeCurve->GetCurveCount();
-			//for (int j = 0; j < curveCnt; j++)
-			//{
-			//	auto c = compositeCurve->GetCurve(j);
-			//	c->SetSuppress(false);
-			//}
 		}
 		else if (feature->geometry->GetType() == SGeometryType::Surface)
 		{
@@ -4260,31 +4250,6 @@ std::string S101Cell::GetInformationAssociationRoleCode(GF::InformationType* inf
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-//std::string S101Cell::GetObjectAttributeCode(int type, std::string id, int index)
-//{
-//	if (type == 1)
-//	{
-//		return GetFeatureAttributeCode(id, index);
-//	}
-//	else if (type == 2)
-//	{
-//		return GetInformationAttributeCode(id, index);
-//	}
-//
-//	return "";
-//}
-
-//int S101Cell::GetFeatureAttributeCount(std::string id)
-//{
-//	auto object = GetFeatureType(id);
-//	if (object)
-//	{
-//		return object->GetAttributeCount();
-//	}
-//
-//	return 0;
-//}
-
 std::string S101Cell::GetFeatureAttributeCode(std::string id, int index)
 {
 	auto object = (R_FeatureRecord*)GetFeatureType(id);
@@ -4302,17 +4267,6 @@ std::string S101Cell::GetFeatureAttributeCode(std::string id, int index)
 
 	return "";
 }
-
-//int S101Cell::GetInformationAttributeCount(std::string id)
-//{
-//	auto object = GetInformationType(id);
-//	if (object)
-//	{
-//		return object->GetAttributeCount();
-//	}
-//
-//	return 0;
-//}
 
 std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
 {
@@ -4753,22 +4707,6 @@ bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML* gml, GM::Composite
 
 
 
-		//if (std::string::npos != id.find("occ"))
-		//{
-		//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
-		//}
-		//else if (std::string::npos != id.find("cc"))
-		//{
-		//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
-		//}
-		//else if (std::string::npos != id.find("oc"))
-		//{
-		//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
-		//}
-		//else if (std::string::npos != id.find("c"))
-		//{
-		//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
-		//}
 	}
 
 	InsertCompositeCurveRecord(ccr->GetRecordName().GetName(), ccr);

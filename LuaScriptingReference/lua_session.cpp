@@ -5,6 +5,10 @@
 #include <iostream>
 #include <stdexcept>
 
+#ifdef _WIN32
+#include <windows.h>   // OutputDebugStringA
+#endif
+
 std::map<lua_State*, lua_session*> lua_session::m_state_session_map;
 
 // Specialize templates here so that any unsupported specializations will result in unresolved external errors.

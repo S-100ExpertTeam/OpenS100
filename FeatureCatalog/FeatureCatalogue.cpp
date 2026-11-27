@@ -165,11 +165,6 @@ std::vector<std::string> FeatureCatalogue::AdmittedInformationTypes(InformationB
 		[this](const std::string& code) { return GetInformationType(code); });
 }
 
-//FeatureCatalogue::FeatureCatalogue(std::string path)
-//{
-//	Read(path);
-//}
-
 FeatureCatalogue::~FeatureCatalogue()
 {
 	delete fieldOfApplication;
@@ -426,14 +421,6 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 				SetProductId(instruction.child_value());
 			}
 		}
-		//else if (!strcmp(instructionName, "S100FC:producer"))
-		//{
-		//	producer.GetContents(instruction);
-		//}
-		//else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSources"))
-		//{
-		//	definitionSources.GetContents(instruction);
-		//}
 		else if (!strcmp(instructionName, "S100FC:S100_FC_SimpleAttributes"))
 		{
 			simpleAttributes.GetContents(instruction);

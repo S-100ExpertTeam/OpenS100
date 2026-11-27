@@ -1343,9 +1343,6 @@
     <ClInclude Include="D2D1Resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Namespace_GISLibrary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ATTR.h">
       <Filter>S101\Field</Filter>
     </ClInclude>

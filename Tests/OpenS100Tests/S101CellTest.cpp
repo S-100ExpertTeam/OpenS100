@@ -59,8 +59,8 @@ TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 // Regression for the record loop in S101Cell::Read8211 / OpenMetadataBy000:
 // a data record whose leader declares zero length and a field-area offset that
 // yields no directory entries used to spin forever. The reader must return.
-// Phase 1 step 1: opening a dataset must not require a renderer. Direct2D geometry
-// is created lazily at draw time, so Open() with D2D1Resources == nullptr succeeds.
+// Opening a dataset must not require a renderer: what a backend keeps for a geometry is
+// made when it is first drawn.
 TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
 {
 	S101Cell cell(&fc);
